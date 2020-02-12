@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Premescla</string>
+
+
+    <string name="sincronizaci_n">Sincronización</string>
+    <string name="descargar_data">Descargar data</string>
+    <string name="subir_data">Subir data</string>
+
+    <string name="status_all_s">Todas</string>
+
+    <string name="status_pendientes_s">Pendientes</string>
+    <string name="status_onproceso_s">En Proceso</string>
+    <string name="status_finalizada_s">Finalizadas</string>
+
+
+    <string name="status_pendiente">Pendiente</string>
+    <string name="status_onproceso">En Proceso</string>
+    <string name="status_finalizada">Finalizada</string>
+
+    <string name="tittle_all_orders">Todas las Ordenes</string>
+    <string name="tittle_pendiente_orders">Ordenes Pendientes</string>
+    <string name="tittle_process_orders">Ordenes en Proceso</string>
+    <string name="tittle_finished_orders">Ordenes Finalizadas</string>
+
+    <string name="nav_header_subtitle">soporte@ibao.pe</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="bluetooth">bluetooth</string>
+    <string name="fundo">Fundo</string>
+    <string name="separador">/</string>
+    <string name="empresa">Empresa</string>
+
+
+    <string name="no_bluetooth">Bluetooth not available.</string>
+    <string name="status_disconnected">descpmectadp</string>
+    <string name="connect">Conectado</string>
+    <string name="paired_devices">Dispositivos Emparejados</string>
+    <string name="dispositivo_no_seleccionado">Dispositivo no seleccionado</string>
+    <string name="connection_failed">Conexión Fallida</string>
+    <string name="connected">Dispositivo Conectado</string>
+    <string name="message_send_error">Error el enviar mensaje</string>
+    <string name="you_sent">Enviado</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_all"
+            android:icon="@drawable/ic_list_black_24dp"
+            android:title="@string/status_all_s" />
+        <item
+            android:id="@+id/nav_pendientes"
+            android:icon="@drawable/ic_pendiente"
+            android:title="@string/status_pendientes_s" />
+        <item
+            android:id="@+id/nav_proceso"
+            android:icon="@drawable/ic_on_proccess"
+            android:title="@string/status_onproceso_s" />
+        <item
+            android:id="@+id/nav_terminada"
+            android:icon="@drawable/ic_all"
+            android:title="@string/status_finalizada_s" />
+    </group>
+<!--
+    <item android:title="@string/sincronizaci_n"
+        >
+        <menu>
+            <item
+                android:id="@+id/nav_download"
+                android:icon="@drawable/ic_system_update_black_24dp"
+                android:title= "@string/descargar_data" />
+            <item
+                android:id="@+id/nav_update"
+                android:icon="@drawable/ic_backup_white_24dp"
+                android:title="@string/subir_data" />
+        </menu>
+    </item>
+-->
+</menu>
