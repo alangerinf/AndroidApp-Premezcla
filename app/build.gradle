@@ -51,6 +51,7 @@ dependencies {
 
     //webserver connection
     implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
     //bluetooth connection
     implementation 'com.github.harry1453:android-bluetooth-serial:v1.1'
 

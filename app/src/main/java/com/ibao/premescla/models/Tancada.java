@@ -1,9 +1,10 @@
 package com.ibao.premescla.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tancada {
+public class Tancada  implements Serializable {
 
     /**
         'id'=> $idTancada_,

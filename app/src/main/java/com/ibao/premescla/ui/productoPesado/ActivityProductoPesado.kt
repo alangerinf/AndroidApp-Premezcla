@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.main.views
+package com.ibao.premescla.ui.productoPesado
 
 import android.app.Dialog
 import android.bluetooth.BluetoothAdapter
@@ -16,37 +16,31 @@ import android.view.*
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.navigation.NavigationView
 import com.harrysoft.androidbluetoothserial.BluetoothManager
-import com.ibao.premescla.BuildConfig
 import com.ibao.premescla.R
-import com.ibao.premescla.models.Orden
-import com.ibao.premescla.ui.main.presenters.MainPresenter
-import com.ibao.premescla.ui.main.views.adapters.RViewAdapterListOrdenes
-import com.ibao.premescla.ui.orden.ActivityOrden
+import com.ibao.premescla.ui.main.views.MainActivityViewModel
 import com.ibao.premescla.utils.appContext
+import com.ibao.premescla.utils.CommunicateViewModel
 import java.util.*
 
+class ActivityProductoPesado : AppCompatActivity(){
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private var presenter: MainPresenter? = null
+    private var  tViewPesoReal : TextView?= null
+    private var btnConect: MaterialButton? = null
+
     private var viewModel: MainActivityViewModel? = null
 
-    private var mySwipeRefreshLayout: SwipeRefreshLayout?= null
-    private var myRView: RecyclerView?= null
+    private var viewModelComunicate: CommunicateViewModel? = null
 
+    private var tViewDeviceSelected : TextView? =null
     private var ctx: Context? = null
 
     private val mBroadcastReceiver1: BroadcastReceiver = object : BroadcastReceiver() {
@@ -56,16 +50,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val state: Int = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
                 when (state) {
                     BluetoothAdapter.STATE_OFF -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_disabled_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_bluetooth_disabled_black_24dp));
                     }
                     BluetoothAdapter.STATE_TURNING_OFF -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_settings_bluetooth_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_settings_bluetooth_black_24dp));
                     }
                     BluetoothAdapter.STATE_ON -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_bluetooth_black_24dp));
                     }
                     BluetoothAdapter.STATE_TURNING_ON -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_settings_bluetooth_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_settings_bluetooth_black_24dp));
                     }
                 }
             }
@@ -78,15 +72,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             when (action) {
                 BluetoothDevice.ACTION_ACL_CONNECTED -> {
                     Toast.makeText(ctx,"Conectado",Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_connected_black_24dp));
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_bluetooth_connected_black_24dp));
                 }
                 BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
                     Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_black_24dp));
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_bluetooth_black_24dp));
                 }
             }
         }
     }
+
 
 
     override fun onDestroy() {
@@ -97,57 +92,75 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_producto_pesado)
 
-        presenter = MainPresenter(this)
+        title="#1: 7D34G22"
 
         // Setup our ViewModel
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        // Setup our ViewModel
+        viewModelComunicate = ViewModelProviders.of(this)[CommunicateViewModel::class.java]
 
+        tViewDeviceSelected = findViewById(R.id.tViewDeviceSelected)
         // This method return false if there is an error, so if it does, we should close.
         // This method return false if there is an error, so if it does, we should close.
         if (!viewModel!!.setupViewModel()) {
             finish()
             return
         }
-        
+        // This method return false if there is an error, so if it does, we should close.
+        // This method return false if there is an error, so if it does, we should close.
+        if (!viewModelComunicate!!.setupViewModel("", "")) {
+            finish()
+            return
+        }
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        title = getString(R.string.tittle_all_orders)
         ctx = this
-        mySwipeRefreshLayout = findViewById(R.id.main_swiperefresh)
-        myRView = findViewById(R.id.fmain_rView)
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val navigationView = findViewById<NavigationView>(R.id.nav_view)
-        val toggle = ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer.addDrawerListener(toggle)
-        toggle.syncState()
-        navigationView.setNavigationItemSelectedListener(this)
-        navigationView.menu.getItem(0).isChecked = true
 
-      //  var app : cBaseApplication= (this.applicationContext as cBaseApplication)
+        tViewPesoReal = findViewById(R.id.tViewPesoReal)
+        btnConect = findViewById(R.id.btnConect)
+
+
+        viewModelComunicate!!.connectionStatus.observe(this, Observer { connectionStatus: CommunicateViewModel.ConnectionStatus -> onConnectionStatus(connectionStatus) })
+        //viewModelComunicate!!.deviceName.observe(this, Observer { name: String? -> title = getString(R.string.device_name_format, name) })
+        viewModelComunicate!!.messages.observe(this, Observer { message: String? ->
+            /*
+            if (TextUtils.isEmpty(message)) {
+                viewModelComunicate!!.setMessages("No hay Mensajes")
+            }
+             */
+            tViewPesoReal!!.text = message
+        })
+
 
         registerFilters()
 
-        mySwipeRefreshLayout!!.setOnRefreshListener {
-            Log.i(TAG, "onRefresh called from SwipeRefreshLayout")
+    }
+    // Called when the ViewModel updates us of our connectivity status
+    private fun onConnectionStatus(connectionStatus: CommunicateViewModel.ConnectionStatus) {
+        when (connectionStatus) {
+            CommunicateViewModel.ConnectionStatus.CONNECTED -> {
 
-            // This method performs the actual data-refresh operation.
-            // The method calls setRefreshing(false) when it's finished.
-            requestData()
+                btnConect!!.isEnabled = true
+                btnConect!!.setText("Conectado")
+                btnConect!!.setOnClickListener { v: View? -> viewModelComunicate!!.disconnect() }
+
+            }
+            CommunicateViewModel.ConnectionStatus.CONNECTING -> {
+
+                btnConect!!.isEnabled = false
+                btnConect!!.setText("Conectando...")
+            }
+            CommunicateViewModel.ConnectionStatus.DISCONNECTED -> {
+
+                btnConect!!.isEnabled = true
+                btnConect!!.setText("Desconectado")
+                btnConect!!.setOnClickListener { v: View? -> viewModelComunicate!!.connect() }
+            }
         }
-        requestData()
     }
-
-    private fun requestData(){
-        presenter!!.requestAllData()
-        mySwipeRefreshLayout!!.isRefreshing = true
-    }
-
     private fun showDialog() {
-        val dialog = Dialog(this@MainActivity)
+        val dialog = Dialog(this@ActivityProductoPesado)
 
         dialog .requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog .setCancelable(true)
@@ -165,7 +178,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             // Start observing the data sent to us by the ViewModel
 
         }
-        viewModel!!.pairedDeviceList.observe(this@MainActivity, Observer(adapter::updateList))
+        viewModel!!.pairedDeviceList.observe(this@ActivityProductoPesado, Observer(adapter::updateList))
         // Immediately refresh the paired devices list
         viewModel!!.refreshPairedDevices()
 
@@ -188,7 +201,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var MENU: Menu
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean { // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.order_detail, menu)
         MENU = menu
 
 
@@ -198,23 +211,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when {
             mBluetoothAdapter == null -> {
                 Toast.makeText(ctx,"null",Toast.LENGTH_SHORT).show()
-                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_warning_black_24dp))
+                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_warning_black_24dp))
             }
             mBluetoothAdapter.isEnabled -> {
 
                 if(!isConnected(BluetoothManager.getInstance())){
 
                     Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_black_24dp));
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_bluetooth_black_24dp));
 
                 }else{
                     Toast.makeText(ctx,"Conectado ",Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_connected_black_24dp));
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_bluetooth_connected_black_24dp));
                 }
 
             }
             else -> {
-                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_disabled_black_24dp))
+                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_bluetooth_disabled_black_24dp))
                 Toast.makeText(ctx,"no habilitado",Toast.LENGTH_SHORT).show()
             }
         }
@@ -241,119 +254,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean { // Handle action bar item clicks here. The action bar will
-// automatically handle clicks on the Home/Up button, so long
-// as you specify a parent activity in AndroidManifest.xml.
+
+
         val id = item.itemId
         if (id == R.id.action_bluetooth) {
             showDialog()
         }
-        if (id == R.id.action_version) {
-            try {
-                Toast.makeText(baseContext, "Versión " + BuildConfig.VERSION_NAME + " code." + BuildConfig.VERSION_CODE /*+" db."+ ConexionSQLiteHelper.VERSION_DB*/, Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-                Toast.makeText(baseContext, e.toString(), Toast.LENGTH_LONG).show()
-            }
-            return true
-        }
-        return if (id == R.id.action_logout) { /*
-            if(new TareoDAO(ctx).listAll_UPLOAD().size()>0) {
-
-                Snackbar snackbar= Snackbar.make(myFragment.getView(),"Falta finalizar todas sus labores y sincronizar",Snackbar.LENGTH_LONG);
-                snackbar.getView().setBackgroundColor(ContextCompat.getColor(this, R.color.red_pastel));
-                snackbar.setActionTextColor(ContextCompat.getColor(this,R.color.white));
-                snackbar.setAction("Sincronizar", v1 -> startActivity(new Intent(this, ActivityUpload.class)));
-                snackbar.show();
-
-            }else{
-                SharedPreferencesManager.deleteUser(ctx);
-                startActivity(new Intent(this, ActivityPreloader.class));
-            }
-
-             */
-            true
-        } else super.onOptionsItemSelected(item)
+         return super.onOptionsItemSelected(item)
     }
 
-    val filter_none = 0
-    val filter_pendiente = 1
-    val filter_proceso = 2
-    val filter_terminada = 3
 
-    var myfilter = filter_none
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean { // Handle navigation view item clicks here.
-        val id = item.itemId
-        when (id) {
-            R.id.nav_all -> {
-                title = getString(R.string.tittle_all_orders)
-               myfilter = filter_none
-            }
-            R.id.nav_pendientes -> {
-                title = getString(R.string.tittle_pendiente_orders)
-                myfilter = filter_pendiente
-            }
-            R.id.nav_proceso -> {
-                title = getString(R.string.tittle_process_orders)
-                myfilter = filter_proceso
-            }
-            R.id.nav_terminada -> {
-                title = getString(R.string.tittle_finished_orders)
-                myfilter = filter_terminada
-            }
-            /*
-            R.id.nav_download -> {
-            }
-            R.id.nav_update -> {
-            }
-
-             */
-        }
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        drawer.closeDrawer(GravityCompat.START)
-        return true
-    }
-
-    override fun onBackPressed() {
-        val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START)
-        } else { //super.onBackPressed();
-            moveTaskToBack(true)
-        }
-    }
-
-    val TAG = "MainActivity.tk"
-    fun showError(error: String) {
-        Log.e(TAG,error)
-        Toast.makeText(this,error,Toast.LENGTH_LONG).show()
-    }
-
-    fun showOrderList(ordenList: List<Orden>) {
-        mySwipeRefreshLayout!!.isRefreshing = false
-
-        var temp = ordenList
-        when(myfilter) {
-            filter_pendiente -> {
-
-            }
-            else -> { // Note the block
-                print("x is neither 1 nor 2")
-            }
-        }
-
-        var adapter = RViewAdapterListOrdenes(this@MainActivity,temp)
-        adapter.setOnClicListener {
-            val pos = myRView!!.getChildAdapterPosition(it)
-            val intent = Intent(this@MainActivity, ActivityOrden::class.java)
-            val orden = adapter.getOrden(pos)
-            intent.putExtra("orden", orden)
-            Log.d(TAG,"pos="+orden.ordenCode)
-            startActivity(intent)
-        }
-
-        myRView!!.adapter = adapter
-
-    }
 
     // A class to hold the data in the RecyclerView
     private inner class DeviceViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
@@ -366,6 +276,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             text2.text = device.address
             if(device.name == appContext.deviceSelect && device.address == appContext.macSelect){
                 conectado.visibility= View.VISIBLE
+                tViewDeviceSelected!!.text=device.name+ " -> " +device.address
+
+                viewModelComunicate!!.setupViewModel(device.name, device.address)
+
             }else{
                 conectado.visibility= View.GONE
             }
@@ -374,6 +288,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     appContext.deviceSelect = ""
                     appContext.macSelect = ""
 
+                    viewModelComunicate!!.setupViewModel("", "")
+
+                    tViewDeviceSelected!!.text=this@ActivityProductoPesado.getString(R.string.dispositivo_no_seleccionado)
                 }else{
                     appContext.deviceSelect = device.name
                     appContext.macSelect = device.address

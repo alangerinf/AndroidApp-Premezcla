@@ -1,6 +1,8 @@
 package com.ibao.premescla.models;
 
-public class OrdenDetalle {
+import java.io.Serializable;
+
+public class OrdenDetalle implements Serializable {
 
 /**
 'id'=>  $row['ID_ORDEN_DETALLE'],

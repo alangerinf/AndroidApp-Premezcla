@@ -1,6 +1,8 @@
 package com.ibao.premescla.models;
 
-public class ProductoPesado {
+import java.io.Serializable;
+
+public class ProductoPesado  implements Serializable {
 
     /***
      *   'id' => $rowProductosPesados['ID_PRODUCTO_PESADO'],

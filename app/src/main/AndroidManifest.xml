@@ -34,23 +34,30 @@
         </activity>
 
         <activity
-            android:name="com.ibao.premescla.ui.orden.ActivityOrder"
+            android:name="com.ibao.premescla.ui.orden.ActivityOrden"
             android:parentActivityName="com.ibao.premescla.ui.main.views.MainActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
-
-
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name="com.ibao.premescla.ui.ordenDetail.ActivityOrderDetail"
-            android:parentActivityName="com.ibao.premescla.ui.orden.ActivityOrder"
+            android:name="com.ibao.premescla.ui.tancada.ActivityTancada"
+            android:parentActivityName="com.ibao.premescla.ui.orden.ActivityOrden"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.ibao.premescla.ui.productoPesado.ActivityProductoPesado"
+            android:parentActivityName="com.ibao.premescla.ui.orden.ActivityOrden"
             android:theme="@style/AppThemeMaterial">
             <intent-filter>
-
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
             </intent-filter>

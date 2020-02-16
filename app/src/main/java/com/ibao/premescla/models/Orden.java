@@ -1,9 +1,10 @@
 package com.ibao.premescla.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Orden {
+public class Orden implements Serializable {
 
 /**
 'id'=> $idOrden,
@@ -31,7 +32,7 @@ public class Orden {
     private String cultivoName;
     private String variedadName;
     private String loteCode;
-    private String orderCode;
+    private String ordenCode;
     private String aplicacionDate;
     private float phMin;
     private float phMax;
@@ -53,7 +54,7 @@ public class Orden {
         this.cultivoName = "";
         this.variedadName = "";
         this.loteCode = "";
-        this.orderCode = "";
+        this.ordenCode = "";
         this.aplicacionDate = "";
         this.phMin = 0;
         this.phMax = 0;
@@ -117,12 +118,12 @@ public class Orden {
         this.loteCode = loteCode;
     }
 
-    public String getOrderCode() {
-        return orderCode;
+    public String getOrdenCode() {
+        return ordenCode;
     }
 
-    public void setOrderCode(String orderCode) {
-        this.orderCode = orderCode;
+    public void setOrdenCode(String ordenCode) {
+        this.ordenCode = ordenCode;
     }
 
     public String getAplicacionDate() {
