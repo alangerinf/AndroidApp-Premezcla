@@ -23,8 +23,8 @@ public class TancadaPresenter {
         this.interactor.requestAllData(id);
     }
 
-    public void showOrdenList(Orden orden){
-        view.showOrder(orden);
+    public void showTancadaData(Tancada tancada){
+        view.showOrder(tancada);
     }
     public void showError(String error){
         view.showError(error);

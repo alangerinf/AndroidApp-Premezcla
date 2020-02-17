@@ -27,8 +27,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Orden
+import com.ibao.premescla.models.Tancada
 import com.ibao.premescla.ui.main.views.MainActivityViewModel
-import com.ibao.premescla.ui.main.views.adapters.RViewAdapterListOrdenes
 import com.ibao.premescla.ui.orden.adapters.RViewAdapterListTancadas
 import com.ibao.premescla.utils.appContext
 import java.util.*
@@ -114,24 +114,25 @@ class ActivityTancada : AppCompatActivity(){
             finish()
             return
         }
-        mySwipeRefreshLayout = findViewById(R.id.aorden_swiperefresh)
+        mySwipeRefreshLayout = findViewById(R.id.atancada_swiperefresh)
         myRView = findViewById(R.id.recyclerView)
         ctx = this
 
         /*
         todo: cambiar la ui
          */
-        tViewnNOrden = findViewById(R.id.aorden_tViewnNOrden)
-        tViewFundo = findViewById(R.id.aorden_tViewFundo)
-        tViewEmpresa = findViewById(R.id.aorden_tViewEmpresa)
-        tViewNTankAll = findViewById(R.id.aorden_tViewNTankAll)
-        tViewDateTime = findViewById(R.id.aorden_tViewDateTime)
-
+        /*
+        tViewnNOrden = findViewById(R.id.atancada_tViewnNOrden)
+        tViewFundo = findViewById(R.id.atancada_tViewFundo)
+        tViewEmpresa = findViewById(R.id.atancada_tViewEmpresa)
+        tViewNTankAll = findViewById(R.id.atancada_tViewNTankAll)
+        tViewDateTime = findViewById(R.id.atancada_tViewDateTime)
+        */
         registerFilters()
 
         bundle = intent.extras!!
-        val orden :Orden = bundle!!.getSerializable("orden") as Orden
-        presenter = TancadaPresenter(this,orden.id)
+        val tancada :Tancada = bundle!!.getSerializable("tancada") as Tancada
+        presenter = TancadaPresenter(this,tancada.id)
 
         mySwipeRefreshLayout!!.setOnRefreshListener {
             requestData()
@@ -246,26 +247,28 @@ class ActivityTancada : AppCompatActivity(){
          return super.onOptionsItemSelected(item)
     }
 
+    val  TAG :String = ActivityTancada::class.java.simpleName
     @SuppressLint("SetTextI18n")
-    fun showOrder(orden: Orden) {
+    fun showOrder(tancada: Tancada) {
+
         mySwipeRefreshLayout!!.isRefreshing= false
-
-        tViewFundo!!.text = "" + orden.getCultivoName() + "\n" + orden.getVariedadName()
-        tViewEmpresa!!.text = "" + orden.getFundoName()
-        tViewDateTime!!.text = "" + orden.getAplicacionDate()
-        tViewnNOrden!!.text = "" + orden.getOrdenCode()
-        tViewNTankAll!!.text = "" + orden.getTancadasProgramadas()
-
-        val adapter = RViewAdapterListTancadas(this,orden.tancadas,orden.ordenesDetalle.size)
+/*
+        tViewFundo!!.text = "" + tancada.getCultivoName() + "\n" + tancada.getVariedadName()
+        tViewEmpresa!!.text = "" + tancada.getFundoName()
+        tViewDateTime!!.text = "" + tancada.getAplicacionDate()
+        tViewnNOrden!!.text = "" + tancada.getOrdenCode()
+        tViewNTankAll!!.text = "" + tancada.getTancadasProgramadas()
+*/
+        val adapter = RViewAdapterListProductoPesado(this,tancada.productosPesados)
         adapter.setOnClicListener {
-            /*
+/*
             val pos = myRView!!.getChildAdapterPosition(it)
-            val intent = Intent(this, ActivityOrden::class.java)
-            val orden = adapter.getOrden(pos)
-            intent.putExtra("orden", orden)
-            Log.d(TAG,"pos="+orden.ordenCode)
+            val intent = Intent(this, ActivityTancada::class.java)
+            val tancada = adapter.getTancada(pos)
+            intent.putExtra("orden", tancada)
+            Log.d(TAG,"pos="+tancada.id)
             startActivity(intent)
-        */
+*/
         }
         myRView!!.adapter = adapter
      }

@@ -30,6 +30,7 @@ import com.ibao.premescla.models.Orden
 import com.ibao.premescla.ui.main.views.MainActivityViewModel
 import com.ibao.premescla.ui.main.views.adapters.RViewAdapterListOrdenes
 import com.ibao.premescla.ui.orden.adapters.RViewAdapterListTancadas
+import com.ibao.premescla.ui.tancada.ActivityTancada
 import com.ibao.premescla.utils.appContext
 import java.util.*
 
@@ -242,6 +243,8 @@ class ActivityOrden : AppCompatActivity(){
          return super.onOptionsItemSelected(item)
     }
 
+    val TAG : String = ActivityOrden::class.java.simpleName
+
     @SuppressLint("SetTextI18n")
     fun showOrder(orden: Orden) {
         mySwipeRefreshLayout!!.isRefreshing= false
@@ -254,14 +257,14 @@ class ActivityOrden : AppCompatActivity(){
 
         val adapter = RViewAdapterListTancadas(this,orden.tancadas,orden.ordenesDetalle.size)
         adapter.setOnClicListener {
-            /*
+
             val pos = myRView!!.getChildAdapterPosition(it)
-            val intent = Intent(this, ActivityOrden::class.java)
-            val orden = adapter.getOrden(pos)
-            intent.putExtra("orden", orden)
-            Log.d(TAG,"pos="+orden.ordenCode)
+            val intent = Intent(this, ActivityTancada::class.java)
+            val tancada = adapter.getTancada(pos)
+            intent.putExtra("tancada", tancada)
+            Log.d(TAG,"pos="+tancada.id)
             startActivity(intent)
-        */
+
         }
         myRView!!.adapter = adapter
      }

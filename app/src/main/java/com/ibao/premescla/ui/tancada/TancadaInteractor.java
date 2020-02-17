@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.ibao.premescla.ConectionConfig;
 import com.ibao.premescla.app.AppController;
 import com.ibao.premescla.models.Orden;
-import com.ibao.premescla.ui.orden.OrdenPresenter;
+import com.ibao.premescla.models.Tancada;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +33,7 @@ public class TancadaInteractor {
 
     public void requestAllData(int id){
         StringRequest jsonObjReq = new StringRequest(Request.Method.GET,
-                ConectionConfig.GET_ORDER+"?id="+id,
+                ConectionConfig.GET_TANCADA+"?id="+id,
 
                 this::onResponse, error -> onError(error)
 
@@ -73,18 +73,18 @@ public class TancadaInteractor {
         try {
             JSONObject main = new JSONObject(response);
             JSONArray data = main.getJSONArray("data");
-            List<Orden> ordenList = new ArrayList<>();
+            List<Tancada> tancadaList = new ArrayList<>();
             for(int i=0;i< data.length();i++){
                 JSONObject jsonOrden = data.getJSONObject(i);
                 Log.i(TAG,"**");
                 Log.i(TAG,jsonOrden.toString());
-                Orden orden = new Gson().fromJson(jsonOrden.toString(),Orden.class);
-                String json =  new Gson().toJson(orden);
+                Tancada tancada = new Gson().fromJson(jsonOrden.toString(),Tancada.class);
+                String json =  new Gson().toJson(tancada);
                 Log.i(TAG,json);
                 Log.i(TAG,"**");
-                ordenList.add(orden);
+                tancadaList.add(tancada);
             }
-                presenter.showOrdenList(ordenList.get(0));
+                presenter.showTancadaData(tancadaList.get(0));
             Log.d(TAG, "done"+data.length());
         } catch (JSONException e) {
             presenter.showError(e.getMessage());
