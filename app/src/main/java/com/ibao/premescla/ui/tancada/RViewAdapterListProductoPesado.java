@@ -51,7 +51,7 @@ public class RViewAdapterListProductoPesado
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.tancada_item,null,false);
+                    .inflate(R.layout.ppesado_item,null,false);
 
         view.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -64,8 +64,9 @@ public class RViewAdapterListProductoPesado
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductoPesado  item = getProductoPesado(position);
+
+        holder.tancada_item_tViewPosition.setText(""+(position+1));
         /*
-        holder.tancada_item_tViewPosition.setText(""+item.getNroTancada());
         holder.tancada_item_tViewPPAll.setText(""+cantOD);
         holder.tancada_item_tViewPPCount.setText(""+item.getProductosPesados().size());
 */
@@ -88,25 +89,15 @@ public class RViewAdapterListProductoPesado
         return tancadaVOList.size();
     }
 
-    private Date getHourFromDate(String dateString){
-
-        Date date = null;
-        try {
-            date=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
-    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tancada_item_tViewPosition;
-        TextView tancada_item_tViewPPAll;
-        TextView tancada_item_tViewPPCount;
-        TextView fmain_item_nTankAll;
-        TextView fmain_item_dateTime;
+        //TextView tancada_item_tViewPPAll;
+        //TextView tancada_item_tViewPPCount;
+        //TextView fmain_item_nTankAll;
+        //TextView fmain_item_dateTime;
 
         FloatingActionButton tareo_item_fab;
 
@@ -114,8 +105,8 @@ public class RViewAdapterListProductoPesado
             super(itemView);
 
             tancada_item_tViewPosition = itemView.findViewById(R.id.tancada_item_tViewPosition);
-            tancada_item_tViewPPAll = itemView.findViewById(R.id.tancada_item_tViewPPAll);
-            tancada_item_tViewPPCount = itemView.findViewById(R.id.tancada_item_tViewPPCount);
+          //  tancada_item_tViewPPAll = itemView.findViewById(R.id.tancada_item_tViewPPAll);
+          //  tancada_item_tViewPPCount = itemView.findViewById(R.id.tancada_item_tViewPPCount);
 /*
             fmain_item_Fundo = itemView.findViewById(R.id.fmain_item_Fundo);
             fmain_item_Empresa = itemView.findViewById(R.id.fmain_item_Empresa);

@@ -23,6 +23,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.R
@@ -30,6 +31,7 @@ import com.ibao.premescla.models.Orden
 import com.ibao.premescla.models.Tancada
 import com.ibao.premescla.ui.main.views.MainActivityViewModel
 import com.ibao.premescla.ui.orden.adapters.RViewAdapterListTancadas
+import com.ibao.premescla.ui.productoPesado.ActivityProductoPesado
 import com.ibao.premescla.utils.appContext
 import java.util.*
 
@@ -51,7 +53,8 @@ class ActivityTancada : AppCompatActivity(){
     private var tViewEmpresa: TextView? = null
     private var tViewNTankAll: TextView? = null
     private var tViewDateTime: TextView? = null
-    
+
+    private  val btnNext: MaterialButton by lazy { findViewById<MaterialButton>(R.id.btnNext) }
 
     private val mBroadcastReceiver1: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -138,6 +141,15 @@ class ActivityTancada : AppCompatActivity(){
             requestData()
         }
         requestData()
+
+        btnNext.setOnClickListener {
+            val intent = Intent(this, ActivityProductoPesado::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun requestNextPPesado(){
+
     }
 
     private fun requestData(){
@@ -249,7 +261,7 @@ class ActivityTancada : AppCompatActivity(){
 
     val  TAG :String = ActivityTancada::class.java.simpleName
     @SuppressLint("SetTextI18n")
-    fun showOrder(tancada: Tancada) {
+    fun showTancada(tancada: Tancada) {
 
         mySwipeRefreshLayout!!.isRefreshing= false
 /*

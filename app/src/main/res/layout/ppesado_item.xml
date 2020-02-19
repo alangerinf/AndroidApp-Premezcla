@@ -26,10 +26,10 @@
             style="@style/tView_Tittle"
             android:layout_width="48sp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:text="0"
-            android:textSize="32sp"
             android:textAlignment="center"
+            android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,10 +38,10 @@
             android:id="@+id/linearLayout3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
@@ -59,10 +59,10 @@
                     android:id="@+id/tancada_item_tViewPPCount"
                     style="@style/tView_secondaryText"
                     android:layout_width="48sp"
-                    android:textAlignment="textEnd"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_min"
                     android:text="0"
+                    android:textAlignment="textEnd"
                     android:textStyle="bold" />
 
                 <TextView
@@ -95,6 +95,19 @@
             app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
             app:layout_constraintStart_toStartOf="@+id/linearLayout3"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Product Name"
+            style="@style/tView_secondaryText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+            app:layout_constraintStart_toEndOf="@+id/tancada_item_tViewPosition"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

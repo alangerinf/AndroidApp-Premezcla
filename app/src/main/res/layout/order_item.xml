@@ -175,15 +175,15 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fmain_item_fabCheck"
-        app:fabSize="mini"
-        android:clickable="false"
-        android:focusable="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/margin_starndar"
-        app:tint="@color/white"
+        android:clickable="false"
+        android:focusable="false"
+        app:fabSize="mini"
+        app:backgroundTint="@color/colorAccent"
         app:srcCompat="@drawable/ic_recipe"
-    />
+        app:tint="@color/white" />
 
 </androidx.cardview.widget.CardView>

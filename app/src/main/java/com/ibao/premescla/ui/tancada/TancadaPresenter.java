@@ -1,11 +1,6 @@
 package com.ibao.premescla.ui.tancada;
 
-import android.util.Log;
-
-import com.ibao.premescla.models.Orden;
 import com.ibao.premescla.models.Tancada;
-import com.ibao.premescla.ui.orden.ActivityOrden;
-import com.ibao.premescla.ui.orden.OrdenInteractor;
 
 public class TancadaPresenter {
 
@@ -24,7 +19,7 @@ public class TancadaPresenter {
     }
 
     public void showTancadaData(Tancada tancada){
-        view.showOrder(tancada);
+        view.showTancada(tancada);
     }
     public void showError(String error){
         view.showError(error);
