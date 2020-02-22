@@ -5,13 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 import com.ibao.premescla.R;
 import com.ibao.premescla.models.Tancada;
+import com.ibao.premescla.utils.PrintQR;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,15 +67,25 @@ public class RViewAdapterListTancadas
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Tancada  item = getTancada(position);
+        int cantPP = item.getProductosPesados().size();
         holder.tancada_item_tViewPosition.setText(""+item.getNroTancada());
         holder.tancada_item_tViewPPAll.setText(""+cantOD);
-        holder.tancada_item_tViewPPCount.setText(""+item.getProductosPesados().size());
+        holder.tancada_item_tViewPPCount.setText(""+cantPP);
 
+        holder.tancada_item_fabPrint.setOnClickListener(v->{
+           // Toast.makeText(ctx,"print",Toast.LENGTH_SHORT).show();
+            PrintQR.INSTANCE.print(new Gson().toJson(item));
+        });
+        if(cantOD==cantPP){
+            holder.tancada_item_fabPrint.show();
+        }else
+        {
+            holder.tancada_item_fabPrint.hide();
+        }
     }
 
     public void setOnClicListener(View.OnClickListener listener){
         this.onClickListener=listener;
-
     }
 
     @Override
@@ -104,10 +117,8 @@ public class RViewAdapterListTancadas
         TextView tancada_item_tViewPosition;
         TextView tancada_item_tViewPPAll;
         TextView tancada_item_tViewPPCount;
-        TextView fmain_item_nTankAll;
-        TextView fmain_item_dateTime;
 
-        FloatingActionButton tareo_item_fab;
+        FloatingActionButton tancada_item_fabPrint;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -115,12 +126,7 @@ public class RViewAdapterListTancadas
             tancada_item_tViewPosition = itemView.findViewById(R.id.tancada_item_tViewPosition);
             tancada_item_tViewPPAll = itemView.findViewById(R.id.tancada_item_tViewPPAll);
             tancada_item_tViewPPCount = itemView.findViewById(R.id.tancada_item_tViewPPCount);
-/*
-            fmain_item_Fundo = itemView.findViewById(R.id.fmain_item_Fundo);
-            fmain_item_Empresa = itemView.findViewById(R.id.fmain_item_Empresa);
-            fmain_item_nTankAll = itemView.findViewById(R.id.fmain_item_nTankAll);
-            fmain_item_dateTime = itemView.findViewById(R.id.fmain_item_dateTime);
-*/
+            tancada_item_fabPrint = itemView.findViewById(R.id.tancada_item_fabPrint);
         }
     }
 }

@@ -25,16 +25,27 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.R
+import com.ibao.premescla.models.ProductoPesado
 import com.ibao.premescla.ui.main.views.MainActivityViewModel
-import com.ibao.premescla.utils.appContext
 import com.ibao.premescla.utils.CommunicateViewModel
+import com.ibao.premescla.utils.Utilities
+import com.ibao.premescla.utils.appContext
+import java.lang.Exception
 import java.util.*
+import kotlin.math.absoluteValue
 
 class ActivityProductoPesado : AppCompatActivity(){
 
-
-    private var  tViewPesoReal : TextView?= null
-    private var btnConect: MaterialButton? = null
+    private val  tViewPesoReal by lazy{ findViewById(R.id.tViewPesoReal) as TextView}
+    private val  btnConect by lazy{ findViewById(R.id.btnConect) as MaterialButton}
+    private val  tViewStep by lazy{ findViewById(R.id.tViewStep) as TextView}
+    private val  tViewTotalStep by lazy{ findViewById(R.id.tViewTotalStep) as TextView}
+    private val  tViewPesoRequest by lazy{ findViewById(R.id.tViewPesoRequest) as TextView}
+    private val tViewProductName  by lazy{ findViewById(R.id.tViewProductName) as TextView}
+    private val tViewProductActive  by lazy{ findViewById(R.id.tViewProductActive) as TextView}
+    private val tViewMessageTolerance  by lazy{ findViewById(R.id.tViewMessageTolerance) as TextView}
+    private val btnNext  by lazy{ findViewById(R.id.btnNext) as MaterialButton}
+    private val btnBack  by lazy{ findViewById(R.id.btnBack) as MaterialButton}
 
     private var viewModel: MainActivityViewModel? = null
 
@@ -42,6 +53,16 @@ class ActivityProductoPesado : AppCompatActivity(){
 
     private var tViewDeviceSelected : TextView? =null
     private var ctx: Context? = null
+
+
+    private var presenter : ProductoPesadoPresenter? = null
+    private val bundle: Bundle  by lazy{ intent!!.extras!! }
+    val ppesado   by lazy{ bundle!!.getSerializable("ppesado") as ProductoPesado }
+    val pos   by lazy{ bundle!!.getInt("pos")  }
+    val all   by lazy{ bundle!!.getInt("all") }
+
+
+    var PPESADO_SAVE: ProductoPesado = ProductoPesado()
 
     private val mBroadcastReceiver1: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -66,16 +87,43 @@ class ActivityProductoPesado : AppCompatActivity(){
         }
     }
 
+
+    val TAG = ActivityProductoPesado::class.java.simpleName
+    fun convertPesoToGr(peso: Float, untis: String): Int {
+
+        var pesoResponse = peso
+        Log.d(TAG, "units=$untis")
+        when(untis){
+             "KGS"  -> pesoResponse *= 1000
+        }
+        return pesoResponse.toInt()
+    }
+
+    private fun refresh(){
+        PPESADO_SAVE.cantidadPesada= 0f
+        Log.d(TAG,"pesada ->"+PPESADO_SAVE.cantidadPesada)
+        btnNext.text= "Lecturar"
+        tViewStep.text = ""+pos
+        tViewTotalStep.text = ""+all
+        tViewPesoRequest.text = ""+convertPesoToGr(ppesado.dosis,ppesado.units)+"g"
+        tViewProductName.text = ""+ppesado.productName
+        tViewProductActive.text = ""+ppesado.productActive
+        tViewMessageTolerance.text =  getString(R.string.torelancia_messagge) +" "+ppesado.toleranceRate+"%"
+
+        btnNext.isEnabled = false
+        btnNext.alpha = 0.5f
+    }
+
     private val mBroadcastReceiver3: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val action = intent!!.action
             when (action) {
                 BluetoothDevice.ACTION_ACL_CONNECTED -> {
-                    Toast.makeText(ctx,"Conectado",Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(ctx,"Conectado",Toast.LENGTH_SHORT).show()
                     MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_bluetooth_connected_black_24dp));
                 }
                 BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
-                    Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
                     MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityProductoPesado, R.drawable.ic_bluetooth_black_24dp));
                 }
             }
@@ -93,7 +141,7 @@ class ActivityProductoPesado : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_producto_pesado)
-
+        presenter = ProductoPesadoPresenter(this)
         title="#1: 7D34G22"
 
         // Setup our ViewModel
@@ -117,10 +165,6 @@ class ActivityProductoPesado : AppCompatActivity(){
 
         ctx = this
 
-        tViewPesoReal = findViewById(R.id.tViewPesoReal)
-        btnConect = findViewById(R.id.btnConect)
-
-
         viewModelComunicate!!.connectionStatus.observe(this, Observer { connectionStatus: CommunicateViewModel.ConnectionStatus -> onConnectionStatus(connectionStatus) })
         //viewModelComunicate!!.deviceName.observe(this, Observer { name: String? -> title = getString(R.string.device_name_format, name) })
         viewModelComunicate!!.messages.observe(this, Observer { message: String? ->
@@ -129,12 +173,67 @@ class ActivityProductoPesado : AppCompatActivity(){
                 viewModelComunicate!!.setMessages("No hay Mensajes")
             }
              */
-            tViewPesoReal!!.text = message
+
+            val peso = convertPesoToGr(ppesado.dosis,ppesado.units)
+            var pesoReal = 0
+            try {
+                if(message!!.length>1 ){
+                    pesoReal= message!!.substring(0,message!!.length-1).toInt()
+                }
+            }catch (ex : Exception){
+
+            }
+
+            val dif = (peso*1.0)/ppesado.toleranceRate.absoluteValue
+
+            if( (peso - pesoReal).absoluteValue <= dif ){
+
+                btnNext.isEnabled = true
+                btnNext.alpha = 1f
+            }else{
+                btnNext.isEnabled = false
+                btnNext.alpha = 0.5f
+            }
+            //quiere decir q aun no se guarda y debe actualizar
+            if(PPESADO_SAVE.cantidadPesada==0f){
+                Log.d(TAG,"actualiza p real")
+                tViewPesoReal!!.text = message
+            }else// si ya se guardo el peso debe dejar de actualizar
+            {
+                Log.d(TAG,"actualiza p real")
+                btnNext.isEnabled = true
+                btnNext.alpha = 1f
+                btnNext.text= "Ok"
+            }
         })
 
+        btnNext.setOnClickListener {
+            if(btnNext.text=="Lecturar"){
 
+                PPESADO_SAVE.fechaPesada = Utilities.getDateTime()
+                PPESADO_SAVE.cantidadPesada = tViewPesoReal.text.toString().substring(0,tViewPesoReal.text.toString().length-1).toFloat()
+                presenter!!.requestPosPPesado(ppesado) //subiendo el resultado
+            }else
+            {//siguiente
+                presenter!!.requestNewPPesado(ppesado.idTancada)
+            }
+
+        }
+
+        btnBack.setOnClickListener {
+
+            refresh()
+        }
         registerFilters()
 
+
+
+        refresh()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
     // Called when the ViewModel updates us of our connectivity status
     private fun onConnectionStatus(connectionStatus: CommunicateViewModel.ConnectionStatus) {
@@ -255,7 +354,6 @@ class ActivityProductoPesado : AppCompatActivity(){
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean { // Handle action bar item clicks here. The action bar will
 
-
         val id = item.itemId
         if (id == R.id.action_bluetooth) {
             showDialog()
@@ -263,6 +361,25 @@ class ActivityProductoPesado : AppCompatActivity(){
          return super.onOptionsItemSelected(item)
     }
 
+    fun showError(error: String) {
+        Toast.makeText(this,error,Toast.LENGTH_LONG).show()
+        refresh()
+    }
+
+    fun goToNext(ppesado: ProductoPesado, actual: Int, all: Int) {
+        val intent : Intent = Intent(this,ActivityProductoPesado::class.java)
+        intent.putExtra("ppesado",ppesado)
+        intent.putExtra("pos",actual)
+        intent.putExtra("all",all)
+        startActivity(intent)
+        finish()
+    }
+
+    fun saveOk() {
+        Toast.makeText(this,"Guardado",Toast.LENGTH_LONG).show()
+        btnBack.alpha=0.5f
+        btnBack.isEnabled=false
+    }
 
 
     // A class to hold the data in the RecyclerView

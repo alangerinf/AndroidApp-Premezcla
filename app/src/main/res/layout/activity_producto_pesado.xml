@@ -20,19 +20,19 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tViewProductName"
             style="@style/tView_Tittle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Producto ABC"
             android:textColor="@color/white"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintBottom_toTopOf="@+id/tViewProductActive"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tViewProductActive"
             style="@style/tView_primaryText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,14 +45,14 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/tViewPesoRequest"
             style="@style/tView_Tittle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="50g"
             android:textColor="@color/white"
             android:textSize="64sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintBottom_toTopOf="@+id/tViewProductName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -61,10 +61,10 @@
             android:layout_height="8dp"
             android:layout_marginEnd="16dp"
             android:background="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
-            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            app:layout_constraintBottom_toTopOf="@+id/tViewProductActive"
+            app:layout_constraintEnd_toStartOf="@+id/tViewProductName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/tViewPesoRequest" />
 
         <View
             android:id="@+id/view"
@@ -72,10 +72,10 @@
             android:layout_height="8dp"
             android:layout_marginStart="16dp"
             android:background="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintBottom_toTopOf="@+id/tViewProductActive"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintStart_toEndOf="@+id/tViewProductName"
+            app:layout_constraintTop_toBottomOf="@+id/tViewPesoRequest" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnConect"
@@ -139,7 +139,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
-        android:text="Anterior"
+        android:text="Reiniciar"
         android:textAllCaps="false"
         android:textSize="@dimen/tViewPrimaryText"
         android:textColor="@color/colorPrimaryDark"
@@ -188,13 +188,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:alpha="0.7"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
+        app:layout_constraintBottom_toBottomOf="@+id/tViewMessageTolerance"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView9"
+        app:layout_constraintTop_toTopOf="@+id/tViewMessageTolerance"
         app:srcCompat="@drawable/ic_info_outline_black_24dp" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/tViewMessageTolerance"
         style="@style/tView_secondaryText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -202,7 +202,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="40dp"
         android:alpha="0.7"
-        android:text="El margen de error para este producto es del 15%"
+        android:text="@string/torelancia_messagge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/tViewPesoReal" />

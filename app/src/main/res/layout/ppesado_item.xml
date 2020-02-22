@@ -22,7 +22,7 @@
 
 
         <TextView
-            android:id="@+id/tancada_item_tViewPosition"
+            android:id="@+id/ppesado_item_tViewPosition"
             style="@style/tView_Tittle"
             android:layout_width="48sp"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                     android:src="@drawable/ic_equalizer_black_24dp" />
 
                 <TextView
-                    android:id="@+id/tancada_item_tViewPPCount"
+                    android:id="@+id/ppesado_item_tViewPeso"
                     style="@style/tView_secondaryText"
                     android:layout_width="48sp"
                     android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/ppesado_item_tViewProductName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -106,7 +106,7 @@
             style="@style/tView_secondaryText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
-            app:layout_constraintStart_toEndOf="@+id/tancada_item_tViewPosition"
+            app:layout_constraintStart_toEndOf="@+id/ppesado_item_tViewPosition"
             app:layout_constraintTop_toTopOf="parent" />
 
 

@@ -213,4 +213,20 @@ public class Orden implements Serializable {
     public void setTancadas(List<Tancada> tancadas) {
         this.tancadas = tancadas;
     }
+
+
+    public int getCantComplete(){
+        int tCompletas =0;
+        for(Tancada t : tancadas){
+            if(t.getProductosPesados().size()==ordenesDetalle.size()){
+                tCompletas++;
+            }
+        }
+        return tCompletas;
+    }
+
+    public boolean isComplete(){
+        return getCantComplete() == tancadasProgramadas;
+    }
+
 }

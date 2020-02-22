@@ -17,6 +17,13 @@ public class ProductoPesado  implements Serializable {
     private float cantidadPesada;
     private String fechaPesada;
 
+    private float dosis;
+    private String units;
+    private float toleranceRate;
+    private String productName;
+    private String productActive;
+    private String productType;
+
     public ProductoPesado() {
 
         this.id = 0;
@@ -25,6 +32,61 @@ public class ProductoPesado  implements Serializable {
         this.cantidadPesada = 0;
         this.fechaPesada = "";
 
+        this.dosis = 0;
+        this.toleranceRate = 0;
+        this.units = "";
+        this.productName = "";
+        this.productActive = "";
+        this.productType = "";
+
+    }
+
+    public float getDosis() {
+        return dosis;
+    }
+
+    public void setDosis(float dosis) {
+        this.dosis = dosis;
+    }
+
+    public String getUnits() {
+        return units;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
+    }
+
+    public float getToleranceRate() {
+        return toleranceRate;
+    }
+
+    public void setToleranceRate(float toleranceRate) {
+        this.toleranceRate = toleranceRate;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductActive() {
+        return productActive;
+    }
+
+    public void setProductActive(String productActive) {
+        this.productActive = productActive;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 
     public int getId() {

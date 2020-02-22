@@ -1,6 +1,5 @@
-package com.ibao.premescla.ui.tancada;
+package com.ibao.premescla.ui.productoPesado;
 
-import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -11,9 +10,7 @@ import com.google.gson.Gson;
 import com.ibao.premescla.ConectionConfig;
 import com.ibao.premescla.app.AppController;
 import com.ibao.premescla.models.ProductoPesado;
-import com.ibao.premescla.models.Tancada;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,26 +19,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TancadaInteractor {
+public class ProductoPesadoInteractor {
 
-    private String TAG = TancadaInteractor.class.getSimpleName();
+    private String TAG = ProductoPesadoInteractor.class.getSimpleName();
 
-    private TancadaPresenter presenter;
+    private ProductoPesadoPresenter presenter;
 
-    public TancadaInteractor(TancadaPresenter presenter) {
+    public ProductoPesadoInteractor(ProductoPesadoPresenter presenter) {
         this.presenter = presenter;
     }
 
-    public void requestAllData(int id){
-        StringRequest jsonObjReq = new StringRequest(Request.Method.GET,
-                ConectionConfig.GET_TANCADA+"?id="+id,
-                this::onResponseAllData, error -> onError(error)
+    public void requestPostProductoPesado(ProductoPesado productoPesado){
+        Log.d(TAG,"requestPostProductoPesado("+productoPesado.getFechaPesada()+")");
+        StringRequest jsonObjReq = new StringRequest(Request.Method.POST,
+                ConectionConfig.POST_PPESADO,
+                this::onResponsePostPPesado, error -> onError(error)
         ){
             @Override
             protected Map<String,String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
+                String data = new Gson().toJson(productoPesado);
+                Log.d(TAG,"data = "+data);
+
+                 params.put("data",data);
                 return params;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<String, String>();
@@ -49,8 +52,8 @@ public class TancadaInteractor {
                 return headers;
             }
         };
-
         AppController.getInstance().addToRequestQueue(jsonObjReq);
+
     }
 
     public void requestNewPPesado(int id){
@@ -84,28 +87,24 @@ public class TancadaInteractor {
         error.printStackTrace();
     }
 
-    private void onResponseAllData(String response) {
+    private void onResponsePostPPesado(String response) {
         Log.d(TAG, "resp:" + response);
         try {
             JSONObject main = new JSONObject(response);
-            JSONArray data = main.getJSONArray("data");
-            List<Tancada> tancadaList = new ArrayList<>();
-            for(int i=0;i< data.length();i++){
-                JSONObject jsonOrden = data.getJSONObject(i);
-                Log.i(TAG,"**");
-                Log.i(TAG,jsonOrden.toString());
-                Tancada tancada = new Gson().fromJson(jsonOrden.toString(),Tancada.class);
-                String json =  new Gson().toJson(tancada);
-                Log.i(TAG,json);
-                Log.i(TAG,"**");
-                tancadaList.add(tancada);
+            boolean success = main.getInt("success")>0;
+
+            if(success){
+                presenter.saveOk();
+            }else {
+                presenter.showError("No se pudo guardar");
             }
-                presenter.showTancadaData(tancadaList.get(0));
-            Log.d(TAG, "done"+data.length());
+
         } catch (JSONException e) {
-            presenter.showError(e.getMessage());
+            Log.e(TAG,"jsonError: "+e.getMessage());
+            presenter.showError("jsonError: "+e.getMessage());
         }
     }
+
     private void onResponseGetNextPPesado(String response) {
         Log.d(TAG, "resp:" + response);
         try {
@@ -135,4 +134,6 @@ public class TancadaInteractor {
             presenter.showError("jsonError: "+e.getMessage());
         }
     }
+
+
 }

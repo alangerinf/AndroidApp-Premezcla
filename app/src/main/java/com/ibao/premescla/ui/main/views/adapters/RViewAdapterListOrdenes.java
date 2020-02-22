@@ -64,7 +64,7 @@ public class RViewAdapterListOrdenes
         holder.fmain_item_dateTime.setText(""+item.getAplicacionDate());
         holder.fmain_item_nOrden.setText(""+item.getOrdenCode());
         holder.fmain_item_nTankAll.setText(""+item.getTancadasProgramadas());
-
+        holder.fmain_item_nTankComplete.setText(""+item.getCantComplete());
     }
 
     public void setOnClicListener(View.OnClickListener listener){
@@ -84,16 +84,7 @@ public class RViewAdapterListOrdenes
         return tareoDetalleVOList.size();
     }
 
-    private Date getHourFromDate(String dateString){
 
-        Date date = null;
-        try {
-            date=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
-    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -102,6 +93,7 @@ public class RViewAdapterListOrdenes
         TextView fmain_item_Fundo;
         TextView fmain_item_Empresa;
         TextView fmain_item_nTankAll;
+        TextView fmain_item_nTankComplete;
         TextView fmain_item_dateTime;
 
         FloatingActionButton tareo_item_fab;
@@ -111,6 +103,7 @@ public class RViewAdapterListOrdenes
             fmain_item_nOrden = itemView.findViewById(R.id.fmain_item_nOrden);
             fmain_item_Fundo = itemView.findViewById(R.id.fmain_item_Fundo);
             fmain_item_Empresa = itemView.findViewById(R.id.fmain_item_Empresa);
+            fmain_item_nTankComplete = itemView.findViewById(R.id.fmain_item_nTankComplete);
             fmain_item_nTankAll = itemView.findViewById(R.id.fmain_item_nTankAll);
             fmain_item_dateTime = itemView.findViewById(R.id.fmain_item_dateTime);
 

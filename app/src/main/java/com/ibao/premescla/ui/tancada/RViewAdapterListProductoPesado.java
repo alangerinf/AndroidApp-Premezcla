@@ -65,11 +65,9 @@ public class RViewAdapterListProductoPesado
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductoPesado  item = getProductoPesado(position);
 
-        holder.tancada_item_tViewPosition.setText(""+(position+1));
-        /*
-        holder.tancada_item_tViewPPAll.setText(""+cantOD);
-        holder.tancada_item_tViewPPCount.setText(""+item.getProductosPesados().size());
-*/
+        holder.ppesado_item_tViewPosition.setText(""+(position+1));
+        holder.ppesado_item_tViewPeso.setText(""+item.getCantidadPesada());
+        holder.ppesado_item_tViewProductName.setText(""+item.getProductName());
     }
 
     public void setOnClicListener(View.OnClickListener listener){
@@ -93,7 +91,9 @@ public class RViewAdapterListProductoPesado
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tancada_item_tViewPosition;
+        TextView ppesado_item_tViewPosition;
+        TextView ppesado_item_tViewPeso;
+        TextView ppesado_item_tViewProductName;
         //TextView tancada_item_tViewPPAll;
         //TextView tancada_item_tViewPPCount;
         //TextView fmain_item_nTankAll;
@@ -104,7 +104,9 @@ public class RViewAdapterListProductoPesado
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tancada_item_tViewPosition = itemView.findViewById(R.id.tancada_item_tViewPosition);
+            ppesado_item_tViewPosition = itemView.findViewById(R.id.ppesado_item_tViewPosition);
+            ppesado_item_tViewPeso = itemView.findViewById(R.id.ppesado_item_tViewPeso);
+            ppesado_item_tViewProductName = itemView.findViewById(R.id.ppesado_item_tViewProductName);
           //  tancada_item_tViewPPAll = itemView.findViewById(R.id.tancada_item_tViewPPAll);
           //  tancada_item_tViewPPCount = itemView.findViewById(R.id.tancada_item_tViewPPCount);
 /*

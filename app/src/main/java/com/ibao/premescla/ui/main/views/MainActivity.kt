@@ -77,11 +77,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val action = intent!!.action
             when (action) {
                 BluetoothDevice.ACTION_ACL_CONNECTED -> {
-                    Toast.makeText(ctx,"Conectado",Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(ctx,"Conectado",Toast.LENGTH_SHORT).show()
                     MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_connected_black_24dp));
                 }
                 BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
-                    Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
                     MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_black_24dp));
                 }
             }

@@ -25,14 +25,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.Gson
 import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.R
-import com.ibao.premescla.models.Orden
+import com.ibao.premescla.models.ProductoPesado
 import com.ibao.premescla.models.Tancada
 import com.ibao.premescla.ui.main.views.MainActivityViewModel
-import com.ibao.premescla.ui.orden.adapters.RViewAdapterListTancadas
 import com.ibao.premescla.ui.productoPesado.ActivityProductoPesado
-import com.ibao.premescla.utils.appContext
+import com.ibao.premescla.utils.*
 import java.util.*
 
 class ActivityTancada : AppCompatActivity(){
@@ -48,13 +48,14 @@ class ActivityTancada : AppCompatActivity(){
     /*
             todo: cambiar la ui
     */
-    private var tViewnNOrden: TextView? = null
-    private var tViewFundo: TextView? = null
-    private var tViewEmpresa: TextView? = null
-    private var tViewNTankAll: TextView? = null
-    private var tViewDateTime: TextView? = null
+    private val atancada_tViewNPPesadoAll: TextView by lazy { findViewById<TextView>(R.id.atancada_tViewNPPesadoAll) }
+    private val atancada_tViewNPPesado: TextView by lazy { findViewById<TextView>(R.id.atancada_tViewNPPesado) }
 
     private  val btnNext: MaterialButton by lazy { findViewById<MaterialButton>(R.id.btnNext) }
+
+    private val bundle: Bundle  by lazy{ intent!!.extras!! }
+    val tancada   by lazy{ bundle!!.getSerializable("tancada") as Tancada }
+    val oDetalleSize   by lazy{ bundle!!.getInt("oDetalleSize") }
 
     private val mBroadcastReceiver1: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -84,11 +85,11 @@ class ActivityTancada : AppCompatActivity(){
             val action = intent!!.action
             when (action) {
                 BluetoothDevice.ACTION_ACL_CONNECTED -> {
-                    Toast.makeText(ctx,"Conectado",Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(ctx,"Conectado",Toast.LENGTH_SHORT).show()
                     MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityTancada, R.drawable.ic_bluetooth_connected_black_24dp));
                 }
                 BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
-                    Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
                     MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityTancada, R.drawable.ic_bluetooth_black_24dp));
                 }
             }
@@ -102,10 +103,10 @@ class ActivityTancada : AppCompatActivity(){
         unregisterReceiver(mBroadcastReceiver3)
     }
 
-    lateinit var bundle : Bundle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        title= "Tancada"
         setContentView(R.layout.activity_tancada)
 
         // Setup our ViewModel
@@ -133,8 +134,6 @@ class ActivityTancada : AppCompatActivity(){
         */
         registerFilters()
 
-        bundle = intent.extras!!
-        val tancada :Tancada = bundle!!.getSerializable("tancada") as Tancada
         presenter = TancadaPresenter(this,tancada.id)
 
         mySwipeRefreshLayout!!.setOnRefreshListener {
@@ -143,18 +142,34 @@ class ActivityTancada : AppCompatActivity(){
         requestData()
 
         btnNext.setOnClickListener {
-            val intent = Intent(this, ActivityProductoPesado::class.java)
-            startActivity(intent)
+            if(oDetalleSize == tancada.productosPesados.size) {
+                //Toast.makeText(this,"imprimir",Toast.LENGTH_SHORT).show()
+                PrintQR.print(Gson().toJson(tancada))
+            }else{
+                requestNextPPesado()
+            }
         }
     }
 
-    private fun requestNextPPesado(){
+    override fun onStart() {
+        super.onStart()
+        requestData()
+    }
 
+    private fun requestNextPPesado(){
+        presenter!!.requestNewPPesado(tancada.id)
     }
 
     private fun requestData(){
         presenter!!.requestAllData()
         mySwipeRefreshLayout!!.isRefreshing = true
+
+
+        if(oDetalleSize == tancada.productosPesados.size) {
+            btnNext.text = "Imprimir"
+        }else{
+            btnNext.text = "Siguiente Pesaje"
+        }
     }
 
     private fun showDialog() {
@@ -259,34 +274,35 @@ class ActivityTancada : AppCompatActivity(){
          return super.onOptionsItemSelected(item)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     val  TAG :String = ActivityTancada::class.java.simpleName
     @SuppressLint("SetTextI18n")
     fun showTancada(tancada: Tancada) {
-
+        atancada_tViewNPPesadoAll.text= ""+oDetalleSize
+        atancada_tViewNPPesado.text = ""+tancada.productosPesados.size
         mySwipeRefreshLayout!!.isRefreshing= false
-/*
-        tViewFundo!!.text = "" + tancada.getCultivoName() + "\n" + tancada.getVariedadName()
-        tViewEmpresa!!.text = "" + tancada.getFundoName()
-        tViewDateTime!!.text = "" + tancada.getAplicacionDate()
-        tViewnNOrden!!.text = "" + tancada.getOrdenCode()
-        tViewNTankAll!!.text = "" + tancada.getTancadasProgramadas()
-*/
+
         val adapter = RViewAdapterListProductoPesado(this,tancada.productosPesados)
         adapter.setOnClicListener {
-/*
-            val pos = myRView!!.getChildAdapterPosition(it)
-            val intent = Intent(this, ActivityTancada::class.java)
-            val tancada = adapter.getTancada(pos)
-            intent.putExtra("orden", tancada)
-            Log.d(TAG,"pos="+tancada.id)
-            startActivity(intent)
-*/
+
         }
         myRView!!.adapter = adapter
      }
 
     fun showError(error: String) {
         Toast.makeText(this,error,Toast.LENGTH_LONG).show()
+    }
+
+    fun goToActivityPPesado(ppesado: ProductoPesado, actual: Int, all: Int) {
+        val intent : Intent = Intent(this@ActivityTancada,ActivityProductoPesado::class.java)
+        intent.putExtra("ppesado",ppesado)
+        intent.putExtra("pos",actual)
+        intent.putExtra("all",all)
+        startActivity(intent)
     }
 
 
@@ -346,4 +362,8 @@ class ActivityTancada : AppCompatActivity(){
             notifyDataSetChanged()
         }
     }
+
+
+
 }
+
