@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.orden;
+package com.ibao.premescla.ui.mod1.main.interactor;
 
 import android.util.Log;
 
@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.ibao.premescla.ConectionConfig;
 import com.ibao.premescla.app.AppController;
 import com.ibao.premescla.models.Orden;
-import com.ibao.premescla.ui.main.presenters.MainPresenter;
+import com.ibao.premescla.ui.mod1.main.presenters.MainPresenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,20 +21,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrdenInteractor {
+public class MainInteractor {
 
-    private String TAG = OrdenInteractor.class.getSimpleName();
+    private String TAG = MainInteractor.class.getSimpleName();
 
-    private OrdenPresenter presenter;
+    private MainPresenter presenter;
 
-    public OrdenInteractor(OrdenPresenter presenter) {
+    public MainInteractor(MainPresenter presenter) {
         this.presenter = presenter;
     }
 
-    public void requestAllData(int id){
+    public void requestAllData(){
         Log.d(TAG,"requestAllData()"+ConectionConfig.GET_ORDER);
         StringRequest jsonObjReq = new StringRequest(Request.Method.GET,
-                ConectionConfig.GET_ORDER+"?id="+id,
+                ConectionConfig.GET_ORDER,
 
                 this::onResponse, error -> onError(error)
 
@@ -85,10 +85,11 @@ public class OrdenInteractor {
                 Log.i(TAG,"**");
                 ordenList.add(orden);
             }
-                presenter.showOrdenList(ordenList.get(0));
+                presenter.showOrdenList(ordenList);
             Log.d(TAG, "done"+data.length());
         } catch (JSONException e) {
             presenter.showError(e.getMessage());
         }
+
     }
 }

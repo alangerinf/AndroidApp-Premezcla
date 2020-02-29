@@ -1,6 +1,5 @@
-package com.ibao.premescla.ui.tancada;
+package com.ibao.premescla.ui.mod1.tancada;
 
-import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;

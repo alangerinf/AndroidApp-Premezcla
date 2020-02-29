@@ -1,13 +1,13 @@
-package com.ibao.premescla.ui.orden.adapters;
+package com.ibao.premescla.ui.mod1.orden.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,7 +28,7 @@ public class RViewAdapterListTancadas
         implements View.OnClickListener{
 
     private List<Tancada> tancadaVOList;
-    private int cantOD;
+    private int CANT_OD;
 
     private Context ctx;
 
@@ -36,12 +36,12 @@ public class RViewAdapterListTancadas
 
     private String TAG = RViewAdapterListTancadas.class.getSimpleName();
 
-    public RViewAdapterListTancadas(Context ctx, List<Tancada> list,int cantOD) {
+    public RViewAdapterListTancadas(Context ctx, List<Tancada> list,int CANT_OD) {
 
         this.tancadaVOList = new ArrayList<>();
                 this.tancadaVOList.addAll(list);
         this.ctx = ctx;
-        this.cantOD = cantOD;
+        this.CANT_OD = CANT_OD;
 
     }
 
@@ -64,23 +64,47 @@ public class RViewAdapterListTancadas
         return new ViewHolder(view);
     }
 
+    int getLastPositioinComplete(){
+        int pos = 0;
+        for(int i = 0; i< tancadaVOList.size();i++){
+            int cantPP = tancadaVOList.get(i).getProductosPesados().size();
+            if(cantPP == CANT_OD){
+                pos = i;
+            }
+
+        }
+        return pos;
+    }
+
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Tancada  item = getTancada(position);
+
         int cantPP = item.getProductosPesados().size();
         holder.tancada_item_tViewPosition.setText(""+item.getNroTancada());
-        holder.tancada_item_tViewPPAll.setText(""+cantOD);
+        holder.tancada_item_tViewPPAll.setText(""+ CANT_OD);
         holder.tancada_item_tViewPPCount.setText(""+cantPP);
-
+        holder.root.setAlpha(1f);
+        holder.root.setEnabled(true);
         holder.tancada_item_fabPrint.setOnClickListener(v->{
            // Toast.makeText(ctx,"print",Toast.LENGTH_SHORT).show();
             PrintQR.INSTANCE.print(new Gson().toJson(item));
         });
-        if(cantOD==cantPP){
+        if(CANT_OD == cantPP){
             holder.tancada_item_fabPrint.show();
         }else
         {
             holder.tancada_item_fabPrint.hide();
+
+            if(position > getLastPositioinComplete()+1){
+                holder.root.setAlpha(0.5f);
+                holder.root.setEnabled(false);
+            }else {
+                holder.root.setAlpha(1f);
+                holder.root.setEnabled(true);
+            }
+
         }
     }
 
@@ -114,6 +138,8 @@ public class RViewAdapterListTancadas
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+
+        CardView root;
         TextView tancada_item_tViewPosition;
         TextView tancada_item_tViewPPAll;
         TextView tancada_item_tViewPPCount;
@@ -122,7 +148,7 @@ public class RViewAdapterListTancadas
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            root = itemView.findViewById(R.id.root);
             tancada_item_tViewPosition = itemView.findViewById(R.id.tancada_item_tViewPosition);
             tancada_item_tViewPPAll = itemView.findViewById(R.id.tancada_item_tViewPPAll);
             tancada_item_tViewPPCount = itemView.findViewById(R.id.tancada_item_tViewPPCount);

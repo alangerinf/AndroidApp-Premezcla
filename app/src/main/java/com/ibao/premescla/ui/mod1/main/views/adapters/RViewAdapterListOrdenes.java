@@ -1,19 +1,17 @@
-package com.ibao.premescla.ui.main.views.adapters;
+package com.ibao.premescla.ui.mod1.main.views.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ibao.premescla.R;
 import com.ibao.premescla.models.Orden;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -65,6 +63,15 @@ public class RViewAdapterListOrdenes
         holder.fmain_item_nOrden.setText(""+item.getOrdenCode());
         holder.fmain_item_nTankAll.setText(""+item.getTancadasProgramadas());
         holder.fmain_item_nTankComplete.setText(""+item.getCantComplete());
+
+        if(item.getCantComplete() == item.getTancadasProgramadas()){
+            holder.fmain_item_finish.setVisibility(View.VISIBLE);
+            holder.fmain_item_onprocess.setVisibility(View.GONE);
+        }else {
+            holder.fmain_item_finish.setVisibility(View.GONE);
+            holder.fmain_item_onprocess.setVisibility(View.VISIBLE);
+        }
+
     }
 
     public void setOnClicListener(View.OnClickListener listener){
@@ -95,11 +102,15 @@ public class RViewAdapterListOrdenes
         TextView fmain_item_nTankAll;
         TextView fmain_item_nTankComplete;
         TextView fmain_item_dateTime;
+        LinearLayout fmain_item_finish;
+        LinearLayout fmain_item_onprocess;
 
         FloatingActionButton tareo_item_fab;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            fmain_item_onprocess = itemView.findViewById(R.id.fmain_item_onprocess);
+            fmain_item_finish = itemView.findViewById(R.id.fmain_item_finish);
             fmain_item_nOrden = itemView.findViewById(R.id.fmain_item_nOrden);
             fmain_item_Fundo = itemView.findViewById(R.id.fmain_item_Fundo);
             fmain_item_Empresa = itemView.findViewById(R.id.fmain_item_Empresa);

@@ -9,10 +9,6 @@
             android:icon="@drawable/ic_list_black_24dp"
             android:title="@string/status_all_s" />
         <item
-            android:id="@+id/nav_pendientes"
-            android:icon="@drawable/ic_pendiente"
-            android:title="@string/status_pendientes_s" />
-        <item
             android:id="@+id/nav_proceso"
             android:icon="@drawable/ic_on_proccess"
             android:title="@string/status_onproceso_s" />

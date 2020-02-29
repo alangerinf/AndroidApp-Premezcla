@@ -65,23 +65,55 @@
                 android:gravity="left"
                 tools:ignore="UseCompoundDrawables">
 
+            <LinearLayout
+                android:id="@+id/fmain_item_onprocess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal"
+                >
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_pendiente"
-                    android:tint="@color/colorDisable"
+                    android:src="@drawable/ic_on_proccess"
+                    app:tint="@color/colorAccent"
                     />
 
                 <TextView
-                    android:id="@+id/fmain_item_status"
                     android:layout_marginStart="@dimen/margin_min"
                     style="@style/tView_secondaryText"
-                    android:textColor="@color/colorDisable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/status_pendiente"
+                    android:text="@string/status_onproceso"
+                    android:textColor="@color/colorAccent"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/fmain_item_finish"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_all"
+                    app:tint="@color/red_pastel"
                     />
 
+                <TextView
+                    android:layout_marginStart="@dimen/margin_min"
+                    style="@style/tView_secondaryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_finalizada"
+                    android:textColor="@color/red_pastel"
+                    />
+            </LinearLayout>
 
             </LinearLayout>
 
@@ -180,6 +212,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/margin_starndar"
         android:clickable="false"
+        android:visibility="invisible"
         android:focusable="false"
         app:fabSize="mini"
         app:backgroundTint="@color/colorAccent"

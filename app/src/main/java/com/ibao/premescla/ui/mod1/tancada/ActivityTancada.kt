@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.tancada
+package com.ibao.premescla.ui.mod1.tancada
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -30,8 +30,8 @@ import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.R
 import com.ibao.premescla.models.ProductoPesado
 import com.ibao.premescla.models.Tancada
-import com.ibao.premescla.ui.main.views.MainActivityViewModel
-import com.ibao.premescla.ui.productoPesado.ActivityProductoPesado
+import com.ibao.premescla.ui.mod1.main.views.MainActivityViewModel
+import com.ibao.premescla.ui.mod1.productoPesado.ActivityProductoPesado
 import com.ibao.premescla.utils.*
 import java.util.*
 
@@ -53,9 +53,9 @@ class ActivityTancada : AppCompatActivity(){
 
     private  val btnNext: MaterialButton by lazy { findViewById<MaterialButton>(R.id.btnNext) }
 
-    private val bundle: Bundle  by lazy{ intent!!.extras!! }
-    val tancada   by lazy{ bundle!!.getSerializable("tancada") as Tancada }
-    val oDetalleSize   by lazy{ bundle!!.getInt("oDetalleSize") }
+    lateinit var bundle: Bundle  //by lazy{ intent!!.extras!! }
+    lateinit var tancada:Tancada  // by lazy{ bundle!!.getSerializable("tancada") as Tancada }
+    var oDetalleSize: Int = 0 // by lazy{ bundle!!.getInt("oDetalleSize") }
 
     private val mBroadcastReceiver1: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -122,6 +122,9 @@ class ActivityTancada : AppCompatActivity(){
         myRView = findViewById(R.id.recyclerView)
         ctx = this
 
+        bundle= intent!!.extras!!
+        tancada= bundle!!.getSerializable("tancada") as Tancada
+        oDetalleSize= bundle!!.getInt("oDetalleSize")
         /*
         todo: cambiar la ui
          */
@@ -163,7 +166,6 @@ class ActivityTancada : AppCompatActivity(){
     private fun requestData(){
         presenter!!.requestAllData()
         mySwipeRefreshLayout!!.isRefreshing = true
-
 
         if(oDetalleSize == tancada.productosPesados.size) {
             btnNext.text = "Imprimir"
@@ -230,7 +232,7 @@ class ActivityTancada : AppCompatActivity(){
 
                 if(!isConnected(BluetoothManager.getInstance())){
 
-                    Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
                     MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityTancada, R.drawable.ic_bluetooth_black_24dp));
 
                 }else{
@@ -281,16 +283,23 @@ class ActivityTancada : AppCompatActivity(){
 
     val  TAG :String = ActivityTancada::class.java.simpleName
     @SuppressLint("SetTextI18n")
-    fun showTancada(tancada: Tancada) {
+    fun showTancada(_tancada: Tancada) {
+        tancada = _tancada;
         atancada_tViewNPPesadoAll.text= ""+oDetalleSize
-        atancada_tViewNPPesado.text = ""+tancada.productosPesados.size
+        atancada_tViewNPPesado.text = ""+_tancada.productosPesados.size
         mySwipeRefreshLayout!!.isRefreshing= false
 
-        val adapter = RViewAdapterListProductoPesado(this,tancada.productosPesados)
+        val adapter = RViewAdapterListProductoPesado(this,_tancada.productosPesados)
         adapter.setOnClicListener {
 
         }
         myRView!!.adapter = adapter
+
+        if(oDetalleSize == _tancada.productosPesados.size) {
+            btnNext.text = "Imprimir"
+        }else{
+            btnNext.text = "Siguiente Pesaje"
+        }
      }
 
     fun showError(error: String) {

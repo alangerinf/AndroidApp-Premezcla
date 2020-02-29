@@ -1,11 +1,6 @@
-package com.ibao.premescla.ui.productoPesado;
-
-import android.os.Handler;
+package com.ibao.premescla.ui.mod1.productoPesado;
 
 import com.ibao.premescla.models.ProductoPesado;
-import com.ibao.premescla.models.Tancada;
-import com.ibao.premescla.ui.tancada.ActivityTancada;
-import com.ibao.premescla.ui.tancada.TancadaInteractor;
 
 
 public class ProductoPesadoPresenter {

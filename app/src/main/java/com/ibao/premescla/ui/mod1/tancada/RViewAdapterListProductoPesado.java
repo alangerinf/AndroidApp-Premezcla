@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.tancada;
+package com.ibao.premescla.ui.mod1.tancada;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,12 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ibao.premescla.R;
 import com.ibao.premescla.models.ProductoPesado;
-import com.ibao.premescla.models.Tancada;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 

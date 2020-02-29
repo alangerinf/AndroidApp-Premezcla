@@ -1,6 +1,5 @@
-package com.ibao.premescla.ui.orden
+package com.ibao.premescla.ui.mod1.main.views
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -17,41 +16,38 @@ import android.view.*
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import com.harrysoft.androidbluetoothserial.BluetoothManager
+import com.ibao.premescla.BuildConfig
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Orden
-import com.ibao.premescla.ui.main.views.MainActivityViewModel
-import com.ibao.premescla.ui.orden.adapters.RViewAdapterListTancadas
-import com.ibao.premescla.ui.tancada.ActivityTancada
+import com.ibao.premescla.ui.mod1.main.presenters.MainPresenter
+import com.ibao.premescla.ui.mod1.main.views.adapters.RViewAdapterListOrdenes
+import com.ibao.premescla.ui.mod1.orden.ActivityOrden
 import com.ibao.premescla.utils.appContext
 import java.util.*
 
-class ActivityOrden : AppCompatActivity(){
 
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private var presenter: MainPresenter? = null
     private var viewModel: MainActivityViewModel? = null
 
-    private var ctx: Context? = null
-    private var presenter : OrdenPresenter? = null
-
-
-    private var   mySwipeRefreshLayout: SwipeRefreshLayout?= null
+    private var mySwipeRefreshLayout: SwipeRefreshLayout?= null
     private var myRView: RecyclerView?= null
 
-    private var tViewnNOrden: TextView? = null
-    private var tViewFundo: TextView? = null
-    private var tViewEmpresa: TextView? = null
-    private var tViewNTankAll: TextView? = null
-    private var tViewNTankComplete: TextView? = null
-    private var tViewDateTime: TextView? = null
-    
+    private var ctx: Context? = null
 
     private val mBroadcastReceiver1: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -60,16 +56,16 @@ class ActivityOrden : AppCompatActivity(){
                 val state: Int = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
                 when (state) {
                     BluetoothAdapter.STATE_OFF -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityOrden, R.drawable.ic_bluetooth_disabled_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_disabled_black_24dp));
                     }
                     BluetoothAdapter.STATE_TURNING_OFF -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityOrden, R.drawable.ic_settings_bluetooth_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_settings_bluetooth_black_24dp));
                     }
                     BluetoothAdapter.STATE_ON -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityOrden, R.drawable.ic_bluetooth_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_black_24dp));
                     }
                     BluetoothAdapter.STATE_TURNING_ON -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityOrden, R.drawable.ic_settings_bluetooth_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_settings_bluetooth_black_24dp));
                     }
                 }
             }
@@ -81,12 +77,12 @@ class ActivityOrden : AppCompatActivity(){
             val action = intent!!.action
             when (action) {
                 BluetoothDevice.ACTION_ACL_CONNECTED -> {
-                    //Toast.makeText(ctx,"Conectado",Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityOrden, R.drawable.ic_bluetooth_connected_black_24dp));
+                    // Toast.makeText(ctx,"Conectado",Toast.LENGTH_SHORT).show()
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_connected_black_24dp));
                 }
                 BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
-                    //Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityOrden, R.drawable.ic_bluetooth_black_24dp));
+                    // Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_black_24dp));
                 }
             }
         }
@@ -99,12 +95,11 @@ class ActivityOrden : AppCompatActivity(){
         unregisterReceiver(mBroadcastReceiver3)
     }
 
-    lateinit var bundle : Bundle
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_order)
-        title = "Orden"
+        setContentView(R.layout.activity_main)
+
+        presenter = MainPresenter(this)
 
         // Setup our ViewModel
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
@@ -115,25 +110,29 @@ class ActivityOrden : AppCompatActivity(){
             finish()
             return
         }
-        mySwipeRefreshLayout = findViewById(R.id.aorden_swiperefresh)
-        myRView = findViewById(R.id.recyclerView)
+        
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        title = getString(R.string.tittle_all_orders)
         ctx = this
+        mySwipeRefreshLayout = findViewById(R.id.main_swiperefresh)
+        myRView = findViewById(R.id.fmain_rView)
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        val toggle = ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
+        navigationView.setNavigationItemSelectedListener(this)
+        navigationView.menu.getItem(0).isChecked = true
 
-        tViewnNOrden = findViewById(R.id.aorden_tViewnNOrden)
-        tViewFundo = findViewById(R.id.aorden_tViewFundo)
-        tViewEmpresa = findViewById(R.id.aorden_tViewEmpresa)
-        tViewNTankAll = findViewById(R.id.aorden_tViewNTankAll)
-        tViewNTankComplete = findViewById(R.id.aorden_tViewNTankComplete)
-
-        tViewDateTime = findViewById(R.id.aorden_tViewDateTime)
+      //  var app : cBaseApplication= (this.applicationContext as cBaseApplication)
 
         registerFilters()
 
-        bundle = intent.extras!!
-        val orden :Orden = bundle!!.getSerializable("orden") as Orden
-        presenter = OrdenPresenter(this,orden.id)
-
         mySwipeRefreshLayout!!.setOnRefreshListener {
+            Log.i(TAG, "onRefresh called from SwipeRefreshLayout")
             requestData()
         }
         requestData()
@@ -145,15 +144,15 @@ class ActivityOrden : AppCompatActivity(){
     }
 
     private fun showDialog() {
-        val dialog = Dialog(this@ActivityOrden)
+        val dialog = Dialog(this@MainActivity)
 
         dialog .requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog .setCancelable(true)
         dialog .setContentView(R.layout.dialog_list_devices)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val fab = dialog.findViewById<FloatingActionButton>(R.id.fabRefresgPaired)
-        val rViewDevices = dialog.findViewById<RecyclerView>(R.id.rViewPairedDevices)
+        var  fab = dialog.findViewById<FloatingActionButton>(R.id.fabRefresgPaired)
+        var  rViewDevices = dialog.findViewById<RecyclerView>(R.id.rViewPairedDevices)
 
         val adapter = DeviceAdapter()
         rViewDevices.adapter = (adapter)
@@ -163,7 +162,7 @@ class ActivityOrden : AppCompatActivity(){
             // Start observing the data sent to us by the ViewModel
 
         }
-        viewModel!!.pairedDeviceList.observe(this@ActivityOrden, Observer(adapter::updateList))
+        viewModel!!.pairedDeviceList.observe(this@MainActivity, Observer(adapter::updateList))
         // Immediately refresh the paired devices list
         viewModel!!.refreshPairedDevices()
 
@@ -186,7 +185,7 @@ class ActivityOrden : AppCompatActivity(){
     lateinit var MENU: Menu
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean { // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.order_detail, menu)
+        menuInflater.inflate(R.menu.main, menu)
         MENU = menu
 
 
@@ -196,23 +195,23 @@ class ActivityOrden : AppCompatActivity(){
         when {
             mBluetoothAdapter == null -> {
                 Toast.makeText(ctx,"null",Toast.LENGTH_SHORT).show()
-                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityOrden, R.drawable.ic_warning_black_24dp))
+                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_warning_black_24dp))
             }
             mBluetoothAdapter.isEnabled -> {
 
                 if(!isConnected(BluetoothManager.getInstance())){
 
                     Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityOrden, R.drawable.ic_bluetooth_black_24dp));
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_black_24dp));
 
                 }else{
                     Toast.makeText(ctx,"Conectado ",Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityOrden, R.drawable.ic_bluetooth_connected_black_24dp));
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_connected_black_24dp));
                 }
 
             }
             else -> {
-                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityOrden, R.drawable.ic_bluetooth_disabled_black_24dp))
+                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_bluetooth_disabled_black_24dp))
                 Toast.makeText(ctx,"no habilitado",Toast.LENGTH_SHORT).show()
             }
         }
@@ -239,47 +238,114 @@ class ActivityOrden : AppCompatActivity(){
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean { // Handle action bar item clicks here. The action bar will
+// automatically handle clicks on the Home/Up button, so long
+// as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
         if (id == R.id.action_bluetooth) {
             showDialog()
         }
-         return super.onOptionsItemSelected(item)
+        if (id == R.id.action_version) {
+            try {
+                Toast.makeText(baseContext, "Versión " + BuildConfig.VERSION_NAME + " code." + BuildConfig.VERSION_CODE /*+" db."+ ConexionSQLiteHelper.VERSION_DB*/, Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Toast.makeText(baseContext, e.toString(), Toast.LENGTH_LONG).show()
+            }
+            return true
+        }
+        return if (id == R.id.action_logout) { /*
+            if(new TareoDAO(ctx).listAll_UPLOAD().size()>0) {
+
+                Snackbar snackbar= Snackbar.make(myFragment.getView(),"Falta finalizar todas sus labores y sincronizar",Snackbar.LENGTH_LONG);
+                snackbar.getView().setBackgroundColor(ContextCompat.getColor(this, R.color.red_pastel));
+                snackbar.setActionTextColor(ContextCompat.getColor(this,R.color.white));
+                snackbar.setAction("Sincronizar", v1 -> startActivity(new Intent(this, ActivityUpload.class)));
+                snackbar.show();
+
+            }else{
+                SharedPreferencesManager.deleteUser(ctx);
+                startActivity(new Intent(this, ActivityPreloader.class));
+            }
+
+             */
+            true
+        } else super.onOptionsItemSelected(item)
     }
 
-    val TAG : String = ActivityOrden::class.java.simpleName
+    val filter_none = 0
+    val filter_proceso = 1
+    val filter_terminada = 2
 
-    @SuppressLint("SetTextI18n")
-    fun showOrder(orden: Orden) {
-        mySwipeRefreshLayout!!.isRefreshing= false
+    var myfilter = filter_none
 
-        tViewFundo!!.text = "" + orden.getCultivoName() + "\n" + orden.getVariedadName()
-        tViewEmpresa!!.text = "" + orden.getFundoName()
-        tViewDateTime!!.text = "" + orden.getAplicacionDate()
-        tViewnNOrden!!.text = "" + orden.getOrdenCode()
-        tViewNTankAll!!.text = "" + orden.getTancadasProgramadas()
-        tViewNTankComplete!!.text = ""+orden.getCantComplete()
+    override fun onNavigationItemSelected(item: MenuItem): Boolean { // Handle navigation view item clicks here.
+        val id = item.itemId
+        when (id) {
+            R.id.nav_all -> {
+                title = getString(R.string.tittle_all_orders)
+               myfilter = filter_none
+                requestData()
+            }
+            R.id.nav_proceso -> {
+                title = getString(R.string.tittle_process_orders)
+                myfilter = filter_proceso
+                requestData()
+            }
+            R.id.nav_terminada -> {
+                title = getString(R.string.tittle_finished_orders)
+                myfilter = filter_terminada
+                requestData()
+            }
 
-        val adapter = RViewAdapterListTancadas(this,orden.tancadas,orden.ordenesDetalle.size)
+        }
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawer.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    override fun onBackPressed() {
+        val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START)
+        } else { //super.onBackPressed();
+            moveTaskToBack(true)
+        }
+    }
+
+    val TAG = "MainActivity.tk"
+    fun showError(error: String) {
+        Log.e(TAG,error)
+        Toast.makeText(this,error,Toast.LENGTH_LONG).show()
+    }
+
+    fun showOrderList(ordenList: List<Orden>) {
+        mySwipeRefreshLayout!!.isRefreshing = false
+
+        var temp = ordenList
+        when(myfilter) {
+            filter_proceso -> {
+                temp  = temp.filter { !it.isComplete }
+
+            }
+            filter_terminada -> {
+                temp  = temp.filter { it.isComplete }
+            }
+            else -> { // Note the block
+
+            }
+        }
+
+        var adapter = RViewAdapterListOrdenes(this@MainActivity,temp)
         adapter.setOnClicListener {
-
             val pos = myRView!!.getChildAdapterPosition(it)
-            val intent = Intent(this, ActivityTancada::class.java)
-            val tancada = adapter.getTancada(pos)
-            intent.putExtra("tancada", tancada)
-            intent.putExtra("oDetalleSize", orden.ordenesDetalle.size)
-            Log.d(TAG,"pos="+tancada.id)
+            val intent = Intent(this@MainActivity, ActivityOrden::class.java)
+            val orden = adapter.getOrden(pos)
+            intent.putExtra("orden", orden)
+            Log.d(TAG,"pos="+orden.ordenCode)
             startActivity(intent)
         }
 
         myRView!!.adapter = adapter
-     }
 
-    fun showError(error: String) {
-        Toast.makeText(this,error,Toast.LENGTH_LONG).show()
-    }
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
     }
 
     // A class to hold the data in the RecyclerView

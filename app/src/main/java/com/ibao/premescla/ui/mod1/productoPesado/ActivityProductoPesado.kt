@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.productoPesado
+package com.ibao.premescla.ui.mod1.productoPesado
 
 import android.app.Dialog
 import android.bluetooth.BluetoothAdapter
@@ -26,7 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.R
 import com.ibao.premescla.models.ProductoPesado
-import com.ibao.premescla.ui.main.views.MainActivityViewModel
+import com.ibao.premescla.ui.mod1.main.views.MainActivityViewModel
 import com.ibao.premescla.utils.CommunicateViewModel
 import com.ibao.premescla.utils.Utilities
 import com.ibao.premescla.utils.appContext
@@ -57,9 +57,9 @@ class ActivityProductoPesado : AppCompatActivity(){
 
     private var presenter : ProductoPesadoPresenter? = null
     private val bundle: Bundle  by lazy{ intent!!.extras!! }
-    val ppesado   by lazy{ bundle!!.getSerializable("ppesado") as ProductoPesado }
-    val pos   by lazy{ bundle!!.getInt("pos")  }
-    val all   by lazy{ bundle!!.getInt("all") }
+    lateinit var  ppesado:ProductoPesado;//   by lazy{ bundle!!.getSerializable("ppesado") as ProductoPesado }
+    var pos:Int=0;//   by lazy{ bundle!!.getInt("pos")  }
+    var all:Int=0;//   by lazy{ bundle!!.getInt("all") }
 
 
     var PPESADO_SAVE: ProductoPesado = ProductoPesado()
@@ -104,6 +104,7 @@ class ActivityProductoPesado : AppCompatActivity(){
         Log.d(TAG,"pesada ->"+PPESADO_SAVE.cantidadPesada)
         btnNext.text= "Lecturar"
         tViewStep.text = ""+pos
+
         tViewTotalStep.text = ""+all
         tViewPesoRequest.text = ""+convertPesoToGr(ppesado.dosis,ppesado.units)+"g"
         tViewProductName.text = ""+ppesado.productName
@@ -165,6 +166,10 @@ class ActivityProductoPesado : AppCompatActivity(){
 
         ctx = this
 
+        ppesado= bundle!!.getSerializable("ppesado") as ProductoPesado
+        pos= bundle!!.getInt("pos")
+        all=bundle!!.getInt("all")
+
         viewModelComunicate!!.connectionStatus.observe(this, Observer { connectionStatus: CommunicateViewModel.ConnectionStatus -> onConnectionStatus(connectionStatus) })
         //viewModelComunicate!!.deviceName.observe(this, Observer { name: String? -> title = getString(R.string.device_name_format, name) })
         viewModelComunicate!!.messages.observe(this, Observer { message: String? ->
@@ -203,16 +208,20 @@ class ActivityProductoPesado : AppCompatActivity(){
                 Log.d(TAG,"actualiza p real")
                 btnNext.isEnabled = true
                 btnNext.alpha = 1f
+                if(all == pos){
+                    finish()
+                }
                 btnNext.text= "Ok"
             }
         })
 
         btnNext.setOnClickListener {
             if(btnNext.text=="Lecturar"){
-
+                PPESADO_SAVE = ppesado
                 PPESADO_SAVE.fechaPesada = Utilities.getDateTime()
                 PPESADO_SAVE.cantidadPesada = tViewPesoReal.text.toString().substring(0,tViewPesoReal.text.toString().length-1).toFloat()
-                presenter!!.requestPosPPesado(ppesado) //subiendo el resultado
+
+                presenter!!.requestPosPPesado(PPESADO_SAVE) //subiendo el resultado
             }else
             {//siguiente
                 presenter!!.requestNewPPesado(ppesado.idTancada)
@@ -366,13 +375,12 @@ class ActivityProductoPesado : AppCompatActivity(){
         refresh()
     }
 
-    fun goToNext(ppesado: ProductoPesado, actual: Int, all: Int) {
-        val intent : Intent = Intent(this,ActivityProductoPesado::class.java)
-        intent.putExtra("ppesado",ppesado)
-        intent.putExtra("pos",actual)
-        intent.putExtra("all",all)
-        startActivity(intent)
-        finish()
+    fun goToNext(_ppesado: ProductoPesado, _actual: Int, _all: Int) {
+   //     val intent : Intent = Intent(this,ActivityProductoPesado::class.java)
+        ppesado = _ppesado
+        pos = _actual
+        all = _all
+        refresh()
     }
 
     fun saveOk() {

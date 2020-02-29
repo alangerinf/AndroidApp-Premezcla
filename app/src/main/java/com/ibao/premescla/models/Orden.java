@@ -229,4 +229,8 @@ public class Orden implements Serializable {
         return getCantComplete() == tancadasProgramadas;
     }
 
+    public boolean isNotComplete(){
+        return getCantComplete() != tancadasProgramadas;
+    }
+
 }

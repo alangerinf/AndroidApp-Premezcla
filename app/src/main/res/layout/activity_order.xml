@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ui.orden.ActivityOrden">
+    tools:context=".ui.mod1.orden.ActivityOrden">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/aorden_swiperefresh"
@@ -44,21 +44,56 @@
                     android:orientation="horizontal"
                     tools:ignore="UseCompoundDrawables">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_on_proccess"
-                        android:tint="@color/colorDisable"
-                        app:tint="@color/colorAccent" />
 
-                    <TextView
-                        android:id="@+id/fmain_item_status"
-                        style="@style/tView_secondaryText"
+                    <LinearLayout
+                        android:id="@+id/fmain_item_onprocess"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_min"
-                        android:text="@string/status_onproceso"
-                        android:textColor="@color/colorAccent" />
+                        android:gravity="left"
+                        android:orientation="horizontal"
+                        >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_on_proccess"
+                            app:tint="@color/colorAccent"
+                            />
+
+                        <TextView
+                            android:layout_marginStart="@dimen/margin_min"
+                            style="@style/tView_secondaryText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status_onproceso"
+                            android:textColor="@color/colorAccent"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/fmain_item_finish"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:orientation="horizontal"
+                        >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_all"
+                            app:tint="@color/red_pastel"
+                            />
+
+                        <TextView
+                            android:layout_marginStart="@dimen/margin_min"
+                            style="@style/tView_secondaryText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status_finalizada"
+                            android:textColor="@color/red_pastel"
+                            />
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -236,6 +271,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lista vacía"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
                 app:layout_constraintEnd_toEndOf="@+id/recyclerView"
                 app:layout_constraintStart_toStartOf="@+id/recyclerView"

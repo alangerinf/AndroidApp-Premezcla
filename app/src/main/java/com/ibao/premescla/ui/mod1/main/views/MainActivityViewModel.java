@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.main.views;
+package com.ibao.premescla.ui.mod1.main.views;
 
 import android.app.Application;
 import android.bluetooth.BluetoothDevice;

@@ -1,6 +1,4 @@
-package com.ibao.premescla.ui.tancada;
-
-import android.os.Handler;
+package com.ibao.premescla.ui.mod1.tancada;
 
 import com.ibao.premescla.models.ProductoPesado;
 import com.ibao.premescla.models.Tancada;
