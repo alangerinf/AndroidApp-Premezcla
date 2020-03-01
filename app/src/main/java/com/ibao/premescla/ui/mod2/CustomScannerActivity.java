@@ -10,17 +10,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.BeepManager;
@@ -31,11 +28,8 @@ import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -80,16 +74,15 @@ public class CustomScannerActivity extends AppCompatActivity implements
         fAButtonLinterna.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(statusLight){
                     statusLight = false;
                  //   Toast.makeText(getBaseContext(),"apagando",Toast.LENGTH_SHORT).show();
-                    fAButtonLinterna.setImageResource(R.drawable.ic_light_white_off);
                     barcodeScannerView.setTorchOff();
 
                 }else {
                     statusLight = true;
                    // Toast.makeText(getBaseContext(), "encendiendo", Toast.LENGTH_SHORT).show();
-                    fAButtonLinterna.setImageResource(R.drawable.ic_highlight_black_24dp);
                     barcodeScannerView.setTorchOn();
                 }
             }
@@ -146,12 +139,12 @@ public class CustomScannerActivity extends AppCompatActivity implements
 
     @Override
     public void onTorchOn() {
-       // switchFlashlightButton.setText("Apagar Linterna");
+        fAButtonLinterna.setImageResource(R.drawable.ic_highlight_black_24dp);
     }
 
     @Override
     public void onTorchOff() {
-       // switchFlashlightButton.setText("Encender Linterna");
+        fAButtonLinterna.setImageResource(R.drawable.ic_light_white_off);
     }
 
     @Override
@@ -160,21 +153,24 @@ public class CustomScannerActivity extends AppCompatActivity implements
         return false;
     }
 
-    public static Date removeSeconds(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.SECOND, 0);
-        return cal.getTime();
-    }
-
     private BeepManager beepManager;
 
-    private boolean isShowenError = false;
+    private boolean isGoToEdit = false;
 
     private BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
+            if(!isGoToEdit){
+                goToEdit(result);
+                isGoToEdit =true;
+                handler.post(runnable);
+                handler.postDelayed(()-> isGoToEdit=false,2000);
+            }
+        }
 
+        private void goToEdit(BarcodeResult result) {
+            Intent  i = new Intent(CustomScannerActivity.this,EditSensorsActivity.class);
+            startActivity(i);
         }
 
         Handler handler = new Handler();
@@ -194,13 +190,6 @@ public class CustomScannerActivity extends AppCompatActivity implements
         }
     };
 
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        Intent returnIntent = new Intent();
-        setResult(RESULT_OK,returnIntent);
-        finish();
-    }
 
     private boolean validarPermisos(){
         if(Build.VERSION.SDK_INT< Build.VERSION_CODES.M){

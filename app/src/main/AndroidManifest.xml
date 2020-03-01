@@ -5,10 +5,8 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
@@ -22,56 +20,52 @@
         android:theme="@style/AppThemeMaterial"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.mod2.SelectAplicatorsActivity"></activity>
+        <activity android:name=".ui.mod2.EditSensorsActivity"></activity>
         <activity
-            android:name="com.ibao.premescla.ui.mod1.main.views.MainActivity"
+            android:name=".ui.mod1.main.views.MainActivity"
             android:theme="@style/AppThemeMaterial.NoActionBar">
             <intent-filter>
-
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.ibao.premescla.ui.mod1.orden.ActivityOrden"
-            android:parentActivityName="com.ibao.premescla.ui.mod1.main.views.MainActivity"
+            android:name=".ui.mod1.orden.ActivityOrden"
+            android:parentActivityName=".ui.mod1.main.views.MainActivity"
             android:theme="@style/AppThemeMaterial">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.ibao.premescla.ui.mod1.tancada.ActivityTancada"
-            android:parentActivityName="com.ibao.premescla.ui.mod1.orden.ActivityOrden"
+            android:name=".ui.mod1.tancada.ActivityTancada"
+            android:parentActivityName=".ui.mod1.orden.ActivityOrden"
             android:theme="@style/AppThemeMaterial">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.ibao.premescla.ui.mod1.productoPesado.ActivityProductoPesado"
-            android:parentActivityName="com.ibao.premescla.ui.mod1.orden.ActivityOrden"
+            android:name=".ui.mod1.productoPesado.ActivityProductoPesado"
+            android:parentActivityName=".ui.mod1.orden.ActivityOrden"
             android:theme="@style/AppThemeMaterial">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.ibao.premescla.ui.mod2.CustomScannerActivity"
+        <activity
+            android:name=".ui.mod2.CustomScannerActivity"
             android:theme="@style/AppThemeMaterial">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-
     </application>
 
 </manifest>
