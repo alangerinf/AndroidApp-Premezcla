@@ -20,8 +20,16 @@
         android:theme="@style/AppThemeMaterial"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.mod2.SelectAplicatorsActivity"></activity>
-        <activity android:name=".ui.mod2.EditSensorsActivity"></activity>
+        <activity android:name=".ui.mod3.TancadaMuestraActivity"></activity>
+        <activity android:name=".ui.mod3.ActivityInboxTancada">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.mod2.SelectAplicatorsActivity" />
+        <activity android:name=".ui.mod2.EditSensorsActivity" />
         <activity
             android:name=".ui.mod1.main.views.MainActivity"
             android:theme="@style/AppThemeMaterial.NoActionBar">
@@ -59,13 +67,7 @@
         </activity>
         <activity
             android:name=".ui.mod2.CustomScannerActivity"
-            android:theme="@style/AppThemeMaterial">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppThemeMaterial"></activity>
     </application>
 
 </manifest>
