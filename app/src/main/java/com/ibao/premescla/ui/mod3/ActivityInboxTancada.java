@@ -69,7 +69,6 @@ public class ActivityInboxTancada extends AppCompatActivity {
     }
 
 
-
     private void cargarData(){
         progressBar.setVisibility(View.GONE);
         rViewAdapterTancadas = new RViewAdapterListPasajeros(ctx, tancadaList);

@@ -37,7 +37,7 @@ public class RViewAdapterListPasajeros
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tancada_item,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tancada_aplicacion_item,viewGroup,false);
         view.setOnClickListener(this);
         return new ViewHolder(view);
     }
