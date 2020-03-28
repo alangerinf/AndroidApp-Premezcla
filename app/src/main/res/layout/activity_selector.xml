@@ -89,7 +89,7 @@
                 android:text="Tiempo (Minutos)" />
             <EditText
                 android:id="@+id/eTextTime"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textAlignment="center"
                 android:padding="12dp"
                 android:layout_width="match_parent"

@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Muestra
+import com.ibao.premescla.utils.Utilities
 import kotlinx.android.synthetic.main.activity_selector.*
 
 class SelectorActivity : AppCompatActivity() {
@@ -32,7 +33,7 @@ class SelectorActivity : AppCompatActivity() {
             }
             val str_lines = eTextLines.text.toString()
             val str_distance = eTextDistance.text.toString()
-            val str_time = eTextTime.text.toString()
+            val str_time = eTextTime.text.toString().toFloat().toString()
 
 
             val lines = str_lines.toInt()
@@ -42,16 +43,16 @@ class SelectorActivity : AppCompatActivity() {
             var flag1= true
             if(lines<=0){
                 eTextLines.setError("Valor no valido")
-                flag1 = false
             }
 
             var flag2= true
             if(distance<=0){
+                flag1 = false
                 eTextDistance.setError("Valor no valido")
                 flag2 = false
             }
             var flag3= true
-            if(str_time.isEmpty() || str_time.toInt()==0){
+            if(str_time.isEmpty() || str_time.toFloat()==0f){
                 eTextTime.setError("Valor no valido")
                 flag3 = false
             }
@@ -62,6 +63,7 @@ class SelectorActivity : AppCompatActivity() {
                 m.distancy = distance.toDouble()
                 m.duration = str_time
                 m.lines = lines
+                m.endMuestra = Utilities.getDateTime()
                 presenter.requestPushMuestra(m)
             }
 

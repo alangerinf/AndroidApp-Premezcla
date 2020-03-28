@@ -66,6 +66,10 @@ class TancadaMuestraActivity : AppCompatActivity() {
             i.putExtra("extra_id_tancada", tancada.id)
             startActivity(i)
         }
+
+        button.setOnClickListener {
+            presenter.requestUpdateEstado(tancada)
+        }
     }
 
     fun showError(error: String) {

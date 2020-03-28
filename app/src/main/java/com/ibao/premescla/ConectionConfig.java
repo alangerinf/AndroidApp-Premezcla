@@ -6,6 +6,14 @@ public class ConectionConfig {
     public static final String GET_TANCADA=ROOT+"getTancada.php";
     public static final String GET_NEXTPPESADO=ROOT+"getNextProductoPesado.php";
 
+    //todo: modificar nombre del php de autentificacion para el login
+    public static final String POST_LOGIN = ROOT+"autentificacion.php";
+
+    public static final String POST_TANCADA=ROOT+"postTancada.php",
+            T_ACTION_DOSIFICACION="dosificacion",
+            T_ACTION_MEZCLA="mezcla",
+            T_ACTION_APLICACION="aplicacion";
+
     public static final String POST_MUESTRA=ROOT+"postMuestra.php";
     public static final String POST_PPESADO =ROOT+"postProductoPesado.php";
 }

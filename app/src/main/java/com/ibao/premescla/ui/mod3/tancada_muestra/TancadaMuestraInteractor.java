@@ -9,9 +9,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.ibao.premescla.ConectionConfig;
 import com.ibao.premescla.app.AppController;
-import com.ibao.premescla.models.ProductoPesado;
 import com.ibao.premescla.models.Tancada;
-import com.ibao.premescla.ui.mod1.tancada.TancadaPresenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +28,46 @@ public class TancadaMuestraInteractor {
 
     public TancadaMuestraInteractor(TancadaMuestraPresenter presenter) {
         this.presenter = presenter;
+    }
+
+
+    public void updateEstado(Tancada tancada){
+        StringRequest jsonObjReq = new StringRequest(Request.Method.DEPRECATED_GET_OR_POST,
+                ConectionConfig.POST_TANCADA+"?action="+ConectionConfig.T_ACTION_APLICACION,
+                this::onResponseUpdateEstado, error -> onError(error)
+        ){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                String data = new Gson().toJson(tancada);
+                Log.i(TAG,"data:"+data);
+                params.put("data",data);
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Content-Type","application/x-www-form-urlencoded");
+                return headers;
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(jsonObjReq);
+    }
+
+    private void onResponseUpdateEstado(String response) {
+        Log.i(TAG, "Update resp:" + response);
+        try {
+            JSONObject main = new JSONObject(response);
+            int success = main.getInt("success");
+            if(success>0){
+                presenter.respUpdateSuccess();
+            }else{
+                presenter.respUpdateFailed("No se pudo insertar");
+            }
+        } catch (JSONException e) {
+            presenter.showError(e.getMessage());
+        }
     }
 
     public void requestAllData(int id){

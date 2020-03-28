@@ -25,6 +25,9 @@ public class Muestra implements Serializable{
     private double velocityTractor;
     private double distancy;
 
+    //esto no deberia esta aqui
+    private int usuario;//es el id
+
     public Muestra() {
         this.id=0;
         this.startMuestra="";
@@ -35,6 +38,7 @@ public class Muestra implements Serializable{
         this.velocityTractor=0d;
         this.idTancada=0;
         this.distancy=0d;
+        this.usuario=0;
     }
 
     public int getId() {
@@ -107,5 +111,13 @@ public class Muestra implements Serializable{
 
     public void setDistancy(double distancy) {
         this.distancy = distancy;
+    }
+
+    public int getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
     }
 }

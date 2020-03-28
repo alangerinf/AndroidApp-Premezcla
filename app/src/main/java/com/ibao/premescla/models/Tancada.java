@@ -41,6 +41,8 @@ public class Tancada  implements Serializable {
     private String conductividad;
     private String fechaConductividad;
 
+    private int usuario;
+
 
     public Tancada() {
         this.id = 0;
@@ -51,6 +53,26 @@ public class Tancada  implements Serializable {
         this.muestras = new ArrayList<>();
         this.codeLote = "";
         this.estadoTancada = "";
+
+        this.nombreTractor= "";
+        this.nombreConductor= "";
+
+        this.fechaQRTancada= "";
+        this.fechaVaceadoMezcla= "";
+        this.fechaTrasladoCampo= "";
+        this.fechaInicioAplicacion= "";
+        this.fechaFinAplicacion= "";
+        this.fechaRetornoProducto= "";
+
+        this.ph= "";
+        this.fechaPh= "";
+
+        this.conductividad= "";
+        this.fechaConductividad= "";
+
+
+
+        this.usuario=0;
     }
 
     public int getId() {
@@ -219,5 +241,13 @@ public class Tancada  implements Serializable {
 
     public void setFechaConductividad(String fechaConductividad) {
         this.fechaConductividad = fechaConductividad;
+    }
+
+    public int getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
     }
 }

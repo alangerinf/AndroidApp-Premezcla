@@ -65,8 +65,7 @@ public class SelectorInteractor {
         Log.d(TAG, "resp:" + response);
         try {
             JSONObject main = new JSONObject(response);
-            JSONObject data = main.getJSONObject("data");
-            int success = data.getInt("success");
+            int success = main.getInt("success");
             if(success>0){
                 presenter.respSuccess();
             }else{

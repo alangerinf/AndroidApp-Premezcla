@@ -1,9 +1,6 @@
 package com.ibao.premescla.ui.mod3.tancada_muestra;
 
-import com.ibao.premescla.models.ProductoPesado;
 import com.ibao.premescla.models.Tancada;
-import com.ibao.premescla.ui.mod1.tancada.ActivityTancada;
-import com.ibao.premescla.ui.mod1.tancada.TancadaInteractor;
 
 
 public class TancadaMuestraPresenter {
@@ -12,15 +9,11 @@ public class TancadaMuestraPresenter {
     private TancadaMuestraActivity view;
     private int id;
 
-
-
     public TancadaMuestraPresenter(TancadaMuestraActivity activity, int id){
         this.interactor = new TancadaMuestraInteractor(this);
         this.view = activity;
         this.id = id;
-
     }
-
 
     String TAG = "TancadaMuestraPresenter.tk";
     public void requestAllData(){
@@ -35,4 +28,15 @@ public class TancadaMuestraPresenter {
         view.showError(error);
     }
 
+    public void requestUpdateEstado(Tancada tancada){
+        interactor.updateEstado(tancada);
+    }
+
+    public void respUpdateSuccess() {
+        requestAllData();
+    }
+
+    public void respUpdateFailed(String fail) {
+        showError(fail);
+    }
 }
