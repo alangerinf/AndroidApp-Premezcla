@@ -20,8 +20,9 @@
         android:theme="@style/AppThemeMaterial"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.mod3.TancadaMuestraActivity"></activity>
-        <activity android:name=".ui.mod3.ActivityInboxTancada">
+        <activity android:name=".ui.mod3.pushone.SelectorActivity"></activity>
+        <activity android:name=".ui.mod3.tancada_muestra.TancadaMuestraActivity" />
+        <activity android:name=".ui.mod3.inbox.ActivityInboxTancada">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -67,7 +68,7 @@
         </activity>
         <activity
             android:name=".ui.mod2.CustomScannerActivity"
-            android:theme="@style/AppThemeMaterial"></activity>
+            android:theme="@style/AppThemeMaterial" />
     </application>
 
 </manifest>

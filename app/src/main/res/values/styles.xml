@@ -39,6 +39,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="spnSelector">
+        <item name="android:background">@drawable/shadow_center</item>
+    </style>
+
     <style name="tView_Tittle">
         <item name="android:textSize">@dimen/tViewTittle</item>
         <item name="android:textStyle">bold</item>

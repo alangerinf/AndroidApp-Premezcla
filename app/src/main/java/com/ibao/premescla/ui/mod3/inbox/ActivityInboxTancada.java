@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.mod3;
+package com.ibao.premescla.ui.mod3.inbox;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -26,6 +26,7 @@ import com.ibao.premescla.ConectionConfig;
 import com.ibao.premescla.R;
 import com.ibao.premescla.app.AppController;
 import com.ibao.premescla.models.Tancada;
+import com.ibao.premescla.ui.mod3.tancada_muestra.TancadaMuestraActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,8 +74,9 @@ public class ActivityInboxTancada extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         rViewAdapterTancadas = new RViewAdapterListPasajeros(ctx, tancadaList);
         rViewAdapterTancadas.setOnClicListener(view -> {
-            Intent i = new Intent(ActivityInboxTancada.this,TancadaMuestraActivity.class);
-            rViewAdapterTancadas.getItemId(rViewTancada.getChildAdapterPosition(view));
+            Tancada tancada = rViewAdapterTancadas.getItem(rViewTancada.getChildAdapterPosition(view));
+            Intent i = new Intent(ActivityInboxTancada.this, TancadaMuestraActivity.class);
+            i.putExtra("extra_id_tancada",tancada.getId());
             startActivity(i);
         });
 
@@ -140,7 +142,6 @@ public class ActivityInboxTancada extends AppCompatActivity {
     private void showError(String toString) {
         Toast.makeText(this,toString,Toast.LENGTH_SHORT).show();
     }
-
 
     private void onResponseAllData(String response) {
         Log.d(TAG, "resp:" + response);
