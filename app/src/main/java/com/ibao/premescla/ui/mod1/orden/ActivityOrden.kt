@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Orden
+import com.ibao.premescla.models.Recipe
 import com.ibao.premescla.ui.mod1.main.views.MainActivityViewModel
 import com.ibao.premescla.ui.mod1.orden.adapters.RViewAdapterListTancadas
 import com.ibao.premescla.ui.mod1.tancada.ActivityTancada
@@ -131,8 +132,8 @@ class ActivityOrden : AppCompatActivity(){
         registerFilters()
 
         bundle = intent.extras!!
-        val orden :Orden = bundle!!.getSerializable("orden") as Orden
-        presenter = OrdenPresenter(this,orden.id)
+        val ORDEN :Orden = bundle!!.getSerializable("orden") as Orden
+        presenter = OrdenPresenter(this,ORDEN.id)
 
         mySwipeRefreshLayout!!.setOnRefreshListener {
             requestData()
@@ -282,8 +283,10 @@ class ActivityOrden : AppCompatActivity(){
             val pos = myRView!!.getChildAdapterPosition(it)
             val intent = Intent(this, ActivityTancada::class.java)
             val tancada = adapter.getTancada(pos)
+
+            val recipe = Recipe( orden.ordenesDetalle)
             intent.putExtra("tancada", tancada)
-            intent.putExtra("oDetalleSize", orden.ordenesDetalle.size)
+            intent.putExtra("recipe", recipe)
             Log.d(TAG,"pos="+tancada.id)
             startActivity(intent)
         }

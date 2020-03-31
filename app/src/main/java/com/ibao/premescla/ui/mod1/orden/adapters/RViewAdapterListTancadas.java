@@ -11,8 +11,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 import com.ibao.premescla.R;
+import com.ibao.premescla.models.Recipe;
 import com.ibao.premescla.models.Tancada;
 import com.ibao.premescla.utils.PrintQR;
 
@@ -28,7 +28,7 @@ public class RViewAdapterListTancadas
         implements View.OnClickListener{
 
     private List<Tancada> tancadaVOList;
-    private int CANT_OD;
+    private Recipe recipe;
 
     private Context ctx;
 
@@ -36,12 +36,12 @@ public class RViewAdapterListTancadas
 
     private String TAG = RViewAdapterListTancadas.class.getSimpleName();
 
-    public RViewAdapterListTancadas(Context ctx, List<Tancada> list,int CANT_OD) {
+    public RViewAdapterListTancadas(Context ctx, List<Tancada> list, Recipe recipe) {
 
         this.tancadaVOList = new ArrayList<>();
                 this.tancadaVOList.addAll(list);
         this.ctx = ctx;
-        this.CANT_OD = CANT_OD;
+        this.recipe = recipe;
 
     }
 
@@ -68,7 +68,7 @@ public class RViewAdapterListTancadas
         int pos = 0;
         for(int i = 0; i< tancadaVOList.size();i++){
             int cantPP = tancadaVOList.get(i).getProductosPesados().size();
-            if(cantPP == CANT_OD){
+            if(cantPP == recipe.getOrdenDetalleList().size()){
                 pos = i;
             }
 
@@ -83,15 +83,15 @@ public class RViewAdapterListTancadas
 
         int cantPP = item.getProductosPesados().size();
         holder.tancada_item_tViewPosition.setText(""+item.getNroTancada());
-        holder.tancada_item_tViewPPAll.setText(""+ CANT_OD);
+        holder.tancada_item_tViewPPAll.setText(""+ recipe.getOrdenDetalleList().size());
         holder.tancada_item_tViewPPCount.setText(""+cantPP);
         holder.root.setAlpha(1f);
         holder.root.setEnabled(true);
         holder.tancada_item_fabPrint.setOnClickListener(v->{
            // Toast.makeText(ctx,"print",Toast.LENGTH_SHORT).show();
-            PrintQR.INSTANCE.print(new Gson().toJson(item));
+            PrintQR.INSTANCE.printQR(item.parseToQR(),""+item.getNroTancada(),""+item.getNroTancada(),recipe);
         });
-        if(CANT_OD == cantPP){
+        if(recipe.getOrdenDetalleList().size() == cantPP){
             holder.tancada_item_fabPrint.show();
         }else
         {

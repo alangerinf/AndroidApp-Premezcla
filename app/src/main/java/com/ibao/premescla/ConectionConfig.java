@@ -6,6 +6,8 @@ public class ConectionConfig {
     public static final String GET_TANCADA=ROOT+"getTancada.php";
     public static final String GET_NEXTPPESADO=ROOT+"getNextProductoPesado.php";
 
+    public static final String GET_TRACTOR_CONDUCTOR=ROOT+"getTractorNConductor.php";
 
     public static final String POST_PPESADO =ROOT+"postProductoPesado.php";
+    public static final String POST_TANCADA = ROOT+"postTancada.php";
 }

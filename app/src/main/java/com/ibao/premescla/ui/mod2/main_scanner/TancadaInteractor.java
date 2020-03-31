@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.mod1.tancada;
+package com.ibao.premescla.ui.mod2.main_scanner;
 
 import android.util.Log;
 
@@ -52,31 +52,6 @@ public class TancadaInteractor {
         AppController.getInstance().addToRequestQueue(jsonObjReq);
     }
 
-    public void requestNewPPesado(int id){
-        Log.d(TAG,"requestNewPPesado("+id+")");
-        StringRequest jsonObjReq = new StringRequest(Request.Method.GET,
-                ConectionConfig.GET_NEXTPPESADO+"?id="+id,
-                this::onResponseGetNextPPesado, error -> onError(error)
-        ){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String, String> params = new HashMap<String, String>();
-                // params.put(POST_USER, user);
-                // params.put(POST_PASS, password);
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<String, String>();
-                headers.put("Content-Type","application/x-www-form-urlencoded");
-                return headers;
-            }
-        };
-        AppController.getInstance().addToRequestQueue(jsonObjReq);
-
-    }
-
     private void onError(VolleyError error){
         Log.e(TAG,error.toString());
         presenter.showError(error.toString());
@@ -103,36 +78,6 @@ public class TancadaInteractor {
             Log.d(TAG, "done"+data.length());
         } catch (JSONException e) {
             presenter.showError(e.getMessage());
-        }
-    }
-    private void onResponseGetNextPPesado(String response) {
-        Log.d(TAG, "resp:" + response);
-        try {
-            JSONObject main = new JSONObject(response);
-            JSONObject jsonPPesado = main.getJSONObject("data");
-            String pos = main.getString("pos");
-            boolean success = main.getInt("success")>0;
-            List<ProductoPesado> ppesadoList = new ArrayList<>();
-            if(success){
-
-                Log.i(TAG,"**");
-                Log.i(TAG,jsonPPesado.toString());
-                ProductoPesado ppesado = new Gson().fromJson(jsonPPesado.toString(),ProductoPesado.class);
-                String json =  new Gson().toJson(ppesado);
-                Log.i(TAG,json);
-                Log.i(TAG,"**");
-                ppesadoList.add(ppesado);
-
-                String[] posArray = pos.split("-");
-                presenter.goToAddPPesado(ppesadoList.get(0), Integer.parseInt(posArray[0]),Integer.parseInt(posArray[1]));
-                Log.d(TAG, "done"+jsonPPesado.length());
-            }else{
-                presenter.showError("La tancada ya esta completa");
-            }
-
-        } catch (JSONException e) {
-            Log.e(TAG,"jsonError: "+e.getMessage());
-            presenter.showError("jsonError: "+e.getMessage());
         }
     }
 }

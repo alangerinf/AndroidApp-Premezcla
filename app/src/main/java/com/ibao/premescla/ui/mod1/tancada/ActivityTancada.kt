@@ -25,14 +25,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.gson.Gson
 import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.R
 import com.ibao.premescla.models.ProductoPesado
+import com.ibao.premescla.models.Recipe
 import com.ibao.premescla.models.Tancada
 import com.ibao.premescla.ui.mod1.main.views.MainActivityViewModel
 import com.ibao.premescla.ui.mod1.productoPesado.ActivityProductoPesado
-import com.ibao.premescla.utils.*
+import com.ibao.premescla.utils.PrintQR
+import com.ibao.premescla.utils.appContext
 import java.util.*
 
 class ActivityTancada : AppCompatActivity(){
@@ -55,7 +56,7 @@ class ActivityTancada : AppCompatActivity(){
 
     lateinit var bundle: Bundle  //by lazy{ intent!!.extras!! }
     lateinit var tancada:Tancada  // by lazy{ bundle!!.getSerializable("tancada") as Tancada }
-    var oDetalleSize: Int = 0 // by lazy{ bundle!!.getInt("oDetalleSize") }
+    lateinit var recipe: Recipe
 
     private val mBroadcastReceiver1: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -124,7 +125,7 @@ class ActivityTancada : AppCompatActivity(){
 
         bundle= intent!!.extras!!
         tancada= bundle!!.getSerializable("tancada") as Tancada
-        oDetalleSize= bundle!!.getInt("oDetalleSize")
+        recipe= bundle!!.getSerializable("recipe") as Recipe
         /*
         todo: cambiar la ui
          */
@@ -145,9 +146,9 @@ class ActivityTancada : AppCompatActivity(){
         requestData()
 
         btnNext.setOnClickListener {
-            if(oDetalleSize == tancada.productosPesados.size) {
+            if(recipe.ordenDetalleList.size == tancada.productosPesados.size) {
                 //Toast.makeText(this,"imprimir",Toast.LENGTH_SHORT).show()
-                PrintQR.print(Gson().toJson(tancada))
+                PrintQR.printQR(tancada.parseToQR(),""+tancada.nroTancada,""+tancada.nroTancada,recipe)
             }else{
                 requestNextPPesado()
             }
@@ -167,7 +168,7 @@ class ActivityTancada : AppCompatActivity(){
         presenter!!.requestAllData()
         mySwipeRefreshLayout!!.isRefreshing = true
 
-        if(oDetalleSize == tancada.productosPesados.size) {
+        if(recipe.ordenDetalleList.size == tancada.productosPesados.size) {
             btnNext.text = "Imprimir"
         }else{
             btnNext.text = "Siguiente Pesaje"
@@ -232,7 +233,7 @@ class ActivityTancada : AppCompatActivity(){
 
                 if(!isConnected(BluetoothManager.getInstance())){
 
-                   // Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
                     MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@ActivityTancada, R.drawable.ic_bluetooth_black_24dp));
 
                 }else{
@@ -273,7 +274,7 @@ class ActivityTancada : AppCompatActivity(){
         if (id == R.id.action_bluetooth) {
             showDialog()
         }
-         return super.onOptionsItemSelected(item)
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -285,7 +286,7 @@ class ActivityTancada : AppCompatActivity(){
     @SuppressLint("SetTextI18n")
     fun showTancada(_tancada: Tancada) {
         tancada = _tancada;
-        atancada_tViewNPPesadoAll.text= ""+oDetalleSize
+        atancada_tViewNPPesadoAll.text= ""+recipe.ordenDetalleList.size
         atancada_tViewNPPesado.text = ""+_tancada.productosPesados.size
         mySwipeRefreshLayout!!.isRefreshing= false
 
@@ -295,12 +296,12 @@ class ActivityTancada : AppCompatActivity(){
         }
         myRView!!.adapter = adapter
 
-        if(oDetalleSize == _tancada.productosPesados.size) {
+        if(recipe.ordenDetalleList.size == _tancada.productosPesados.size) {
             btnNext.text = "Imprimir"
         }else{
             btnNext.text = "Siguiente Pesaje"
         }
-     }
+    }
 
     fun showError(error: String) {
         Toast.makeText(this,error,Toast.LENGTH_LONG).show()

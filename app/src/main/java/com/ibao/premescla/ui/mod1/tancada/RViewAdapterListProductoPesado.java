@@ -68,7 +68,6 @@ public class RViewAdapterListProductoPesado
 
     public void setOnClicListener(View.OnClickListener listener){
         this.onClickListener=listener;
-
     }
 
     @Override

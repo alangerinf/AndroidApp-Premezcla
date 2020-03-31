@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mod2.SelectAplicatorsActivity">
-
+    tools:context=".ui.mod2.select_aplicatiors.SelectAplicatorsActivity">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button2"
+        android:id="@+id/btnSave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -29,13 +28,137 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/btnSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/tView_secondaryText"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+
+                android:text="Número de Tancada"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/tView_secondaryText"
+                android:textColor="@color/colorPrimaryDark"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/asa_tViewNTancada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/tView_secondaryText"
+                android:layout_weight="1"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                style="@style/tView_secondaryText"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Lote" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/tView_secondaryText"
+                android:textColor="@color/colorPrimaryDark"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/asa_tViewLote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/tView_secondaryText"
+                android:layout_weight="1"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                style="@style/tView_secondaryText"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="pH" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_height="wrap_content"
+                style="@style/tView_secondaryText"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/asa_tViewPh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/tView_secondaryText"
+                android:layout_weight="1"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                style="@style/tView_secondaryText"
+                android:text="Conductividad" />
+
+            <TextView
+                style="@style/tView_secondaryText"
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_height="wrap_content"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/asa_tViewConductividad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/tView_secondaryText"
+                android:layout_weight="1"
+                android:text="TextView" />
+        </LinearLayout>
         <TextView
             style="@style/tView_primaryText"
+            android:layout_marginTop="16dp"
             android:textColor="@color/colorPrimaryDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,6 +173,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spnTractor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -70,6 +194,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spnConductor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>

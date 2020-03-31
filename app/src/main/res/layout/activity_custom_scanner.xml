@@ -14,7 +14,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
-        app:zxing_scanner_layout="@layout/custom_barcode_scanner"/>
+        app:zxing_scanner_layout="@layout/custom_barcode_scanner">
+
+    </com.journeyapps.barcodescanner.DecoratedBarcodeView>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -53,6 +55,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/zxing_barcode_scanner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/zxing_barcode_scanner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

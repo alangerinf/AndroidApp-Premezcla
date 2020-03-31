@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.mod2;
+package com.ibao.premescla.ui.mod2.main_scanner;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +12,8 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -22,12 +24,15 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.BeepManager;
 import com.ibao.premescla.R;
+import com.ibao.premescla.models.Tancada;
+import com.ibao.premescla.ui.mod2.EditSensorsActivity;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -48,8 +53,10 @@ public class CustomScannerActivity extends AppCompatActivity implements
     private static FloatingActionButton fAButtonLinterna;
     private static boolean statusLight;
 
-    private CaptureManager capture;
+    private TancadaPresenter presenter;
+    private ProgressBar progressBar;
 
+    private CaptureManager capture;
 
     Context ctx;
 
@@ -60,15 +67,11 @@ public class CustomScannerActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_scanner);
         ctx= this;
-
+        progressBar = findViewById(R.id.progressBar);
         statusLight=false;
         fAButtonLinterna = findViewById(R.id.fAButtonLinterna);
 
         root = findViewById(R.id.root);
-
-
-
-
         validarPermisos();
 
         fAButtonLinterna.setOnClickListener(new View.OnClickListener() {
@@ -160,22 +163,34 @@ public class CustomScannerActivity extends AppCompatActivity implements
     private BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
-            if(!isGoToEdit){
-                goToEdit(result);
-                isGoToEdit =true;
-                handler.post(runnable);
-                handler.postDelayed(()-> isGoToEdit=false,2000);
+
+            if(result!=null){
+                String QR = result.getText();
+                try {
+                    int idTancada = Tancada.getIdparseFromQR(QR);
+                    if(idTancada!=0){
+                        presenter = new TancadaPresenter(CustomScannerActivity.this,idTancada);
+                        presenter.requestAllData();
+                        progressBar.setVisibility(View.VISIBLE);
+                        if(!isGoToEdit){
+                            isGoToEdit =true;
+                            handler.post(runnableFound);
+                            //handler.postDelayed(()-> isGoToEdit=false,2000);
+                        }
+                    }
+                }catch (Exception e){
+
+                }
             }
+
+
         }
 
-        private void goToEdit(BarcodeResult result) {
-            Intent  i = new Intent(CustomScannerActivity.this,EditSensorsActivity.class);
-            startActivity(i);
-        }
 
-        Handler handler = new Handler();
 
-        Runnable runnable = new Runnable() {
+
+
+        Runnable runnableFound = new Runnable() {
             @Override
             public void run() {
                 beepManager.setBeepEnabled(false);
@@ -243,5 +258,28 @@ public class CustomScannerActivity extends AppCompatActivity implements
 
                 });
         alertOpciones.show();
+    }
+    private void goToEdit(Tancada tancada) {
+        Intent  i = new Intent(CustomScannerActivity.this, EditSensorsActivity.class);
+        i.putExtra("tancada", tancada);
+        startActivity(i);
+    }
+    public void showTancada(Tancada tancada) {
+        goToEdit(tancada);
+        handler.postDelayed(()->{
+            isGoToEdit=false;
+            progressBar.setVisibility(View.GONE);
+        }
+        ,1000);
+    }
+    Handler handler = new Handler();
+    public void showError(String error) {
+
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+        handler.post(()-> {
+            isGoToEdit=false;
+
+        });
     }
 }
