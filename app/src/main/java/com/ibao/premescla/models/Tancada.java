@@ -16,24 +16,63 @@ public class Tancada  implements Serializable {
     private int id;
     private int idOrden;
     private int nroTancada;
-    private float pH;
-    private float conductividad;
+    private double mojamiento;
     private List<ProductoPesado> productosPesados;
+    private List<Muestra> muestras;
+    private String estadoTancada;
+
+    private String codeLote;
+    private int idLote;
+
+    private String nombreTractor;
+    private String nombreConductor;
 
 
-    private int idTractor;
-    private int idConductor;
+    private String fechaQRTancada;
+    private String fechaVaceadoMezcla;
+    private String fechaTrasladoCampo;
+    private String fechaInicioAplicacion;
+    private String fechaFinAplicacion;
+    private String fechaRetornoProducto;
+
+    private String ph;
+    private String fechaPh;
+
+    private String conductividad;
+    private String fechaConductividad;
+
+    private int usuario;
+
 
     public Tancada() {
         this.id = 0;
         this.idOrden = 0;
         this.nroTancada = 0;
-        this.pH = 0f;
-        this.conductividad = 0f;
+        this.mojamiento=0;
         this.productosPesados = new ArrayList<>();
-        this.idTractor = 0;
-        this.idConductor = 0;
+        this.muestras = new ArrayList<>();
+        this.codeLote = "";
+        this.estadoTancada = "";
 
+        this.nombreTractor= "";
+        this.nombreConductor= "";
+
+        this.fechaQRTancada= "";
+        this.fechaVaceadoMezcla= "";
+        this.fechaTrasladoCampo= "";
+        this.fechaInicioAplicacion= "";
+        this.fechaFinAplicacion= "";
+        this.fechaRetornoProducto= "";
+
+        this.ph= "";
+        this.fechaPh= "";
+
+        this.conductividad= "";
+        this.fechaConductividad= "";
+
+
+
+        this.usuario=0;
     }
 
     public int getId() {
@@ -68,53 +107,147 @@ public class Tancada  implements Serializable {
         this.productosPesados = productosPesados;
     }
 
-    public String parseToQR(){
-        return "T"+id;
+    public List<Muestra> getMuestras() {
+        return muestras;
     }
 
-    public static int getIdparseFromQR(String qr) throws NullPointerException{
-        int id =0;
-        try {
-            if(qr.charAt(0)=='T'){
-                id = Integer.parseInt(qr.substring(1));
-            }else {
-                new NullPointerException("QR no pertenece a una tancada");
-            }
-        }catch (Exception e){
-            new NullPointerException("QR no válido");
-        }
-        return id;
+    public void setMuestras(List<Muestra> muestras) {
+        this.muestras = muestras;
     }
 
-    public float getpH() {
-        return pH;
+    public double getMojamiento() {
+        return mojamiento;
     }
 
-    public void setpH(float pH) {
-        this.pH = pH;
+    public void setMojamiento(double mojamiento) {
+        this.mojamiento = mojamiento;
     }
 
-    public float getConductividad() {
+    public String getCodeLote() {
+        return codeLote;
+    }
+
+    public void setCodeLote(String codeLote) {
+        this.codeLote = codeLote;
+    }
+
+    public String getEstadoTancada() {
+        return estadoTancada;
+    }
+
+    public void setEstadoTancada(String estadoTancada) {
+        this.estadoTancada = estadoTancada;
+    }
+
+    public int getIdLote() {
+        return idLote;
+    }
+
+    public void setIdLote(int idLote) {
+        this.idLote = idLote;
+    }
+
+    public String getNombreTractor() {
+        return nombreTractor;
+    }
+
+    public void setNombreTractor(String nombreTractor) {
+        this.nombreTractor = nombreTractor;
+    }
+
+    public String getNombreConductor() {
+        return nombreConductor;
+    }
+
+    public void setNombreConductor(String nombreConductor) {
+        this.nombreConductor = nombreConductor;
+    }
+
+    public String getFechaQRTancada() {
+        return fechaQRTancada;
+    }
+
+    public void setFechaQRTancada(String fechaQRTancada) {
+        this.fechaQRTancada = fechaQRTancada;
+    }
+
+    public String getFechaVaceadoMezcla() {
+        return fechaVaceadoMezcla;
+    }
+
+    public void setFechaVaceadoMezcla(String fechaVaceadoMezcla) {
+        this.fechaVaceadoMezcla = fechaVaceadoMezcla;
+    }
+
+    public String getFechaTrasladoCampo() {
+        return fechaTrasladoCampo;
+    }
+
+    public void setFechaTrasladoCampo(String fechaTrasladoCampo) {
+        this.fechaTrasladoCampo = fechaTrasladoCampo;
+    }
+
+    public String getFechaInicioAplicacion() {
+        return fechaInicioAplicacion;
+    }
+
+    public void setFechaInicioAplicacion(String fechaInicioAplicacion) {
+        this.fechaInicioAplicacion = fechaInicioAplicacion;
+    }
+
+    public String getFechaFinAplicacion() {
+        return fechaFinAplicacion;
+    }
+
+    public void setFechaFinAplicacion(String fechaFinAplicacion) {
+        this.fechaFinAplicacion = fechaFinAplicacion;
+    }
+
+    public String getFechaRetornoProducto() {
+        return fechaRetornoProducto;
+    }
+
+    public void setFechaRetornoProducto(String fechaRetornoProducto) {
+        this.fechaRetornoProducto = fechaRetornoProducto;
+    }
+
+    public String getPh() {
+        return ph;
+    }
+
+    public void setPh(String ph) {
+        this.ph = ph;
+    }
+
+    public String getFechaPh() {
+        return fechaPh;
+    }
+
+    public void setFechaPh(String fechaPh) {
+        this.fechaPh = fechaPh;
+    }
+
+    public String getConductividad() {
         return conductividad;
     }
 
-    public void setConductividad(float conductividad) {
+    public void setConductividad(String conductividad) {
         this.conductividad = conductividad;
     }
 
-    public int getIdTractor() {
-        return idTractor;
+    public String getFechaConductividad() {
+        return fechaConductividad;
     }
 
-    public void setIdTractor(int idTractor) {
-        this.idTractor = idTractor;
+    public void setFechaConductividad(String fechaConductividad) {
+        this.fechaConductividad = fechaConductividad;
     }
 
-    public int getIdConductor() {
-        return idConductor;
+    public int getUsuario() {
+        return usuario;
     }
 
-    public void setIdConductor(int idConductor) {
-        this.idConductor = idConductor;
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
     }
 }
