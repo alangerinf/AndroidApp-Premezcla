@@ -28,8 +28,8 @@ class SelectAplicatorsActivity : AppCompatActivity() {
 
         asa_tViewNTancada.text = "${TANCADA.nroTancada}";
         asa_tViewLote.text= "${TANCADA.nroTancada}"
-        asa_tViewConductividad.text = "" + if (TANCADA.conductividad == 0f) "sin editar" else TANCADA.conductividad
-        asa_tViewPh.text = "" + if (TANCADA.getpH() == 0f) "sin editar" else TANCADA.getpH()
+        asa_tViewConductividad.text = "" + if (TANCADA.conductividad.toFloat() == 0f) "sin editar" else TANCADA.conductividad
+        asa_tViewPh.text = "" + if (TANCADA.ph.toFloat() == 0f) "sin editar" else TANCADA.ph
         presenter.requestAllData(TANCADA.id)
 
         btnSave.setOnClickListener {

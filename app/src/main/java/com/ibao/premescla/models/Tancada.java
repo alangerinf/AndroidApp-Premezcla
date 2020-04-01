@@ -13,6 +13,11 @@ public class Tancada  implements Serializable {
         'productosPesados' => $productoPesadoDAO->selectByIdTancada($idTancada_)
      */
 
+
+
+    private int idTractor;
+    private int idConductor;
+
     private int id;
     private int idOrden;
     private int nroTancada;
@@ -250,4 +255,39 @@ public class Tancada  implements Serializable {
     public void setUsuario(int usuario) {
         this.usuario = usuario;
     }
+
+    public int getIdTractor() {
+        return idTractor;
+    }
+
+    public void setIdTractor(int idTractor) {
+        this.idTractor = idTractor;
+    }
+
+    public int getIdConductor() {
+        return idConductor;
+    }
+
+    public void setIdConductor(int idConductor) {
+        this.idConductor = idConductor;
+    }
+
+    public String parseToQR(){
+        return "T"+id;
+    }
+
+    public static int getIdparseFromQR(String qr) throws NullPointerException{
+        int id =0;
+        try {
+            if(qr.charAt(0)=='T'){
+                id = Integer.parseInt(qr.substring(1));
+            }else {
+                new NullPointerException("QR no pertenece a una tancada");
+            }
+        }catch (Exception e){
+            new NullPointerException("QR no válido");
+        }
+        return id;
+    }
+
 }

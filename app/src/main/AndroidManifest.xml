@@ -39,7 +39,7 @@
             >
 
         </activity>
-        <activity android:name=".ui.mod2.SelectAplicatorsActivity" />
+        <activity android:name=".ui.mod2.select_aplicatiors.SelectAplicatorsActivity" />
         <activity android:name=".ui.mod2.EditSensorsActivity" />
         <activity
             android:name=".ui.mod1.main.views.MainActivity"
@@ -81,7 +81,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.mod2.CustomScannerActivity"
+            android:name=".ui.mod2.main_scanner.CustomScannerActivity"
             android:theme="@style/AppThemeMaterial" />
     </application>
 

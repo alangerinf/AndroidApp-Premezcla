@@ -277,7 +277,7 @@ class ActivityOrden : AppCompatActivity(){
             fmain_item_onprocess.visibility= View.VISIBLE
         }
 
-        val adapter = RViewAdapterListTancadas(this,orden.tancadas,orden.ordenesDetalle.size)
+        val adapter = RViewAdapterListTancadas(this,orden.tancadas,Recipe(orden.ordenesDetalle))
         adapter.setOnClicListener {
 
             val pos = myRView!!.getChildAdapterPosition(it)

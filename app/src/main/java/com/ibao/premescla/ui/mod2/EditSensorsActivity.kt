@@ -65,8 +65,8 @@ class EditSensorsActivity : AppCompatActivity() {
                 val intent = Intent(this@EditSensorsActivity, SelectAplicatorsActivity::class.java)
                 Log.i("MEDICIONES","valuePH: "+valuePH)
                 val i = Log.i("MEDICIONES", "valueConductividad: " + valueConductividad)
-                TANCADA.setpH(valuePH)
-                TANCADA.conductividad = valueConductividad
+                TANCADA.ph=valuePH.toString()
+                TANCADA.conductividad = valueConductividad.toString()
                 intent.putExtra("tancada", TANCADA)
 
                 startActivity(intent)

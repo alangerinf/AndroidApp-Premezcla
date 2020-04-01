@@ -16,5 +16,8 @@ public class ConectionConfig {
 
     public static final String POST_MUESTRA=ROOT+"postMuestra.php";
     public static final String POST_PPESADO =ROOT+"postProductoPesado.php";
-    public static final String POST_TANCADA = ROOT+"postTancada.php";
+
+    public static final String GET_TRACTOR_CONDUCTOR=ROOT+"getTractorNConductor.php";
+
+
 }
