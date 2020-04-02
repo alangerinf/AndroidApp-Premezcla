@@ -23,6 +23,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.ibao.premescla.R;
 import com.ibao.premescla.ui.login.presenter.LoginPresenter;
 import com.ibao.premescla.ui.login.presenter.LoginPresenterImpl;
+import com.ibao.premescla.ui.modselector.ModSelectorActivity;
 
 
 public class LoginActivity extends Activity implements LoginView{
@@ -164,7 +165,7 @@ public class LoginActivity extends Activity implements LoginView{
     @Override
     public void goHome() {
 
-       /* Intent intent = new Intent(getBaseContext(), ActivityMain.class);
+        Intent intent = new Intent(getBaseContext(), ModSelectorActivity.class);
 
         View viewTemp = findViewById(R.id.logo);
         ActivityOptions options = (ActivityOptions) ActivityOptions.makeSceneTransitionAnimation
@@ -172,7 +173,7 @@ public class LoginActivity extends Activity implements LoginView{
                         Pair.create(viewTemp, viewTemp.getTransitionName())
                 );
         startActivity(intent, options.toBundle());
-    */
+
     }
 
 

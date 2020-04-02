@@ -4,14 +4,16 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Serializable {
     private int id;
     private String user;
     private String name;
     private String password;
-    private String token;
-
+    private String modulos;
+   private List<Integer> idModulos;
 
     public String toString(){
         Gson gson = new Gson();
@@ -25,7 +27,8 @@ public class User implements Serializable {
         user="";
         name="";
         password="";
-        token="";
+        modulos="";
+        idModulos= new ArrayList<>();
     }
 
     public String getName() {
@@ -60,11 +63,24 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getToken() {
-        return token;
+
+    public String getModulos() {
+        return modulos;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setModulos(String modulos) {
+        this.modulos = modulos;
+    }
+
+    public List<Integer> getIdModulos() {
+        return idModulos;
+    }
+
+    private void setIdModulos(String modulos) {
+        String[] ids = modulos.split(",");
+        this.idModulos= new ArrayList<>();
+        for(String id :ids){
+            idModulos.add(Integer.valueOf(id));
+        }
     }
 }

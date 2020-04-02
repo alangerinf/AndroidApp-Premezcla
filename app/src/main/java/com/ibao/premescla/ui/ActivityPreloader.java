@@ -15,6 +15,7 @@ import com.ibao.premescla.R;
 import com.ibao.premescla.SharedPreferencesManager;
 import com.ibao.premescla.models.User;
 import com.ibao.premescla.ui.login.view.LoginActivity;
+import com.ibao.premescla.ui.modselector.ModSelectorActivity;
 
 public class ActivityPreloader extends Activity {
 
@@ -86,7 +87,7 @@ public class ActivityPreloader extends Activity {
             {
                 User user = SharedPreferencesManager.getUser(ctx);
                 if(user!=null){
-               //     startActivity(new Intent(this, ActivityMain.class));
+                    startActivity(new Intent(this, ModSelectorActivity.class));
                 }else {
                     startActivity(new Intent(this, LoginActivity.class));
                 }

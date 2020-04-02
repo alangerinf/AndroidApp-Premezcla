@@ -31,7 +31,7 @@ public class SharedPreferencesManager {
             editor.putInt(user_id,user.getId());
             editor.putString(user_user,user.getUser());
             editor.putString(user_password,user.getPassword());
-            editor.putString(user_token,user.getToken());
+            editor.putString(user_token,user.getModulos());
             editor.putString(user_name,user.getName());
             flag = editor.commit();
         }catch (Exception e){
@@ -61,9 +61,8 @@ public class SharedPreferencesManager {
                     user.setId(12);
                     user.setUser(preferences.getString(user_user,""));
                     user.setPassword(preferences.getString(user_password,""));
-                    user.setToken(preferences.getString(user_token,""));
+                    user.setModulos(preferences.getString(user_token,""));
                     user.setName(preferences.getString(user_name,""));
-                    Log.d(TAG,"getUser token "+user.getToken() );
                 }
             }catch (Exception e) {
                 Log.d(TAG,"getUser:" + e.toString()) ;

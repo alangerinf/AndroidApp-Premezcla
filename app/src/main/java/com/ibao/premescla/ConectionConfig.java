@@ -7,7 +7,7 @@ public class ConectionConfig {
     public static final String GET_NEXTPPESADO=ROOT+"getNextProductoPesado.php";
 
     //todo: modificar nombre del php de autentificacion para el login
-    public static final String POST_LOGIN = ROOT+"autentificacion.php";
+    public static final String POST_LOGIN = ROOT+"autenticar.php";
 
     public static final String POST_TANCADA=ROOT+"postTancada.php",
             T_ACTION_DOSIFICACION="dosificacion",
@@ -18,6 +18,5 @@ public class ConectionConfig {
     public static final String POST_PPESADO =ROOT+"postProductoPesado.php";
 
     public static final String GET_TRACTOR_CONDUCTOR=ROOT+"getTractorNConductor.php";
-
 
 }

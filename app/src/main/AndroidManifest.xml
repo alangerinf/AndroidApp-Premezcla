@@ -20,12 +20,17 @@
         android:theme="@style/AppThemeMaterial"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.modselector.ModSelectorActivity"
+            android:theme="@style/AppThemeMaterial.Fullscreen">
+
+        </activity>
         <activity
             android:name=".ui.ActivityPreloader"
             android:screenOrientation="fullSensor"
             android:theme="@style/AppThemeMaterial.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -35,10 +40,7 @@
             android:theme="@style/AppThemeMaterial.Fullscreen" />
         <activity android:name=".ui.mod3.pushone.SelectorActivity" />
         <activity android:name=".ui.mod3.tancada_muestra.TancadaMuestraActivity" />
-        <activity android:name=".ui.mod3.inbox.ActivityInboxTancada"
-            >
-
-        </activity>
+        <activity android:name=".ui.mod3.inbox.ActivityInboxTancada"></activity>
         <activity android:name=".ui.mod2.select_aplicatiors.SelectAplicatorsActivity" />
         <activity android:name=".ui.mod2.EditSensorsActivity" />
         <activity
@@ -46,6 +48,7 @@
             android:theme="@style/AppThemeMaterial.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
