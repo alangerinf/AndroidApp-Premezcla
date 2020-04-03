@@ -292,7 +292,7 @@ class ActivityOrden : AppCompatActivity(){
         }
 
         myRView!!.adapter = adapter
-     }
+}
 
     fun showError(error: String) {
         Toast.makeText(this,error,Toast.LENGTH_LONG).show()

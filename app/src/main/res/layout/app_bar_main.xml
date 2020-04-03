@@ -21,7 +21,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <include layout="@layout/content_main_mezcla" />
+    <include layout="@layout/content_main_mezcla" android:id="@+id/fragment_container"/>
 
 
 

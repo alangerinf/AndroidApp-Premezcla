@@ -1,13 +1,11 @@
 package com.ibao.premescla.ui.mod1beta.views
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothProfile
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -17,14 +15,18 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -33,12 +35,9 @@ import com.ibao.premescla.BuildConfig
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Orden
 import com.ibao.premescla.ui.mod1.main.views.MainActivityViewModel
-import com.ibao.premescla.ui.mod1.main.views.adapters.RViewAdapterListOrdenes
-import com.ibao.premescla.ui.mod1.orden.ActivityOrden
 import com.ibao.premescla.utils.appContext
-
-import kotlinx.android.synthetic.main.activity_main_mezcla.*
-import java.util.ArrayList
+import kotlinx.android.synthetic.main.content_main_mezcla.*
+import java.util.*
 
 class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener  {
 
@@ -245,11 +244,14 @@ class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         } else super.onOptionsItemSelected(item)
     }
 
-    val filter_none = 0
-    val filter_proceso = 1
-    val filter_terminada = 2
 
-    var myfilter = filter_none
+    companion object{
+
+        val filter_none = 0
+        val filter_proceso = 1
+        val filter_terminada = 2
+        var myfilter = filter_none
+    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean { // Handle navigation view item clicks here.
         val id = item.itemId
@@ -257,35 +259,38 @@ class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.nav_all -> {
                 title = getString(R.string.tittle_all_orders)
                 myfilter = filter_none
-              //  requestData()
             }
             R.id.nav_proceso -> {
                 title = getString(R.string.tittle_process_orders)
                 myfilter = filter_proceso
-              //  requestData()
             }
             R.id.nav_terminada -> {
                 title = getString(R.string.tittle_finished_orders)
                 myfilter = filter_terminada
-              //  requestData()
-            }
 
+            }
         }
+
+        supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.findNavController()!!.navigate(R.id.action_global_MainFragment)
+
+
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
 
     override fun onBackPressed() {
-        val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START)
-        } else { //super.onBackPressed();
-            onBackPressed()
-          //  moveTaskToBack(true)
+        when(NavHostFragment.findNavController(nav_host_fragment).currentDestination!!.id) {
+            R.id.MainFragment-> {
+                val dialog= AlertDialog.Builder(this).setMessage("Hello").setPositiveButton("Ok", DialogInterface.OnClickListener { dialogInterface, i ->
+                    finish()
+                }).show()
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
     }
-
     val TAG = "MainActivity.tk"
     fun showError(error: String) {
         Log.e(TAG,error)

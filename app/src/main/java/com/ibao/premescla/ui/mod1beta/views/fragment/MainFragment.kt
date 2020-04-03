@@ -7,10 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Orden
 import com.ibao.premescla.ui.mod1.main.views.adapters.RViewAdapterListOrdenes
 import com.ibao.premescla.ui.mod1beta.presenters.MainMezclaPresenter
+import com.ibao.premescla.ui.mod1beta.views.MainMezclaActivity.Companion.filter_proceso
+import com.ibao.premescla.ui.mod1beta.views.MainMezclaActivity.Companion.filter_terminada
+import com.ibao.premescla.ui.mod1beta.views.MainMezclaActivity.Companion.myfilter
 import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
@@ -37,7 +43,11 @@ class MainFragment : Fragment() {
             Log.i(TAG, "onRefresh called from SwipeRefreshLayout")
             requestData()
         }
+
+         navController = Navigation.findNavController(view!!)
+
     }
+    var navController : NavController? = null
 
     override fun onResume() {
         Log.i(TAG,"resume")
@@ -59,7 +69,7 @@ class MainFragment : Fragment() {
         main_swiperefresh!!.isRefreshing = false
 
         var temp = ordenList
-/*
+
         when(myfilter) {
             filter_proceso -> {
                 temp  = temp.filter { !it.isComplete }
@@ -72,18 +82,16 @@ class MainFragment : Fragment() {
 
             }
         }
-*/
+
         var adapter = RViewAdapterListOrdenes(activity,temp)
-      /*
+
         adapter.setOnClicListener {
-            val pos = myRView!!.getChildAdapterPosition(it)
-            val intent = Intent(this@MainActivity, ActivityOrden::class.java)
+            val pos = fmain_rView!!.getChildAdapterPosition(it)
             val orden = adapter.getOrden(pos)
-            intent.putExtra("orden", orden)
-            Log.d(TAG,"pos="+orden.ordenCode)
-            startActivity(intent)
-        }
-*/
+            val bundle = bundleOf("orden" to orden )
+            navController!!.navigate(R.id.action_FirstFragment_to_SecondFragment,bundle)
+      }
+
         fmain_rView!!.adapter = adapter
 
     }
