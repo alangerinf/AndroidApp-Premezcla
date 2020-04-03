@@ -58,5 +58,14 @@
     <string name="toast_8">Now QrCode size must be less than 7!</string>
     <string name="toast_9">BarCode type or conent error!</string>
     <string name="toast_10">Please set the printer as black label mode!</string>
+    <string name="title_activity_main_mezcla">MainMezclaActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="main_fragment_label">Fragment Main</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

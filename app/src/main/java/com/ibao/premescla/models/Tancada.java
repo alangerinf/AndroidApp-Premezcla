@@ -21,7 +21,7 @@ public class Tancada  implements Serializable {
     private int id;
     private int idOrden;
     private int nroTancada;
-    private double mojamiento;
+    private String mojamiento;
     private List<ProductoPesado> productosPesados;
     private List<Muestra> muestras;
     private String estadoTancada;
@@ -53,7 +53,7 @@ public class Tancada  implements Serializable {
         this.id = 0;
         this.idOrden = 0;
         this.nroTancada = 0;
-        this.mojamiento=0;
+        this.mojamiento="";
         this.productosPesados = new ArrayList<>();
         this.muestras = new ArrayList<>();
         this.codeLote = "";
@@ -120,11 +120,11 @@ public class Tancada  implements Serializable {
         this.muestras = muestras;
     }
 
-    public double getMojamiento() {
+    public String getMojamiento() {
         return mojamiento;
     }
 
-    public void setMojamiento(double mojamiento) {
+    public void setMojamiento(String mojamiento) {
         this.mojamiento = mojamiento;
     }
 

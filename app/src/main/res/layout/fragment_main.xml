@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:id="@+id/content_main"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".ui.mod1.main.views.MainActivity">
+        tools:context=".ui.mod1beta.views.fragment.SecondFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/main_swiperefresh"
@@ -21,22 +21,5 @@
             app:spanCount="1"
             />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-<!--
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fmain_fab"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        app:backgroundTint="@color/colorPrimaryDark"
-        app:rippleColor="@color/colorAccent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="@dimen/fab_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_playlist_add_white_24dp"
 
-        />
--->
 </androidx.constraintlayout.widget.ConstraintLayout>

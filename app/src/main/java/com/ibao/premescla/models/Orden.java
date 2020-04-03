@@ -6,43 +6,25 @@ import java.util.List;
 
 public class Orden implements Serializable {
 
-/**
-'id'=> $idOrden,
-'idLote'=> $rowOrden['ID_LOTE'],
-'fundoName'=> utf8_encode($rowOrden['NOMBRE_FUNDO']),
-'cultivoName'=> utf8_encode($rowOrden['NOMBRE_CULTIVO']),
-'variedadName'=> utf8_encode($rowOrden['NOMBRE_VARIEDAD']),
-'loteCode'=> utf8_encode($rowOrden['CODIGO_LOTE']),
-'ordenCode'=> utf8_encode($rowOrden['CODIGO_ORDEN']),
-'ordenDate'=> utf8_encode($rowOrden['FECHA_ORDEN']),
-'aplicacionDate'=> utf8_encode($rowOrden['FECHA_APLICACION']),
-'phMin'=> $rowOrden['MIN_PH'],
-'phMax'=> $rowOrden['MAX_PH'],
-'ecRate'=> $rowOrden['EC'],
-'ecTolerance'=> $rowOrden['TOLERANCIA_EC'],
-'tractorVel'=> $rowOrden['VELOCIDAD_TRACTOR'],
-'rpm'=> $rowOrden['RPM'],
-'boquillasCant'=> $rowOrden['NRO_BOQUILLAS'],
-'tancadasProgramadas'=> $rowOrden['NRO_TANCADAS_PROGRAMAS']
-*/
-
-    private int id;
-    private int idLote;
-    private String fundoName;
-    private String cultivoName;
-    private String variedadName;
-    private String loteCode;
-    private String ordenCode;
-    private String aplicacionDate;
-    private float phMin;
-    private float phMax;
-    private float ecRate;
-    private float ecTolerance;
-    private float tractorVel;
-    private float rpm;
-    private int boquillasCant;
-    private int tancadasProgramadas;
-
+    private int id; // "id": "2",
+    private int idLote; //"idLote": 0
+    private String fundoName; // "fundoName": "SAN LORENZO",
+    private String cultivoName;// "cultivoName": "ARANDANO",
+    private String variedadName; // "variedadName": "BILOXI",
+    private String loteCode;//    "loteCode": "020501",
+    private String ordenCode;//    "ordenCode": "00002106",
+    //    "ordenDate": "2020-03-04",
+    private String aplicacionDate;//    "aplicacionDate": "2020-03-06",
+    private float phMin;//    "phMin": 0,
+    private float phMax;//    "phMax": 0,
+    private float ecRate;//    "ecRate": 0,
+    private float ecTolerance;//    "ecTolerance": 0,
+    //    "mojamiento": 500,
+    private float tractorVel;//    "tractorVel": 0,
+    private float rpm;//    "rpm": 0,
+    private int boquillasCant;//    "boquillasCant": 0,
+    private int tancadasProgramadas;//    "tancadasProgramadas": 1,
+    //    "status": null,
     private List<OrdenDetalle> ordenesDetalle;
     private List<Tancada> tancadas;
 
@@ -232,5 +214,7 @@ public class Orden implements Serializable {
     public boolean isNotComplete(){
         return getCantComplete() != tancadasProgramadas;
     }
+
+
 
 }
