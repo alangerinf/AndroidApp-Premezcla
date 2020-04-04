@@ -12,7 +12,9 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Orden
+import com.ibao.premescla.models.Orden.*
 import com.ibao.premescla.ui.mod1beta.presenters.MainDosificacionPresenter
+import com.ibao.premescla.ui.mod1beta.views.MainDosificacionActivity.Companion.filter_pendiente
 import com.ibao.premescla.ui.mod1beta.views.MainDosificacionActivity.Companion.filter_proceso
 import com.ibao.premescla.ui.mod1beta.views.MainDosificacionActivity.Companion.filter_terminada
 import com.ibao.premescla.ui.mod1beta.views.MainDosificacionActivity.Companion.myfilter
@@ -70,12 +72,16 @@ class MainFragment : Fragment() {
         var temp = ordenList
 
         when(myfilter) {
+            filter_pendiente -> {
+                temp  = temp.filter { it.currentProccess == status_pendiente }
+
+            }
             filter_proceso -> {
-                temp  = temp.filter { !it.isComplete }
+                temp  = temp.filter { it.currentProccess == status_enproceso  }
 
             }
             filter_terminada -> {
-                temp  = temp.filter { it.isComplete }
+                temp  = temp.filter { it.currentProccess == status_finalizada }
             }
             else -> { // Note the block
 

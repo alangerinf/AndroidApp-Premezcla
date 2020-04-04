@@ -44,13 +44,38 @@
                     android:orientation="horizontal"
                     tools:ignore="UseCompoundDrawables">
 
+                    <LinearLayout
+                        android:id="@+id/fmain_item_pendiente"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:orientation="horizontal"
+                        >
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_pan_tool_black_24dp"
+                            app:tint="@color/colorDisable"
+                            />
+
+                        <TextView
+                            android:layout_marginStart="@dimen/margin_min"
+                            style="@style/tView_secondaryText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status_pendiente"
+                            android:textColor="@color/colorDisable"
+                            />
+                    </LinearLayout>
                     <LinearLayout
                         android:id="@+id/fmain_item_onprocess"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="left"
+                        android:visibility="gone"
                         android:orientation="horizontal"
+
                         >
 
                         <ImageView
@@ -125,23 +150,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/space_floating_button"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/aorden_tViewFundo"
-                        style="@style/tView_Tittle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fundo" />
-
-                    <TextView
-                        style="@style/tView_Tittle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_min"
-                        android:layout_marginEnd="@dimen/margin_min"
-                        android:text="@string/separador" />
 
                     <TextView
                         android:id="@+id/aorden_tViewEmpresa"
@@ -149,6 +158,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/empresa" />
+                    <TextView
+                        style="@style/tView_Tittle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_min"
+                        android:layout_marginEnd="@dimen/margin_min"
+                        android:text="@string/separador" />
+                    <TextView
+                        android:id="@+id/aorden_tViewFundo"
+                        style="@style/tView_Tittle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fundo" />
+
 
                 </LinearLayout>
 

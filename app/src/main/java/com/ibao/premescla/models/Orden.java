@@ -6,6 +6,11 @@ import java.util.List;
 
 public class Orden implements Serializable {
 
+    public final static int status_pendiente = 0;
+    public final static int status_enproceso = 1;
+    public final static int status_finalizada = 2;
+
+
     private int id; // "id": "2",
     private int idLote; //"idLote": 0
     private String fundoName; // "fundoName": "SAN LORENZO",
@@ -222,5 +227,21 @@ public class Orden implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getCurrentProccess(){
+        int resp = -1;
+        switch (status){
+            case "PENDIENTE" :
+                resp = status_pendiente;
+                break;
+            case "EN PROCESO" :
+                resp = status_enproceso;
+                break;
+            case "FINALIZADA" :
+                resp = status_finalizada;
+                break;
+        }
+        return resp;
     }
 }

@@ -97,7 +97,7 @@ public class RViewAdapterListTancadas
         {
             holder.tancada_item_fabPrint.hide();
 
-            if(position > getLastPositioinComplete()+1){
+            if(position > getLastPositioinComplete()){
                 holder.root.setAlpha(0.5f);
                 holder.root.setEnabled(false);
             }else {

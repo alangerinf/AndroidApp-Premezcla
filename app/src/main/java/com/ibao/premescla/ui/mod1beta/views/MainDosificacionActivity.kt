@@ -272,7 +272,8 @@ class MainDosificacionActivity : AppCompatActivity(), NavigationView.OnNavigatio
 
     companion object{
 
-        val filter_none = 0
+        val filter_none = -1
+        val filter_pendiente = 0
         val filter_proceso = 1
         val filter_terminada = 2
         var myfilter = filter_none
@@ -284,6 +285,10 @@ class MainDosificacionActivity : AppCompatActivity(), NavigationView.OnNavigatio
             R.id.nav_all -> {
                 title = getString(R.string.tittle_all_orders)
                 myfilter = filter_none
+            }
+            R.id.nav_pendiente -> {
+                title = getString(R.string.tittle_pendiente_orders)
+                myfilter = filter_pendiente
             }
             R.id.nav_proceso -> {
                 title = getString(R.string.tittle_process_orders)

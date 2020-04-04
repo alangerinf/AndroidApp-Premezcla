@@ -14,6 +14,10 @@ import com.ibao.premescla.models.Orden;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ibao.premescla.models.Orden.status_enproceso;
+import static com.ibao.premescla.models.Orden.status_finalizada;
+import static com.ibao.premescla.models.Orden.status_pendiente;
+
 
 public class RViewAdapterListOrdenes
         extends RecyclerView.Adapter<RViewAdapterListOrdenes.ViewHolder>
@@ -57,21 +61,34 @@ public class RViewAdapterListOrdenes
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Orden  item = getOrden(position);
-        holder.fmain_item_Fundo.setText(""+item.getCultivoName()+"\n"+item.getVariedadName());
+        holder.fmain_item_Fundo.setText(""+item.getCultivoName()+" / "+item.getLoteCode());
         holder.fmain_item_Empresa.setText(""+item.getFundoName());
         holder.fmain_item_dateTime.setText(""+item.getAplicacionDate());
         holder.fmain_item_nOrden.setText(""+item.getOrdenCode());
         holder.fmain_item_nTankAll.setText(""+item.getTancadasProgramadas());
         holder.fmain_item_nTankComplete.setText(""+item.getCantComplete());
 
-        if(item.getCantComplete() == item.getTancadasProgramadas()){
-            holder.fmain_item_finish.setVisibility(View.VISIBLE);
-            holder.fmain_item_onprocess.setVisibility(View.GONE);
-        }else {
-            holder.fmain_item_finish.setVisibility(View.GONE);
-            holder.fmain_item_onprocess.setVisibility(View.VISIBLE);
-        }
+        holder.fmain_item_pendiente.setVisibility(View.GONE);
+        holder.fmain_item_finish.setVisibility(View.GONE);
+        holder.fmain_item_onprocess.setVisibility(View.GONE);
+        switch (item.getCurrentProccess()){
+            case status_pendiente:
+                holder.fmain_item_pendiente.setVisibility(View.VISIBLE);
+                holder.fmain_item_onprocess.setVisibility(View.GONE);
+                holder.fmain_item_finish.setVisibility(View.GONE);
+                break;
+            case status_enproceso:
+                holder.fmain_item_pendiente.setVisibility(View.GONE);
+                holder.fmain_item_onprocess.setVisibility(View.VISIBLE);
+                holder.fmain_item_finish.setVisibility(View.GONE);
+                break;
+            case status_finalizada:
+                holder.fmain_item_pendiente.setVisibility(View.GONE);
+                holder.fmain_item_onprocess.setVisibility(View.GONE);
+                holder.fmain_item_finish.setVisibility(View.VISIBLE);
+                break;
 
+        }
     }
 
     public void setOnClicListener(View.OnClickListener listener){
@@ -104,11 +121,13 @@ public class RViewAdapterListOrdenes
         TextView fmain_item_dateTime;
         LinearLayout fmain_item_finish;
         LinearLayout fmain_item_onprocess;
-
+        LinearLayout fmain_item_pendiente;
         FloatingActionButton tareo_item_fab;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            fmain_item_pendiente = itemView.findViewById(R.id.fmain_item_pendiente);
             fmain_item_onprocess = itemView.findViewById(R.id.fmain_item_onprocess);
             fmain_item_finish = itemView.findViewById(R.id.fmain_item_finish);
             fmain_item_nOrden = itemView.findViewById(R.id.fmain_item_nOrden);
