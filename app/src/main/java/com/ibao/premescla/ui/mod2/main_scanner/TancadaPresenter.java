@@ -1,17 +1,15 @@
 package com.ibao.premescla.ui.mod2.main_scanner;
 
-import com.ibao.premescla.models.ProductoPesado;
 import com.ibao.premescla.models.Tancada;
-import com.ibao.premescla.ui.mod2.main_scanner.CustomScannerActivity;
 
 
 public class TancadaPresenter {
 
     private TancadaInteractor interactor;
-    private CustomScannerActivity view;
+    private MainMezclaActivity view;
     private int id;
 
-    public TancadaPresenter(CustomScannerActivity activity, int id){
+    public TancadaPresenter(MainMezclaActivity activity, int id){
         this.interactor = new TancadaInteractor(this);
         this.view = activity;
         this.id = id;

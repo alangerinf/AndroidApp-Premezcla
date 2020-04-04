@@ -33,8 +33,9 @@ import com.ibao.premescla.BuildConfig
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Orden
 import com.ibao.premescla.ui.mod1.main.presenters.MainPresenter
-import com.ibao.premescla.ui.mod1.main.views.adapters.RViewAdapterListOrdenes
+import com.ibao.premescla.ui.mod1beta.views.fragment.RViewAdapterListOrdenes
 import com.ibao.premescla.ui.mod1.orden.ActivityOrden
+import com.ibao.premescla.ui.mod1beta.views.fragment.MainActivityViewModel
 import com.ibao.premescla.utils.appContext
 import java.util.*
 
@@ -131,7 +132,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         registerFilters()
 
-        mySwipeRefreshLayout!!.setOnRefreshListener {
+        mySwipeRefreshLayout?.setOnRefreshListener {
             Log.i(TAG, "onRefresh called from SwipeRefreshLayout")
             requestData()
         }
@@ -140,7 +141,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun requestData(){
         presenter!!.requestAllData()
-        mySwipeRefreshLayout!!.isRefreshing = true
+        mySwipeRefreshLayout?.isRefreshing = true
     }
 
     private fun showDialog() {
@@ -318,7 +319,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun showOrderList(ordenList: List<Orden>) {
-        mySwipeRefreshLayout!!.isRefreshing = false
+        mySwipeRefreshLayout?.isRefreshing = false
 
         var temp = ordenList
         when(myfilter) {
@@ -334,7 +335,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
-        var adapter = RViewAdapterListOrdenes(this@MainActivity,temp)
+        var adapter = RViewAdapterListOrdenes(this@MainActivity, temp)
         adapter.setOnClicListener {
             val pos = myRView!!.getChildAdapterPosition(it)
             val intent = Intent(this@MainActivity, ActivityOrden::class.java)

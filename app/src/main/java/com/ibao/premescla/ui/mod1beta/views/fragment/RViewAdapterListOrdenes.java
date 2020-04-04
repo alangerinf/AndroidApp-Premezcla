@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.mod1.main.views.adapters;
+package com.ibao.premescla.ui.mod1beta.views.fragment;
 
 import android.content.Context;
 import android.view.LayoutInflater;

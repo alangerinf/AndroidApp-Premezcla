@@ -20,29 +20,29 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.BuildConfig
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Orden
-import com.ibao.premescla.ui.mod1.main.views.MainActivityViewModel
+import com.ibao.premescla.ui.mod1beta.views.fragment.MainActivityViewModel
+import com.ibao.premescla.utils.CommunicateViewModel
 import com.ibao.premescla.utils.appContext
 import kotlinx.android.synthetic.main.content_main_mezcla.*
 import java.util.*
 
-class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener  {
+class MainDosificacionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener  {
 
+    private var viewModelComunicate: CommunicateViewModel? = null
+    private val  btnConect by lazy{ findViewById<MaterialButton>(R.id.btnConect) }
     private var viewModel: MainActivityViewModel? = null
-
     lateinit var MENU: Menu
     
     private val mBroadcastReceiver1: BroadcastReceiver = object : BroadcastReceiver() {
@@ -52,16 +52,16 @@ class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 val state: Int = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
                 when (state) {
                     BluetoothAdapter.STATE_OFF -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainMezclaActivity, R.drawable.ic_bluetooth_disabled_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainDosificacionActivity, R.drawable.ic_bluetooth_disabled_black_24dp));
                     }
                     BluetoothAdapter.STATE_TURNING_OFF -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainMezclaActivity, R.drawable.ic_settings_bluetooth_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainDosificacionActivity, R.drawable.ic_settings_bluetooth_black_24dp));
                     }
                     BluetoothAdapter.STATE_ON -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainMezclaActivity, R.drawable.ic_bluetooth_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainDosificacionActivity, R.drawable.ic_bluetooth_black_24dp));
                     }
                     BluetoothAdapter.STATE_TURNING_ON -> {
-                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainMezclaActivity, R.drawable.ic_settings_bluetooth_black_24dp));
+                        MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainDosificacionActivity, R.drawable.ic_settings_bluetooth_black_24dp));
                     }
                 }
             }
@@ -74,11 +74,11 @@ class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             when (action) {
                 BluetoothDevice.ACTION_ACL_CONNECTED -> {
                     // Toast.makeText(ctx,"Conectado",Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainMezclaActivity, R.drawable.ic_bluetooth_connected_black_24dp));
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainDosificacionActivity, R.drawable.ic_bluetooth_connected_black_24dp));
                 }
                 BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
                     // Toast.makeText(ctx,"disconected",Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainMezclaActivity, R.drawable.ic_bluetooth_black_24dp));
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainDosificacionActivity, R.drawable.ic_bluetooth_black_24dp));
                 }
             }
         }
@@ -98,9 +98,11 @@ class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         setSupportActionBar(toolbar)
         title = getString(R.string.tittle_all_orders)
 
-
         // Setup our ViewModel
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        // Setup our ViewModel
+        viewModelComunicate = ViewModelProviders.of(this)[CommunicateViewModel::class.java]
+        viewModelComunicate!!.connectionStatus.observe(this, Observer { connectionStatus: CommunicateViewModel.ConnectionStatus -> onConnectionStatus(connectionStatus) })
 
         // This method return false if there is an error, so if it does, we should close.
         // This method return false if there is an error, so if it does, we should close.
@@ -143,23 +145,23 @@ class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         when {
             mBluetoothAdapter == null -> {
                 //Toast.makeText(ctx,"null", Toast.LENGTH_SHORT).show()
-                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainMezclaActivity, R.drawable.ic_warning_black_24dp))
+                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainDosificacionActivity, R.drawable.ic_warning_black_24dp))
             }
             mBluetoothAdapter.isEnabled -> {
 
                 if(!isConnected(BluetoothManager.getInstance())){
 
                //     Toast.makeText(ctx,"disconected", Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainMezclaActivity, R.drawable.ic_bluetooth_black_24dp));
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainDosificacionActivity, R.drawable.ic_bluetooth_black_24dp));
 
                 }else{
               //      Toast.makeText(ctx,"Conectado ", Toast.LENGTH_SHORT).show()
-                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainMezclaActivity, R.drawable.ic_bluetooth_connected_black_24dp));
+                    MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainDosificacionActivity, R.drawable.ic_bluetooth_connected_black_24dp));
                 }
 
             }
             else -> {
-                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainMezclaActivity, R.drawable.ic_bluetooth_disabled_black_24dp))
+                MENU.getItem(0).setIcon(ContextCompat.getDrawable(this@MainDosificacionActivity, R.drawable.ic_bluetooth_disabled_black_24dp))
              //   Toast.makeText(ctx,"no habilitado", Toast.LENGTH_SHORT).show()
             }
         }
@@ -184,8 +186,30 @@ class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         return  res
 
     }
+    private fun onConnectionStatus(connectionStatus: CommunicateViewModel.ConnectionStatus) {
+        when (connectionStatus) {
+            CommunicateViewModel.ConnectionStatus.CONNECTED -> {
+
+                btnConect!!.isEnabled = true
+                btnConect!!.setText("Conectado")
+                btnConect!!.setOnClickListener { v: View? -> viewModelComunicate!!.disconnect() }
+
+            }
+            CommunicateViewModel.ConnectionStatus.CONNECTING -> {
+
+                btnConect!!.isEnabled = false
+                btnConect!!.setText("Conectando...")
+            }
+            CommunicateViewModel.ConnectionStatus.DISCONNECTED -> {
+
+                btnConect!!.isEnabled = true
+                btnConect!!.setText("Desconectado")
+                btnConect!!.setOnClickListener { v: View? -> viewModelComunicate!!.connect() }
+            }
+        }
+    }
     private fun showDialog() {
-        val dialog = Dialog(this@MainMezclaActivity)
+        val dialog = Dialog(this@MainDosificacionActivity)
 
         dialog .requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog .setCancelable(true)
@@ -203,13 +227,14 @@ class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             // Start observing the data sent to us by the ViewModel
 
         }
-        viewModel!!.pairedDeviceList.observe(this@MainMezclaActivity, Observer(adapter::updateList))
+        viewModel!!.pairedDeviceList.observe(this@MainDosificacionActivity, Observer(adapter::updateList))
         // Immediately refresh the paired devices list
         viewModel!!.refreshPairedDevices()
 
         dialog .show()
 
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean { // Handle action bar item clicks here. The action bar will
 // automatically handle clicks on the Home/Up button, so long
 // as you specify a parent activity in AndroidManifest.xml.
@@ -291,7 +316,7 @@ class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             }
         }
     }
-    val TAG = "MainActivity.tk"
+    val TAG = "MainMezclaActivity.tk"
     fun showError(error: String) {
         Log.e(TAG,error)
         Toast.makeText(this,error, Toast.LENGTH_LONG).show()
@@ -341,6 +366,10 @@ class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             text2.text = device.address
             if(device.name == appContext.deviceSelect && device.address == appContext.macSelect){
                 conectado.visibility= View.VISIBLE
+                tViewDeviceSelected!!.text=device.name+ " -> " +device.address
+
+                viewModelComunicate!!.setupViewModel(device.name, device.address)
+
             }else{
                 conectado.visibility= View.GONE
             }
@@ -349,12 +378,15 @@ class MainMezclaActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                     appContext.deviceSelect = ""
                     appContext.macSelect = ""
 
+                    viewModelComunicate!!.setupViewModel("", "")
+
+                    tViewDeviceSelected!!.text=this@MainDosificacionActivity.getString(R.string.dispositivo_no_seleccionado)
                 }else{
                     appContext.deviceSelect = device.name
                     appContext.macSelect = device.address
                 }
-                //todo: quita
-                //viewModel!!.refreshPairedDevices()
+
+                viewModel!!.refreshPairedDevices()
             }
         }
 

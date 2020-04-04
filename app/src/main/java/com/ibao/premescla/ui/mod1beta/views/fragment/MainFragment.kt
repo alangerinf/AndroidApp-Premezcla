@@ -12,11 +12,10 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Orden
-import com.ibao.premescla.ui.mod1.main.views.adapters.RViewAdapterListOrdenes
-import com.ibao.premescla.ui.mod1beta.presenters.MainMezclaPresenter
-import com.ibao.premescla.ui.mod1beta.views.MainMezclaActivity.Companion.filter_proceso
-import com.ibao.premescla.ui.mod1beta.views.MainMezclaActivity.Companion.filter_terminada
-import com.ibao.premescla.ui.mod1beta.views.MainMezclaActivity.Companion.myfilter
+import com.ibao.premescla.ui.mod1beta.presenters.MainDosificacionPresenter
+import com.ibao.premescla.ui.mod1beta.views.MainDosificacionActivity.Companion.filter_proceso
+import com.ibao.premescla.ui.mod1beta.views.MainDosificacionActivity.Companion.filter_terminada
+import com.ibao.premescla.ui.mod1beta.views.MainDosificacionActivity.Companion.myfilter
 import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
@@ -24,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
  */
 class MainFragment : Fragment() {
 
-    private var presenter: MainMezclaPresenter? = null
+    private var presenter: MainDosificacionPresenter? = null
     
     val TAG = MainFragment::class.java.simpleName
     
@@ -38,7 +37,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MainMezclaPresenter(this)
+        presenter = MainDosificacionPresenter(this)
         main_swiperefresh.setOnRefreshListener {
             Log.i(TAG, "onRefresh called from SwipeRefreshLayout")
             requestData()
@@ -83,7 +82,7 @@ class MainFragment : Fragment() {
             }
         }
 
-        var adapter = RViewAdapterListOrdenes(activity,temp)
+        var adapter = RViewAdapterListOrdenes(activity, temp)
 
         adapter.setOnClicListener {
             val pos = fmain_rView!!.getChildAdapterPosition(it)

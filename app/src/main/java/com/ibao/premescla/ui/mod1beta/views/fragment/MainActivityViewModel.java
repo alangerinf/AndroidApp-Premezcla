@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.mod1beta.views;
+package com.ibao.premescla.ui.mod1beta.views.fragment;
 
 import android.app.Application;
 import android.bluetooth.BluetoothDevice;
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class MainMezclaActivityViewModel extends AndroidViewModel {
+public class MainActivityViewModel extends AndroidViewModel {
 
 
     // Our BluetoothManager!
@@ -28,7 +28,7 @@ public class MainMezclaActivityViewModel extends AndroidViewModel {
     private boolean viewModelSetup = false;
 
     // Called by the system, this is just a constructor that matches AndroidViewModel.
-    public MainMezclaActivityViewModel(@NotNull Application application) {
+    public MainActivityViewModel(@NotNull Application application) {
         super(application);
     }
 

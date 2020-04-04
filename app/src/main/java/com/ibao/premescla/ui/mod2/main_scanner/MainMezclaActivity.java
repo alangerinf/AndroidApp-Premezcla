@@ -13,7 +13,6 @@ import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -32,7 +31,6 @@ import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -43,7 +41,7 @@ import static android.Manifest.permission.CAMERA;
 /**
  * Custom Scannner Activity extending from Activity to display a custom layout form scanner view.
  */
-public class CustomScannerActivity extends AppCompatActivity implements
+public class MainMezclaActivity extends AppCompatActivity implements
         DecoratedBarcodeView.TorchListener {
 
     private DecoratedBarcodeView barcodeScannerView;
@@ -169,7 +167,7 @@ public class CustomScannerActivity extends AppCompatActivity implements
                 try {
                     int idTancada = Tancada.getIdparseFromQR(QR);
                     if(idTancada!=0){
-                        presenter = new TancadaPresenter(CustomScannerActivity.this,idTancada);
+                        presenter = new TancadaPresenter(MainMezclaActivity.this,idTancada);
                         presenter.requestAllData();
                         progressBar.setVisibility(View.VISIBLE);
                         if(!isGoToEdit){
@@ -224,7 +222,7 @@ public class CustomScannerActivity extends AppCompatActivity implements
 
     }
     private void cargarDialogoRecomendacion() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(CustomScannerActivity.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainMezclaActivity.this);
         dialog.setTitle("Permisos Desactivados");
         dialog.setMessage("Debe aceptar todos los permisos para poder tomar fotos");
         dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -240,7 +238,7 @@ public class CustomScannerActivity extends AppCompatActivity implements
                 "si",
                 "no"
         };
-        final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(CustomScannerActivity.this);
+        final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(MainMezclaActivity.this);
         alertOpciones.setTitle("¿Desea configurar los permisos de Forma Manual?");
         alertOpciones.setItems(
                 opciones,
@@ -260,7 +258,7 @@ public class CustomScannerActivity extends AppCompatActivity implements
         alertOpciones.show();
     }
     private void goToEdit(Tancada tancada) {
-        Intent  i = new Intent(CustomScannerActivity.this, EditSensorsActivity.class);
+        Intent  i = new Intent(MainMezclaActivity.this, EditSensorsActivity.class);
         i.putExtra("tancada", tancada);
         startActivity(i);
     }

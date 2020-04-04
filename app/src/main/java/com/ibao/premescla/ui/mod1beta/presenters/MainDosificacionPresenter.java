@@ -3,18 +3,17 @@ package com.ibao.premescla.ui.mod1beta.presenters;
 import android.util.Log;
 
 import com.ibao.premescla.models.Orden;
-import com.ibao.premescla.ui.mod1beta.interactor.MainMezclaInteractor;
-import com.ibao.premescla.ui.mod1beta.views.MainMezclaActivity;
+import com.ibao.premescla.ui.mod1beta.interactor.MainDosificacionInteractor;
 import com.ibao.premescla.ui.mod1beta.views.fragment.MainFragment;
 
 import java.util.List;
 
-public class MainMezclaPresenter {
+public class MainDosificacionPresenter {
 
-    private MainMezclaInteractor interactor;
+    private MainDosificacionInteractor interactor;
     private MainFragment view;
-    public MainMezclaPresenter(MainFragment fragment){
-        this.interactor = new MainMezclaInteractor(this);
+    public MainDosificacionPresenter(MainFragment fragment){
+        this.interactor = new MainDosificacionInteractor(this);
         this.view = fragment;
     }
     String TAG = "MainPresenter.tk";

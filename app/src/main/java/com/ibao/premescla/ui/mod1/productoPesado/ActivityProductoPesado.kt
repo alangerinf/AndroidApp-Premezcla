@@ -26,7 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.R
 import com.ibao.premescla.models.ProductoPesado
-import com.ibao.premescla.ui.mod1.main.views.MainActivityViewModel
+import com.ibao.premescla.ui.mod1beta.views.fragment.MainActivityViewModel
 import com.ibao.premescla.utils.CommunicateViewModel
 import com.ibao.premescla.utils.Utilities
 import com.ibao.premescla.utils.appContext
@@ -226,17 +226,11 @@ class ActivityProductoPesado : AppCompatActivity(){
             {//siguiente
                 presenter!!.requestNewPPesado(ppesado.idTancada)
             }
-
         }
-
         btnBack.setOnClickListener {
-
             refresh()
         }
         registerFilters()
-
-
-
         refresh()
     }
 
@@ -376,7 +370,6 @@ class ActivityProductoPesado : AppCompatActivity(){
     }
 
     fun goToNext(_ppesado: ProductoPesado, _actual: Int, _all: Int) {
-   //     val intent : Intent = Intent(this,ActivityProductoPesado::class.java)
         ppesado = _ppesado
         pos = _actual
         all = _all

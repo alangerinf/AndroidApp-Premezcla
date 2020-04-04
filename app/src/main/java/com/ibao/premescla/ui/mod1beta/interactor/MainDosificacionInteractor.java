@@ -11,8 +11,7 @@ import com.google.gson.Gson;
 import com.ibao.premescla.ConectionConfig;
 import com.ibao.premescla.app.AppController;
 import com.ibao.premescla.models.Orden;
-import com.ibao.premescla.ui.mod1.main.presenters.MainPresenter;
-import com.ibao.premescla.ui.mod1beta.presenters.MainMezclaPresenter;
+import com.ibao.premescla.ui.mod1beta.presenters.MainDosificacionPresenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,13 +22,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainMezclaInteractor {
+public class MainDosificacionInteractor {
 
-    private String TAG = MainMezclaInteractor.class.getSimpleName();
+    private String TAG = MainDosificacionInteractor.class.getSimpleName();
 
-    private MainMezclaPresenter presenter;
+    private MainDosificacionPresenter presenter;
 
-    public MainMezclaInteractor(MainMezclaPresenter presenter) {
+    public MainDosificacionInteractor(MainDosificacionPresenter presenter) {
         this.presenter = presenter;
     }
 

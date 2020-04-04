@@ -3,11 +3,7 @@ package com.ibao.premescla.ui.mod2.select_aplicatiors;
 import com.ibao.premescla.models.Conductor;
 import com.ibao.premescla.models.Tancada;
 import com.ibao.premescla.models.Tractor;
-import com.ibao.premescla.ui.mod2.EditSensorsActivity;
-import com.ibao.premescla.ui.mod2.main_scanner.CustomScannerActivity;
-import com.ibao.premescla.ui.mod2.main_scanner.TancadaInteractor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

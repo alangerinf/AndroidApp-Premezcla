@@ -24,7 +24,7 @@ public class Orden implements Serializable {
     private float rpm;//    "rpm": 0,
     private int boquillasCant;//    "boquillasCant": 0,
     private int tancadasProgramadas;//    "tancadasProgramadas": 1,
-    //    "status": null,
+    private String status;
     private List<OrdenDetalle> ordenesDetalle;
     private List<Tancada> tancadas;
 
@@ -46,6 +46,7 @@ public class Orden implements Serializable {
         this.rpm = 0;
         this.boquillasCant = 0;
         this.tancadasProgramadas = 0;
+        this.status="";
 
         this.ordenesDetalle = new ArrayList<>();
         this.tancadas = new ArrayList<>();
@@ -215,6 +216,11 @@ public class Orden implements Serializable {
         return getCantComplete() != tancadasProgramadas;
     }
 
+    public String getStatus() {
+        return status;
+    }
 
-
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

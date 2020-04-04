@@ -30,8 +30,9 @@ import com.ibao.premescla.R
 import com.ibao.premescla.models.ProductoPesado
 import com.ibao.premescla.models.Recipe
 import com.ibao.premescla.models.Tancada
-import com.ibao.premescla.ui.mod1.main.views.MainActivityViewModel
+import com.ibao.premescla.ui.mod1beta.views.fragment.MainActivityViewModel
 import com.ibao.premescla.ui.mod1.productoPesado.ActivityProductoPesado
+import com.ibao.premescla.ui.mod1beta.views.fragment.RViewAdapterListProductoPesado
 import com.ibao.premescla.utils.PrintQR
 import com.ibao.premescla.utils.appContext
 import java.util.*
@@ -290,7 +291,7 @@ class ActivityTancada : AppCompatActivity(){
         atancada_tViewNPPesado.text = ""+_tancada.productosPesados.size
         mySwipeRefreshLayout!!.isRefreshing= false
 
-        val adapter = RViewAdapterListProductoPesado(this,_tancada.productosPesados)
+        val adapter = RViewAdapterListProductoPesado(this, _tancada.productosPesados)
         adapter.setOnClicListener {
 
         }

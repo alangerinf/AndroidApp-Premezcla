@@ -21,14 +21,12 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.mod1beta.views.MainMezclaActivity"
+            android:name=".ui.mod1beta.views.MainDosificacionActivity"
             android:label="@string/title_activity_main_mezcla"
             android:theme="@style/AppThemeMaterial.NoActionBar">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -38,7 +36,11 @@
             android:name=".ui.ActivityPreloader"
             android:screenOrientation="fullSensor"
             android:theme="@style/AppThemeMaterial.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.login.view.LoginActivity"
@@ -52,11 +54,6 @@
         <activity
             android:name=".ui.mod1.main.views.MainActivity"
             android:theme="@style/AppThemeMaterial.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
@@ -90,7 +87,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.mod2.main_scanner.CustomScannerActivity"
+            android:name=".ui.mod2.main_scanner.MainMezclaActivity"
             android:theme="@style/AppThemeMaterial" />
     </application>
 

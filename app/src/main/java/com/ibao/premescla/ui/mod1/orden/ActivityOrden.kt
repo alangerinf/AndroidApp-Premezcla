@@ -29,8 +29,8 @@ import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Orden
 import com.ibao.premescla.models.Recipe
-import com.ibao.premescla.ui.mod1.main.views.MainActivityViewModel
-import com.ibao.premescla.ui.mod1.orden.adapters.RViewAdapterListTancadas
+import com.ibao.premescla.ui.mod1beta.views.fragment.MainActivityViewModel
+import com.ibao.premescla.ui.mod1beta.views.fragment.RViewAdapterListTancadas
 import com.ibao.premescla.ui.mod1.tancada.ActivityTancada
 import com.ibao.premescla.utils.appContext
 import java.util.*
@@ -277,7 +277,7 @@ class ActivityOrden : AppCompatActivity(){
             fmain_item_onprocess.visibility= View.VISIBLE
         }
 
-        val adapter = RViewAdapterListTancadas(this,orden.tancadas,Recipe(orden.ordenesDetalle))
+        val adapter = RViewAdapterListTancadas(this, orden.tancadas, Recipe(orden.ordenesDetalle))
         adapter.setOnClicListener {
 
             val pos = myRView!!.getChildAdapterPosition(it)

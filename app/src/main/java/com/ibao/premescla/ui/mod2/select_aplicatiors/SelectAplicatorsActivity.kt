@@ -10,8 +10,7 @@ import com.ibao.premescla.R
 import com.ibao.premescla.models.Conductor
 import com.ibao.premescla.models.Tancada
 import com.ibao.premescla.models.Tractor
-import com.ibao.premescla.ui.mod2.EditSensorsActivity
-import com.ibao.premescla.ui.mod2.main_scanner.CustomScannerActivity
+import com.ibao.premescla.ui.mod2.main_scanner.MainMezclaActivity
 import kotlinx.android.synthetic.main.activity_select_aplicators.*
 import java.util.*
 
@@ -64,7 +63,7 @@ class SelectAplicatorsActivity : AppCompatActivity() {
     }
 
     fun saveOk() {
-        val i = Intent(this,CustomScannerActivity::class.java)
+        val i = Intent(this, MainMezclaActivity::class.java)
         startActivity(i)
         this.finish()
     }

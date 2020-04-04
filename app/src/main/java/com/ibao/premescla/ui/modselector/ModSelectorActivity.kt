@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.ibao.premescla.R
-import com.ibao.premescla.ui.mod1.main.views.MainActivity
-import com.ibao.premescla.ui.mod2.main_scanner.CustomScannerActivity
+import com.ibao.premescla.ui.mod1beta.views.MainDosificacionActivity
+import com.ibao.premescla.ui.mod2.main_scanner.MainMezclaActivity
 import com.ibao.premescla.ui.mod3.inbox.ActivityInboxTancada
 import kotlinx.android.synthetic.main.activity_mod_selector.*
 
@@ -16,17 +16,18 @@ class ModSelectorActivity : Activity() {
         setContentView(R.layout.activity_mod_selector)
 
 
-
         btnDosificacion.setOnClickListener {
-            val i = Intent(this,MainActivity::class.java);
+            val i = Intent(this, MainDosificacionActivity::class.java);
             startActivity(i)
             it.isEnabled = false
+
         }
 
         btnMezcla.setOnClickListener {
-            val i = Intent(this,CustomScannerActivity::class.java);
+            val i = Intent(this, MainMezclaActivity::class.java);
             startActivity(i)
             it.isEnabled = false
+
         }
 
         btnAplicacion.setOnClickListener {
