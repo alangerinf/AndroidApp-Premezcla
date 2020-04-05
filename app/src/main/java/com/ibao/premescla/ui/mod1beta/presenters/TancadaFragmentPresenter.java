@@ -2,10 +2,8 @@ package com.ibao.premescla.ui.mod1beta.presenters;
 
 import com.ibao.premescla.models.ProductoPesado;
 import com.ibao.premescla.models.Tancada;
-import com.ibao.premescla.ui.mod1.tancada.ActivityTancada;
-import com.ibao.premescla.ui.mod1.tancada.TancadaInteractor;
 import com.ibao.premescla.ui.mod1beta.interactor.TancadaFragmentInteractor;
-import com.ibao.premescla.ui.mod1beta.views.fragment.TancadaFragment;
+import com.ibao.premescla.ui.mod1beta.views.fragment.tancada.TancadaFragment;
 
 
 public class TancadaFragmentPresenter {

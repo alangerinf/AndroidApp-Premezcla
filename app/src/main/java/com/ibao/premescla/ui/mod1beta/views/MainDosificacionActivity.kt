@@ -32,10 +32,9 @@ import com.harrysoft.androidbluetoothserial.BluetoothManager
 import com.ibao.premescla.BuildConfig
 import com.ibao.premescla.R
 import com.ibao.premescla.models.Orden
-import com.ibao.premescla.ui.mod1beta.views.fragment.MainActivityViewModel
 import com.ibao.premescla.utils.CommunicateViewModel
 import com.ibao.premescla.utils.appContext
-import kotlinx.android.synthetic.main.content_main_mezcla.*
+import kotlinx.android.synthetic.main.mod1_content_main.*
 import java.util.*
 
 class MainDosificacionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener  {
@@ -93,7 +92,7 @@ class MainDosificacionActivity : AppCompatActivity(), NavigationView.OnNavigatio
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_mezcla)
+        setContentView(R.layout.mod1_act_main)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         title = getString(R.string.tittle_all_orders)
@@ -213,7 +212,7 @@ class MainDosificacionActivity : AppCompatActivity(), NavigationView.OnNavigatio
 
         dialog .requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog .setCancelable(true)
-        dialog .setContentView(R.layout.dialog_list_devices)
+        dialog .setContentView(R.layout.mod1_dialog_devices)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         var  fab = dialog.findViewById<FloatingActionButton>(R.id.fabRefresgPaired)
@@ -407,7 +406,7 @@ class MainDosificacionActivity : AppCompatActivity(), NavigationView.OnNavigatio
     private inner class DeviceAdapter : RecyclerView.Adapter<DeviceViewHolder>() {
         private var deviceList: List<BluetoothDevice> = ArrayList()
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
-            return DeviceViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false))
+            return DeviceViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.mod1_dialog_devices_item, parent, false))
         }
 
         override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {

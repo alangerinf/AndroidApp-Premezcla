@@ -13,9 +13,8 @@ public class Tancada  implements Serializable {
         'productosPesados' => $productoPesadoDAO->selectByIdTancada($idTancada_)
      */
 
-
-
     private int idTractor;
+    private int idFumigadora;
     private int idConductor;
 
     private int id;
@@ -25,7 +24,7 @@ public class Tancada  implements Serializable {
     private List<ProductoPesado> productosPesados;
     private List<Muestra> muestras;
     private String estadoTancada;
-
+    private String codeOrden;
     private String codeLote;
     private int idLote;
 
@@ -57,6 +56,7 @@ public class Tancada  implements Serializable {
         this.productosPesados = new ArrayList<>();
         this.muestras = new ArrayList<>();
         this.codeLote = "";
+        this.codeOrden="";
         this.estadoTancada = "";
 
         this.nombreTractor= "";
@@ -74,7 +74,7 @@ public class Tancada  implements Serializable {
 
         this.conductividad= "";
         this.fechaConductividad= "";
-
+        this.idFumigadora=0;
 
 
         this.usuario=0;
@@ -276,6 +276,14 @@ public class Tancada  implements Serializable {
         return "T"+id;
     }
 
+    public int getIdFumigadora() {
+        return idFumigadora;
+    }
+
+    public void setIdFumigadora(int idFumigadora) {
+        this.idFumigadora = idFumigadora;
+    }
+
     public static int getIdparseFromQR(String qr) throws NullPointerException{
         int id =0;
         try {
@@ -290,4 +298,11 @@ public class Tancada  implements Serializable {
         return id;
     }
 
+    public String getCodeOrden() {
+        return codeOrden;
+    }
+
+    public void setCodeOrden(String codeOrden) {
+        this.codeOrden = codeOrden;
+    }
 }

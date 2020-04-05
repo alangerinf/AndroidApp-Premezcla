@@ -6,16 +6,16 @@
     app:startDestination="@id/MainFragment">
     <fragment
         android:id="@+id/MainFragment"
-        android:name="com.ibao.premescla.ui.mod1beta.views.fragment.MainFragment"
-        tools:layout="@layout/fragment_main">
+        android:name="com.ibao.premescla.ui.mod1beta.views.fragment.main.MainFragment"
+        tools:layout="@layout/mod1_frag_main">
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.ibao.premescla.ui.mod1beta.views.fragment.OrdenFragment"
-        tools:layout="@layout/fragment_orden">
+        android:name="com.ibao.premescla.ui.mod1beta.views.fragment.orden.OrdenFragment"
+        tools:layout="@layout/mod1_frag_orden">
         <action
             android:id="@+id/action_SecondFragment_to_tancadaFragment"
             app:destination="@id/tancadaFragment" />
@@ -25,16 +25,16 @@
         app:destination="@id/MainFragment" />
     <fragment
         android:id="@+id/tancadaFragment"
-        android:name="com.ibao.premescla.ui.mod1beta.views.fragment.TancadaFragment"
+        android:name="com.ibao.premescla.ui.mod1beta.views.fragment.tancada.TancadaFragment"
         android:label="TancadaFragment"
-        tools:layout="@layout/fragment_tancada">
+        tools:layout="@layout/mod1_frag_tancada">
         <action
             android:id="@+id/action_tancadaFragment_to_PPesadoFragment"
             app:destination="@id/PPesadoFragment" />
     </fragment>
     <fragment
         android:id="@+id/PPesadoFragment"
-        android:name="com.ibao.premescla.ui.mod1beta.views.fragment.PPesadoFragment"
+        android:name="com.ibao.premescla.ui.mod1beta.views.fragment.ppesado.PPesadoFragment"
         android:label="PPesadoFragment"
-        tools:layout="@layout/fragment_ppesado"/>
+        tools:layout="@layout/mod1_frag_ppesado"/>
 </navigation>

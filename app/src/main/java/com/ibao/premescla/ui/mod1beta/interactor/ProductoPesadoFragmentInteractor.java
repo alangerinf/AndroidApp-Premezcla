@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import com.ibao.premescla.ConectionConfig;
 import com.ibao.premescla.app.AppController;
 import com.ibao.premescla.models.ProductoPesado;
-import com.ibao.premescla.ui.mod1.productoPesado.ProductoPesadoPresenter;
 import com.ibao.premescla.ui.mod1beta.presenters.ProductoPesadoFragmentPresenter;
 
 import org.json.JSONException;
@@ -108,7 +107,7 @@ public class ProductoPesadoFragmentInteractor {
     }
 
     private void onResponseGetNextPPesado(String response) {
-        Log.d(TAG, "resp:" + response);
+        Log.d(TAG, "onResponseGetNextPPesado resp:" + response);
         try {
             JSONObject main = new JSONObject(response);
             JSONObject jsonPPesado = main.getJSONObject("data");

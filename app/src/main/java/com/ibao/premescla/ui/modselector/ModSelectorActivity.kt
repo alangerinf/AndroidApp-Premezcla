@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.ibao.premescla.R
 import com.ibao.premescla.ui.mod1beta.views.MainDosificacionActivity
-import com.ibao.premescla.ui.mod2.main_scanner.MainMezclaActivity
-import com.ibao.premescla.ui.mod3.inbox.ActivityInboxTancada
+import com.ibao.premescla.ui.mod2.main.MainMezclaActivity
+import com.ibao.premescla.ui.mod3.main.ActivityInboxTancada
 import kotlinx.android.synthetic.main.activity_mod_selector.*
 
 class ModSelectorActivity : Activity() {

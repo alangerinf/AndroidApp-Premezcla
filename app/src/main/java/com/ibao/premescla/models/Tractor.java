@@ -4,20 +4,20 @@ public class Tractor {
 
     /*
     {
-        "id":3,
-        "idTancada":0,
-        "placa":"ABC-223"
+        "id": "1",
+        "codTractor": "1",
+        "nombreTractor": "TRACTOR FERRARI XYZ"
     }
     */
     private int id;
-    private int idTancada;
-    private String placa;
+    private String codTractor;
+    private String nombreTractor;
 
     public Tractor() {
 
         this.id = 0;
-        this.idTancada = 0;
-        this.placa ="";
+        this.codTractor = "";
+        this.nombreTractor ="";
     }
 
     public int getId() {
@@ -28,19 +28,19 @@ public class Tractor {
         this.id = id;
     }
 
-    public int getIdTancada() {
-        return idTancada;
+    public String getCodTractor() {
+        return codTractor;
     }
 
-    public void setIdTancada(int idTancada) {
-        this.idTancada = idTancada;
+    public void setCodTractor(String codTractor) {
+        this.codTractor = codTractor;
     }
 
-    public String getPlaca() {
-        return placa;
+    public String getNombreTractor() {
+        return nombreTractor;
     }
 
-    public void setPlaca(String placa) {
-        this.placa = placa;
+    public void setNombreTractor(String nombreTractor) {
+        this.nombreTractor = nombreTractor;
     }
 }

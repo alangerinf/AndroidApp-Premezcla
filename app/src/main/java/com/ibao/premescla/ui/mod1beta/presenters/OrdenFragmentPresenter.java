@@ -3,10 +3,8 @@ package com.ibao.premescla.ui.mod1beta.presenters;
 import android.util.Log;
 
 import com.ibao.premescla.models.Orden;
-import com.ibao.premescla.ui.mod1.orden.ActivityOrden;
-import com.ibao.premescla.ui.mod1.orden.OrdenInteractor;
 import com.ibao.premescla.ui.mod1beta.interactor.OrdenFragmentInteractor;
-import com.ibao.premescla.ui.mod1beta.views.fragment.OrdenFragment;
+import com.ibao.premescla.ui.mod1beta.views.fragment.orden.OrdenFragment;
 
 public class OrdenFragmentPresenter {
 

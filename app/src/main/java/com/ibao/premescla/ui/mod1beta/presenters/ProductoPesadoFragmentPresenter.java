@@ -1,10 +1,8 @@
 package com.ibao.premescla.ui.mod1beta.presenters;
 
 import com.ibao.premescla.models.ProductoPesado;
-import com.ibao.premescla.ui.mod1.productoPesado.ActivityProductoPesado;
-import com.ibao.premescla.ui.mod1.productoPesado.ProductoPesadoInteractor;
 import com.ibao.premescla.ui.mod1beta.interactor.ProductoPesadoFragmentInteractor;
-import com.ibao.premescla.ui.mod1beta.views.fragment.PPesadoFragment;
+import com.ibao.premescla.ui.mod1beta.views.fragment.ppesado.PPesadoFragment;
 
 
 public class ProductoPesadoFragmentPresenter {
@@ -18,7 +16,6 @@ public class ProductoPesadoFragmentPresenter {
     }
 
     String TAG = ProductoPesadoFragmentPresenter.class.getSimpleName();
-
 
     public void goToAddPPesado(ProductoPesado ppesado,int actual, int all){
         view.goToNext(ppesado,actual,all);

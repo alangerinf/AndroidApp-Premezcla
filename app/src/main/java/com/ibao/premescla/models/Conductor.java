@@ -1,26 +1,32 @@
 package com.ibao.premescla.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Conductor {
 
     /*
-    {
-        "id":2,
-        "idTancada":0,
-        "documentNumber":"12345678",
-        "name":"ALVARADO TRELLES, DOMINGO"
-    }
+        "id": "1",
+        "idTancada": "270",
+        "ordenCode": "00002146",
+        "nombreConductor": "BENITO PEREZ",
     */
 
     private int id;
     private int idTancada;
-    private String documentNumber;
-    private String name;
+    private String ordenCode;
+    private String nombreConductor;
+
+    private List<Tractor> tractores;
+    private List<Fumigadora> fumigadoras;
 
     public Conductor() {
         this.id=0;
         this.idTancada=0;
-        this.documentNumber="";
-        this.name="";
+        this.ordenCode ="";
+        this.nombreConductor ="";
+        this.tractores=new ArrayList<>();
+        this.fumigadoras=new ArrayList<>();
     }
 
     public int getId() {
@@ -39,19 +45,38 @@ public class Conductor {
         this.idTancada = idTancada;
     }
 
-    public String getDocumentNumber() {
-        return documentNumber;
+    public String getOrdenCode() {
+        return ordenCode;
     }
 
-    public void setDocumentNumber(String documentNumber) {
-        this.documentNumber = documentNumber;
+    public void setOrdenCode(String ordenCode) {
+        this.ordenCode = ordenCode;
     }
 
-    public String getName() {
-        return name;
+    public String getNombreConductor() {
+        return nombreConductor;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombreConductor(String nombreConductor) {
+        this.nombreConductor = nombreConductor;
     }
+
+
+    public List<Tractor> getTractores() {
+        return tractores;
+    }
+
+    public void setTractores(List<Tractor> tractores) {
+        this.tractores = tractores;
+    }
+
+    public List<Fumigadora> getFumigadoras() {
+        return fumigadoras;
+    }
+
+    public void setFumigadoras(List<Fumigadora> fumigadoras) {
+        this.fumigadoras = fumigadoras;
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package com.ibao.premescla.ui.mod1beta.interactor;
+package com.ibao.premescla.ui.mod2.main;
 
 import android.util.Log;
 
@@ -9,8 +9,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.ibao.premescla.ConectionConfig;
 import com.ibao.premescla.app.AppController;
-import com.ibao.premescla.models.Orden;
-import com.ibao.premescla.ui.mod1beta.presenters.OrdenFragmentPresenter;
+import com.ibao.premescla.models.Tancada;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,33 +20,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrdenFragmentInteractor {
+public class TancadaInteractor {
 
-    private String TAG = OrdenFragmentInteractor.class.getSimpleName();
+    private String TAG = TancadaInteractor.class.getSimpleName();
 
-    private OrdenFragmentPresenter presenter;
+    private TancadaPresenter presenter;
 
-    public OrdenFragmentInteractor(OrdenFragmentPresenter presenter) {
+    public TancadaInteractor(TancadaPresenter presenter) {
         this.presenter = presenter;
     }
 
     public void requestAllData(int id){
-        Log.d(TAG,"requestAllData()"+ConectionConfig.GET_ORDER);
         StringRequest jsonObjReq = new StringRequest(Request.Method.GET,
-                ConectionConfig.GET_ORDER+"?id="+id,
-
-                this::onResponse, error -> onError(error)
-
+                ConectionConfig.GET_TANCADA+"?id="+id,
+                this::onResponseAllData, error -> onError(error)
         ){
-
             @Override
             protected Map<String,String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
-               // params.put(POST_USER, user);
-               // params.put(POST_PASS, password);
                 return params;
             }
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<String, String>();
@@ -56,9 +48,7 @@ public class OrdenFragmentInteractor {
             }
         };
 
-
         AppController.getInstance().addToRequestQueue(jsonObjReq);
-
     }
 
     private void onError(VolleyError error){
@@ -67,25 +57,23 @@ public class OrdenFragmentInteractor {
         error.printStackTrace();
     }
 
-    private void onResponse(String response) {
+    private void onResponseAllData(String response) {
         Log.d(TAG, "resp:" + response);
-
-
         try {
             JSONObject main = new JSONObject(response);
             JSONArray data = main.getJSONArray("data");
-            List<Orden> ordenList = new ArrayList<>();
+            List<Tancada> tancadaList = new ArrayList<>();
             for(int i=0;i< data.length();i++){
                 JSONObject jsonOrden = data.getJSONObject(i);
                 Log.i(TAG,"**");
                 Log.i(TAG,jsonOrden.toString());
-                Orden orden = new Gson().fromJson(jsonOrden.toString(),Orden.class);
-                String json =  new Gson().toJson(orden);
+                Tancada tancada = new Gson().fromJson(jsonOrden.toString(),Tancada.class);
+                String json =  new Gson().toJson(tancada);
                 Log.i(TAG,json);
                 Log.i(TAG,"**");
-                ordenList.add(orden);
+                tancadaList.add(tancada);
             }
-                presenter.showOrdenList(ordenList.get(0));
+                presenter.showTancadaData(tancadaList.get(0));
             Log.d(TAG, "done"+data.length());
         } catch (JSONException e) {
             presenter.showError(e.getMessage());

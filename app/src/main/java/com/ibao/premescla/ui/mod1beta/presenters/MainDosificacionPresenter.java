@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.ibao.premescla.models.Orden;
 import com.ibao.premescla.ui.mod1beta.interactor.MainDosificacionInteractor;
-import com.ibao.premescla.ui.mod1beta.views.fragment.MainFragment;
+import com.ibao.premescla.ui.mod1beta.views.fragment.main.MainFragment;
 
 import java.util.List;
 

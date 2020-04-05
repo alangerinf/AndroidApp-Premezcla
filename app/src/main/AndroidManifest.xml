@@ -46,48 +46,14 @@
             android:name=".ui.login.view.LoginActivity"
             android:screenOrientation="fullSensor"
             android:theme="@style/AppThemeMaterial.Fullscreen" />
-        <activity android:name=".ui.mod3.pushone.SelectorActivity" />
-        <activity android:name=".ui.mod3.tancada_muestra.TancadaMuestraActivity" />
-        <activity android:name=".ui.mod3.inbox.ActivityInboxTancada" />
-        <activity android:name=".ui.mod2.select_aplicatiors.SelectAplicatorsActivity" />
-        <activity android:name=".ui.mod2.EditSensorsActivity" />
+        <activity android:name=".ui.mod3.muestra_post.SelectorActivity" />
+        <activity android:name=".ui.mod3.tancada.TancadaMuestraActivity" />
+        <activity android:name=".ui.mod3.main.ActivityInboxTancada" />
+        <activity android:name=".ui.mod2.select.SelectAplicatorsActivity" />
+        <activity android:name=".ui.mod2.edit.EditSensorsActivity" />
+
         <activity
-            android:name=".ui.mod1.main.views.MainActivity"
-            android:theme="@style/AppThemeMaterial.NoActionBar">
-            <intent-filter>
-                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
-                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.mod1.orden.ActivityOrden"
-            android:parentActivityName=".ui.mod1.main.views.MainActivity"
-            android:theme="@style/AppThemeMaterial">
-            <intent-filter>
-                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
-                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.mod1.tancada.ActivityTancada"
-            android:parentActivityName=".ui.mod1.orden.ActivityOrden"
-            android:theme="@style/AppThemeMaterial">
-            <intent-filter>
-                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
-                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.mod1.productoPesado.ActivityProductoPesado"
-            android:parentActivityName=".ui.mod1.orden.ActivityOrden"
-            android:theme="@style/AppThemeMaterial">
-            <intent-filter>
-                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
-                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.mod2.main_scanner.MainMezclaActivity"
+            android:name=".ui.mod2.main.MainMezclaActivity"
             android:theme="@style/AppThemeMaterial" />
     </application>
 
