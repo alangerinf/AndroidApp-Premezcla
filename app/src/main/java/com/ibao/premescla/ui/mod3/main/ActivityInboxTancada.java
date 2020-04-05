@@ -66,9 +66,15 @@ public class ActivityInboxTancada extends AppCompatActivity {
             fAButtonClearText.setVisibility(View.INVISIBLE);
         });
         tancadaList = new ArrayList<>();
-        consultarTancadas("");
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String text = eTextSearch.getText().toString();
+        consultarTancadas(text);
+    }
 
     private void cargarData(){
         progressBar.setVisibility(View.GONE);

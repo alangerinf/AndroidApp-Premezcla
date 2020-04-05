@@ -1,24 +1,25 @@
 package com.ibao.premescla.ui.mod3.tancada
 
-        import android.content.Intent
-                import android.os.Bundle
-                import android.widget.Toast
-                import androidx.appcompat.app.AppCompatActivity
-                import com.ibao.premescla.R
-                import com.ibao.premescla.models.Tancada
-                import com.ibao.premescla.ui.mod3.muestra_post.SelectorActivity
-                import kotlinx.android.synthetic.main.mod3_act_tancada.*
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.ibao.premescla.R
+import com.ibao.premescla.models.Tancada
+import com.ibao.premescla.ui.mod3.muestra_post.SelectorActivity
+import kotlinx.android.synthetic.main.mod3_act_tancada.*
 
-        class TancadaMuestraActivity : AppCompatActivity() {
+class TancadaMuestraActivity : AppCompatActivity() {
 
-            private val BUNDLE: Bundle by lazy { intent.extras!! }
-            private val ID_TANCADA: Int by lazy { BUNDLE.getInt("extra_id_tancada") }
-            private val presenter: TancadaMuestraPresenter by lazy { TancadaMuestraPresenter(this@TancadaMuestraActivity,ID_TANCADA)}
-            private lateinit var TANCADA: Tancada
-            override fun onCreate(savedInstanceState: Bundle?) {
-                super.onCreate(savedInstanceState)
-                setContentView(R.layout.mod3_act_tancada)
-                loadData()
+    private val BUNDLE: Bundle by lazy { intent.extras!! }
+    private val ID_TANCADA: Int by lazy { BUNDLE.getInt("extra_id_tancada") }
+    private val presenter: TancadaMuestraPresenter by lazy { TancadaMuestraPresenter(this@TancadaMuestraActivity,ID_TANCADA)}
+    private lateinit var TANCADA: Tancada
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.mod3_act_tancada)
+        loadData()
     }
 
     fun loadData(){
@@ -68,7 +69,31 @@ package com.ibao.premescla.ui.mod3.tancada
         }
 
         button.setOnClickListener {
-            presenter.requestUpdateEstado(tancada)
+            if(tancada.muestras.size>0){
+                presenter.requestUpdateEstado(tancada)
+            }else{
+                showError("Ingrese muestras para finalizar")
+            }
+        }
+
+        button.isEnabled=true
+        if(timeStart.isEmpty()){
+            floatingActionButton.hide()
+            button.text="INICIAR APLICACIÓN"
+            button.setBackgroundColor(resources.getColor(R.color.colorAccent))
+        }else{
+            if(timeEnd.isEmpty()){
+                floatingActionButton.show()
+                button.text="FINALIZAR APLICACIÓN"
+                button.setBackgroundColor(resources.getColor(R.color.red_pastel))
+            }else{
+                floatingActionButton.hide()
+                button.text="APLICACIÓN FINALIZADA"
+                button.setBackgroundColor(resources.getColor(R.color.colorDisable))
+                
+                button.isEnabled=false
+            }
+
         }
     }
 

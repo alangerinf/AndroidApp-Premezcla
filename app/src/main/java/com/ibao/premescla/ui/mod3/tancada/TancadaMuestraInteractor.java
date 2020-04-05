@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.ibao.premescla.ConectionConfig;
 import com.ibao.premescla.app.AppController;
 import com.ibao.premescla.models.Tancada;
+import com.ibao.premescla.utils.Utilities;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,15 +33,24 @@ public class TancadaMuestraInteractor {
 
 
     public void updateEstado(Tancada tancada){
+        String url = ConectionConfig.POST_TANCADA+"?action="+ConectionConfig.T_ACTION_APLICACION;
+        Log.i(TAG,url);
         StringRequest jsonObjReq = new StringRequest(Request.Method.DEPRECATED_GET_OR_POST,
-                ConectionConfig.POST_TANCADA+"?action="+ConectionConfig.T_ACTION_APLICACION,
+                url,
                 this::onResponseUpdateEstado, error -> onError(error)
         ){
             @Override
             protected Map<String,String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
+
+                if(tancada.getFechaInicioAplicacion().isEmpty()){
+                    tancada.setFechaInicioAplicacion(Utilities.getDateTime());
+                }else{
+                    tancada.setFechaFinAplicacion(Utilities.getDateTime());
+                }
+
                 String data = new Gson().toJson(tancada);
-                Log.i(TAG,"data:"+data);
+                Log.i(TAG,"updateEstado data:"+data);
                 params.put("data",data);
                 return params;
             }
