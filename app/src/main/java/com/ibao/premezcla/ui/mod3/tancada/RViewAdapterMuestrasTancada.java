@@ -61,6 +61,13 @@ public class RViewAdapterMuestrasTancada
         holder.tm_tViewLines.setText(""+item.getLines());
         holder.tm_tViewDistance.setText(""+getFloatFormateado(item.getDistancy()));
         holder.tm_tViewDuracion.setText(""+item.getDuration());
+
+        if(item.getVelocityMuestra()==item.getVelocityTractor()){
+            holder.tm_iViewFace.setImageResource(R.drawable.ic_happy_24dp);
+        }else {
+            holder.tm_iViewFace.setImageResource(R.drawable.ic_sad_24dp);
+        }
+
     }
 
 

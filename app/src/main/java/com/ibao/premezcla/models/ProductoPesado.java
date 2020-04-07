@@ -23,9 +23,9 @@ public class ProductoPesado  implements Serializable {
     private String productName;
     private String productActive;
     private String productType;
-
+    private int usuario;
     public ProductoPesado() {
-
+        this.usuario = 0;
         this.id = 0;
         this.idTancada = 0;
         this.idOrdenDetalle = 0;
@@ -127,5 +127,13 @@ public class ProductoPesado  implements Serializable {
 
     public void setFechaPesada(String fechaPesada) {
         this.fechaPesada = fechaPesada;
+    }
+
+    public int getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
     }
 }

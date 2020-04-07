@@ -61,6 +61,7 @@ public class RViewAdapterListPasajeros
     public void onBindViewHolder(@NonNull ViewHolder holder, final int pos) {
         Tancada tancada = getItem(pos);
 
+        holder.ti_tViewOrdenCode.setText(""+tancada.getCodeOrden());
         holder.ti_tViewStatus.setText(""+tancada.getEstadoTancada());
         holder.ti_tViewLoteCode.setText(""+tancada.getCodeLote());
         holder.ti_tViewNroTancada.setText(""+tancada.getNroTancada());
@@ -105,6 +106,7 @@ public class RViewAdapterListPasajeros
         TextView ti_tViewTimeEnd;
         TextView ti_tViewConductor;
         TextView ti_tViewTractor;
+        TextView ti_tViewOrdenCode;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             ti_tViewNroTancada = itemView.findViewById(R.id.ti_tViewNroTancada);
@@ -116,6 +118,8 @@ public class RViewAdapterListPasajeros
             ti_tViewTimeEnd = itemView.findViewById(R.id.ti_tViewTimeEnd);
             ti_tViewConductor = itemView.findViewById(R.id.ti_tViewConductor);
             ti_tViewTractor = itemView.findViewById(R.id.ti_tViewTractor);
+            ti_tViewOrdenCode = itemView.findViewById(R.id.ti_tViewOrdenCode);
+
         }
     }
 

@@ -8,6 +8,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.ibao.premezcla.ConectionConfig;
+import com.ibao.premezcla.SharedPreferencesManager;
 import com.ibao.premezcla.app.AppController;
 import com.ibao.premezcla.models.Conductor;
 import com.ibao.premezcla.models.Tancada;
@@ -64,6 +65,8 @@ public class SelectorInteractor {
             @Override
             protected Map<String,String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
+
+                tancada.setUsuario(SharedPreferencesManager.getUser(AppController.getInstance().getBaseContext()).getId());
                 params.put("data",new Gson().toJson(tancada));
                 return params;
             }

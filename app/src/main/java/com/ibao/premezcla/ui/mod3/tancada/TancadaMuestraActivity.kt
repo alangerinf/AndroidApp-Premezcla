@@ -20,6 +20,11 @@ class TancadaMuestraActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mod3_act_tancada)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         loadData()
     }
 
@@ -34,7 +39,7 @@ class TancadaMuestraActivity : AppCompatActivity() {
         ti_tViewNroTancada.text = "" + TANCADA.nroTancada
         ti_tViewMojamiento.text = "" + TANCADA.mojamiento
         ti_tViewMuestras.text = "" + TANCADA.muestras.size
-
+        eTextCodOrden.text = ""+TANCADA.codeOrden
         val timeStart = TANCADA.fechaInicioAplicacion
         val timeEnd = TANCADA.fechaFinAplicacion
 
@@ -77,12 +82,12 @@ class TancadaMuestraActivity : AppCompatActivity() {
                 Log.d(TAG,"1")
                 presenter.requestUpdateEstado(tancada)
             }else{
-                if(tancada.muestras.size>0 && tancada.fechaFinAplicacion.isEmpty()){
+                //if(tancada.muestras.size>0 && tancada.fechaFinAplicacion.isEmpty()){
                     Log.d(TAG,"2")
                     presenter.requestUpdateEstado(tancada)
-                }else{
+                /*}else{
                     showError("Ingrese muestras para finalizar")
-                }
+                }*/
             }
         }
 

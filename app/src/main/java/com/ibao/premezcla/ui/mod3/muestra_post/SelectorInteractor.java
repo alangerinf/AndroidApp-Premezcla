@@ -1,5 +1,6 @@
 package com.ibao.premezcla.ui.mod3.muestra_post;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -8,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.ibao.premezcla.ConectionConfig;
+import com.ibao.premezcla.SharedPreferencesManager;
 import com.ibao.premezcla.app.AppController;
 import com.ibao.premezcla.models.Muestra;
 
@@ -35,6 +37,7 @@ public class SelectorInteractor {
             @Override
             protected Map<String,String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
+                mueestra.setUsuario(SharedPreferencesManager.getUser(AppController.getInstance().getBaseContext()).getId());
                 String data = new Gson().toJson(mueestra);
                 Log.i(TAG,"data:"+data);
                 params.put("data",data);

@@ -8,6 +8,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.ibao.premezcla.ConectionConfig;
+import com.ibao.premezcla.SharedPreferencesManager;
 import com.ibao.premezcla.app.AppController;
 import com.ibao.premezcla.models.ProductoPesado;
 import com.ibao.premezcla.ui.mod1.presenters.ProductoPesadoFragmentPresenter;
@@ -39,6 +40,7 @@ public class ProductoPesadoFragmentInteractor {
             @Override
             protected Map<String,String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
+                productoPesado.setUsuario(SharedPreferencesManager.getUser(AppController.getInstance().getBaseContext()).getId());
                 String data = new Gson().toJson(productoPesado);
                 Log.d(TAG,"data = "+data);
 
