@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:id="@+id/content_main"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".ui.mod1beta.views.fragment.orden.OrdenFragment">
+        tools:context=".ui.mod1.views.fragment.orden.OrdenFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/main_swiperefresh"

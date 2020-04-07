@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_version"
+        android:orderInCategory="100"
+        android:title="Versión"
+        android:icon="@drawable/ic_info_outline_black_24dp"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/change_module"
+        android:orderInCategory="100"
+        android:title="Cambiar de Modulo"
+        android:icon="@drawable/ic_compare_arrows_black_24dp"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="Cerrar Sesión"
+        app:showAsAction="never" />
+</menu>

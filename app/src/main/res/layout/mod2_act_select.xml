@@ -47,7 +47,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
 
-                android:text="Número de Tancada"
+                android:text="Cod. Orden"
                 android:textColor="@color/colorPrimaryDark" />
 
             <TextView
@@ -58,7 +58,7 @@
                 android:text=":" />
 
             <TextView
-                android:id="@+id/asa_tViewNTancada"
+                android:id="@+id/asa_tViewOrden"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/tView_secondaryText"
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 style="@style/tView_secondaryText"
                 android:textColor="@color/colorPrimaryDark"
-                android:text="Lote" />
+                android:text="Cod. Lote" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,6 +89,38 @@
 
             <TextView
                 android:id="@+id/asa_tViewLote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/tView_secondaryText"
+                android:layout_weight="1"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/tView_secondaryText"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+
+                android:text="Nro. Tancada"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/tView_secondaryText"
+                android:textColor="@color/colorPrimaryDark"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/asa_tViewNTancada"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/tView_secondaryText"

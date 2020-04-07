@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Premescla</string>
-
+    <string name="app_name">Premezcla</string>
 
     <string name="sincronizaci_n">Sincronización</string>
     <string name="descargar_data">Descargar data</string>
