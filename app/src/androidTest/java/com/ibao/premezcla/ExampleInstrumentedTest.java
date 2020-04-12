@@ -1,6 +1,7 @@
 package com.ibao.premezcla;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -17,11 +18,13 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+    String TAG  = ExampleInstrumentedTest.class.getSimpleName();
     @Test
     public void useAppContext() {
         // cBaseApplication of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-
+        System.out.println("packageName: "+appContext.getPackageName());
+        Log.d(TAG,"packageName: "+appContext.getPackageName());
         assertEquals("com.ibao.premezcla", appContext.getPackageName());
     }
 }
