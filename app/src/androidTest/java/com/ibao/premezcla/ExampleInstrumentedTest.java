@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // cBaseApplication of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.ibao.premescla", appContext.getPackageName());
+        assertEquals("com.ibao.premezcla", appContext.getPackageName());
     }
 }
